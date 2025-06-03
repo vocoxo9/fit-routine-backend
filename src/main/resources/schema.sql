@@ -37,7 +37,7 @@ CREATE TABLE TB_MEMBER
     BIRTH_AT   DATE                                 NOT NULL,
     PHONE      VARCHAR2(13) UNIQUE                  NOT NULL,
     CREATED_AT DATE    DEFAULT SYSDATE              NOT NULL,
-    STATUS     CHAR(1) DEFAULT 'Y'                  NOT NULL,
+    IS_DELETED     CHAR(1) DEFAULT 'Y'                  NOT NULL,
     CONSTRAINT PK_TB_MEMBER PRIMARY KEY (MEMBER_ID)
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE TB_MENU
     CALORIE       NUMBER                                                           NOT NULL,
     CARBOHYDRATE  NUMBER                                                           NOT NULL,
     PROTEIN       NUMBER                                                           NOT NULL,
-    MENU_CATEGORY VARCHAR2(30) CHECK (MENU_CATEGORY IN ('RICE', 'SIDES', 'SOUPS')) NOT NULL,
+    CATEGORY VARCHAR2(30) CHECK (CATEGORY IN ('RICE', 'SIDES', 'SOUPS')) NOT NULL,
     CONSTRAINT PK_TB_MENU PRIMARY KEY (MENU_ID)
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE TB_EXERCISE
     EXERCISE_ID       NUMBER                                                                         NOT NULL,
     NAME              VARCHAR2(100)                                                                  NOT NULL,
     MET               NUMBER                                                                         NOT NULL,
-    EXERCISE_CATEGORY VARCHAR2(50) CHECK (EXERCISE_CATEGORY IN ('UPPER', 'LOWER', 'CARDIO', 'LIFE')) NOT NULL,
+    CATEGORY VARCHAR2(50) CHECK (CATEGORY IN ('UPPER', 'LOWER', 'CARDIO', 'LIFE')) NOT NULL,
     CONSTRAINT PK_TB_EXERCISE PRIMARY KEY (EXERCISE_ID)
 );
 
@@ -115,7 +115,7 @@ CREATE TABLE TB_BOARD
 (
     BOARD_ID      NUMBER                                                                                  NOT NULL,
     TITLE         VARCHAR2(150)                                                                           NOT NULL,
-    BOARD_CONTENT VARCHAR2(1500),
+    CONTENT VARCHAR2(1500),
     CATEGORY      VARCHAR2(20) DEFAULT 'ALL' CHECK (CATEGORY IN ('ALL', 'DIET', 'STRENGTH', 'ENDURANCE')) NOT NULL,
     CREATED_AT    DATE         DEFAULT SYSDATE                                                            NOT NULL,
     MEMBER_ID     NUMBER                                                                                  NOT NULL,
@@ -136,8 +136,8 @@ CREATE TABLE TB_REPLY
     REPLY_ID        NUMBER               NOT NULL,
     BOARD_ID        NUMBER               NOT NULL,
     MEMBER_ID       NUMBER               NOT NULL,
-    REPLY_CONTENT   VARCHAR2(1500)       NOT NULL,
-    ANSWER_REPLY_ID NUMBER,
+    CONTENT   VARCHAR2(1500)       NOT NULL,
+    PARENT_ID NUMBER,
     REPLIED_AT      DATE DEFAULT SYSDATE NOT NULL,
     CONSTRAINT PK_TB_REPLY PRIMARY KEY (REPLY_ID),
     CONSTRAINT FK_TB_BOARD_TO_TB_REPLY_1 FOREIGN KEY (BOARD_ID) REFERENCES TB_BOARD (BOARD_ID) ON DELETE CASCADE,
@@ -163,7 +163,7 @@ CREATE TABLE TB_BOARD_LIKE
 CREATE TABLE TB_ALARM
 (
     NOTICE_ID          NUMBER                                                               NOT NULL,
-    NOTICE_CONTENT     VARCHAR2(100)                                                        NOT NULL,
+    CONTENT     VARCHAR2(100)                                                        NOT NULL,
     CATEGORY           VARCHAR2(30) CHECK (CATEGORY IN ('REPLY', 'TODO', 'FOLLOW', 'LIKE')) NOT NULL,
     CREATED_AT         DATE DEFAULT SYSDATE                                                 NOT NULL,
     RECEIVER_MEMBER_ID NUMBER                                                               NOT NULL,
