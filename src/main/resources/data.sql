@@ -1,4 +1,3 @@
--- 예시 자료입니다. --
 INSERT INTO TB_MENU
 VALUES (SEQ_MENU_ID.NEXTVAL, '메뉴1', 10, 10, 10, 'RICE');
 INSERT INTO TB_MENU
@@ -10,16 +9,12 @@ INSERT INTO TB_EXERCISE
 VALUES (SEQ_EXERCISE_ID.NEXTVAL, '운동2', 22, 'LOWER');
 
 INSERT INTO TB_MEMBER
-VALUES (SEQ_MEMBER_ID.nextval, 'abc@gmail.com', 'asdf1234',
-        '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'Y');
+VALUES (SEQ_MEMBER_ID.nextval, 'abc@gmail.com', 'asdf1234', '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'Y');
 INSERT INTO TB_MEMBER
-VALUES (SEQ_MEMBER_ID.nextval, 'qwer@gmail.com', 'qwer1234',
-        '재롱이', 'M', sysdate, '010-1111-2222', sysdate, 'Y');
+VALUES (SEQ_MEMBER_ID.nextval, 'qwer@gmail.com', 'qwer1234', '재롱이', 'M', sysdate, '010-1111-2222', sysdate, 'Y');
 
 INSERT INTO TB_MEMBER_DETAIL
 VALUES (1, 160, 43);
 
 INSERT INTO TB_MEMBER_DETAIL
 VALUES (2, 178, 67);
-
-
