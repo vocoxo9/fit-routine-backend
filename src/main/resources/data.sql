@@ -732,6 +732,11 @@ VALUES (SEQ_BOARD_ID.NEXTVAL,
         2
         );
 
+INSERT INTO TB_IMAGE
+VALUES ('부산해운대.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 1);
+INSERT INTO TB_IMAGE
+VALUES ('파라솔.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 1);
+
 INSERT INTO TB_BOARD
 VALUES (SEQ_BOARD_ID.NEXTVAL,
         '20년만에 처음 다이어트',
@@ -740,6 +745,9 @@ VALUES (SEQ_BOARD_ID.NEXTVAL,
         SYSDATE,
         2
         );
+
+INSERT INTO TB_IMAGE
+VALUES ('헬스장1일차.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 2);
 
 INSERT INTO TB_BOARD
 VALUES (SEQ_BOARD_ID.NEXTVAL,
@@ -750,6 +758,13 @@ VALUES (SEQ_BOARD_ID.NEXTVAL,
         1
         );
 
+INSERT INTO TB_IMAGE
+VALUES ('식단 1일차.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 3);
+INSERT INTO TB_IMAGE
+VALUES ('식단 2일차.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 3);
+INSERT INTO TB_IMAGE
+VALUES ('헬스장.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 3);
+
 INSERT INTO TB_BOARD
 VALUES (SEQ_BOARD_ID.NEXTVAL,
         '두번째 바디프로필은 할만 하네',
@@ -758,3 +773,17 @@ VALUES (SEQ_BOARD_ID.NEXTVAL,
         SYSDATE,
         1
         );
+
+INSERT INTO TB_IMAGE
+VALUES ('식단.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 4);
+INSERT INTO TB_IMAGE
+VALUES ('헬스장.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 4);
+
+INSERT INTO TB_BOARD_LIKE
+VALUES (2, 3);
+
+INSERT INTO TB_BOARD_LIKE
+VALUES (1, 3);
+
+INSERT INTO TB_BOARD_LIKE
+VALUES (2, 2);
