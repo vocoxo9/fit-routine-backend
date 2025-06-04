@@ -722,3 +722,39 @@ VALUES (235, '힙 쓰러스트', 6, 'LOWER');
 
 INSERT INTO TB_EXERCISE (EXERCISE_ID, NAME, MET, CATEGORY)
 VALUES (236, '힙 어브덕션', 5, 'LOWER');
+
+INSERT INTO TB_BOARD
+VALUES (SEQ_BOARD_ID.NEXTVAL,
+        '부산 해운대 가자',
+        '이번 부산 해운대에서 선팅을 하기 위해서 몸을 만들기 시작했습니다.',
+        DEFAULT,
+        SYSDATE,
+        2
+        );
+
+INSERT INTO TB_BOARD
+VALUES (SEQ_BOARD_ID.NEXTVAL,
+        '20년만에 처음 다이어트',
+        '19살까지 살이 찌지 않다가 20살때 급격히 식욕이 늘어나면서 10kg이 증가하였습니다.',
+        DEFAULT,
+        SYSDATE,
+        2
+        );
+
+INSERT INTO TB_BOARD
+VALUES (SEQ_BOARD_ID.NEXTVAL,
+        '인생 첫 바디프로필',
+        '이번에 5개월 동안 식단과 운동을 병행하여 인생에서 처음으로 바디프로필을 찍어봤습니다.',
+        DEFAULT,
+        SYSDATE,
+        1
+        );
+
+INSERT INTO TB_BOARD
+VALUES (SEQ_BOARD_ID.NEXTVAL,
+        '두번째 바디프로필은 할만 하네',
+        '두번째라고 식단과 운동을 하는것에는 어렵지 않았는데, 운동에 대한 회의감을 견디는게 조금 힘들었습니다.',
+        DEFAULT,
+        SYSDATE,
+        1
+        );
