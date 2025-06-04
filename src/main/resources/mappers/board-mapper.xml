@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.khedu.fitroutine.board.model.dao.BoardMapper">
+    <select id="getPopularBoardTop3" resultType="kr.co.khedu.fitroutine.board.model.dto.PopularBoardDTO">
+        SELECT BOARD_ID, TITLE, NICKNAME
+        FROM (
+            SELECT
+                B.BOARD_ID,
+                B.TITLE,
+                M.NICKNAME,
+                COUNT(L.BOARD_ID) AS LIKE_COUNT
+            FROM
+                TB_BOARD B
+                JOIN TB_MEMBER M ON B.MEMBER_ID = M.MEMBER_ID
+                LEFT JOIN TB_BOARD_LIKE L ON B.BOARD_ID = L.BOARD_ID
+            GROUP BY
+                B.BOARD_ID,
+                B.TITLE,
+                M.NICKNAME
+            ORDER BY
+                LIKE_COUNT DESC
+        )
+        WHERE ROWNUM &lt;= 3
+    </select>
+</mapper>
