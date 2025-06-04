@@ -6,6 +6,7 @@
     <select id="getBlogDetail" resultType="kr.co.khedu.fitroutine.blog.model.dto.BlogDetail">
         SELECT
             MEMBER_ID,
+            NICKNAME,
             B.GRADE,
             B.INTRODUCE,
             M.GENDER,
