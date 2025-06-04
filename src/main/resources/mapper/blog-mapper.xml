@@ -19,12 +19,12 @@
                     SELECT 1
                     FROM TB_FOLLOW F
                     WHERE F.FOLLOWED_MEMBER_ID = MEMBER_ID
-                    AND F.CLICKED_MEMBER_ID = #{viewerMemberId}
+                    AND F.CLICKED_MEMBER_ID = #{viewerId}
                 ) THEN 1
                 ELSE 0
             END AS LIKED
         FROM TB_BLOG B
         JOIN TB_MEMBER M USING(MEMBER_ID)
-        WHERE MEMBER_ID = #{ownerMemberId}
+        WHERE MEMBER_ID = #{memberId}
     </select>
 </mapper>

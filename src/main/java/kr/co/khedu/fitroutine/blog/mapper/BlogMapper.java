@@ -5,5 +5,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface BlogMapper {
-    BlogDetail getBlogDetail(long ownerMemberId, long viewerMemberId);
+    BlogDetail getBlogDetail(long memberId, long viewerId);
 }

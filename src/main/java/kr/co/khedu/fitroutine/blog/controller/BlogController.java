@@ -16,11 +16,11 @@ public final class BlogController {
         this.blogService = blogService;
     }
 
-    @GetMapping("/{ownerMemberId}")
-    public BlogDetail getBlogDetail(@PathVariable long ownerMemberId) {
+    @GetMapping("/{memberId}")
+    public BlogDetail getBlogDetail(@PathVariable long memberId) {
         // 토큰 서비스 추가 시 수정
-        long viewerMemberId = 1;
+        long viewerId = 1;
 
-        return blogService.getBlogDetail(ownerMemberId, viewerMemberId);
+        return blogService.getBlogDetail(memberId, viewerId);
     }
 }

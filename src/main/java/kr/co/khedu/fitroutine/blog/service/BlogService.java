@@ -12,11 +12,11 @@ public final class BlogService {
         this.blogMapper = blogMapper;
     }
 
-    public BlogDetail getBlogDetail(long ownerMemberId, long viewerMemberId) {
-        BlogDetail blogDetail = blogMapper.getBlogDetail(ownerMemberId, viewerMemberId);
+    public BlogDetail getBlogDetail(long memberId, long viewerId) {
+        BlogDetail blogDetail = blogMapper.getBlogDetail(memberId, viewerId);
 
         if (blogDetail == null) {
-            throw new IllegalStateException("블로그를 찾을 수 없습니다: " + ownerMemberId);
+            throw new IllegalStateException("블로그를 찾을 수 없습니다: " + memberId);
         }
 
         return blogDetail;
