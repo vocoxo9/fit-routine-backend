@@ -20,7 +20,7 @@
                     SELECT 1
                     FROM TB_FOLLOW F
                     WHERE F.FOLLOWED_MEMBER_ID = MEMBER_ID
-                    AND F.CLICKED_MEMBER_ID = #{viewerId}
+                    AND F.FOLLOWER_MEMBER_ID = #{viewerId}
                 ) THEN 1
                 ELSE 0
             END AS LIKED
