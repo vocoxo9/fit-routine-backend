@@ -4,15 +4,31 @@ INSERT INTO TB_MENU
 VALUES (SEQ_MENU_ID.NEXTVAL, '메뉴2', 15, 10, 20, 'SOUPS');
 
 INSERT INTO TB_MEMBER
-VALUES (SEQ_MEMBER_ID.nextval, 'abc@gmail.com', 'asdf1234', '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'Y');
+VALUES (1, 'abc@gmail.com', 'asdf1234', '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'Y');
 INSERT INTO TB_MEMBER
-VALUES (SEQ_MEMBER_ID.nextval, 'qwer@gmail.com', 'qwer1234', '재롱이', 'M', sysdate, '010-1111-2222', sysdate, 'Y');
+VALUES (2, 'qwer@gmail.com', 'qwer1234', '재롱이', 'M', sysdate, '010-1111-2222', sysdate, 'Y');
+INSERT INTO TB_MEMBER
+VALUES (3, 'test1@gmail.com', 'qwer1234', '가나', 'M', sysdate, '010-1311-2222', sysdate, 'Y');
+INSERT INTO TB_MEMBER
+VALUES (4, 'test2@gmail.com', 'qwer1234', '다라', 'F', sysdate, '010-1611-2222', sysdate, 'Y');
+
+INSERT INTO TB_FOLLOW
+VALUES (1, 2);
+INSERT INTO TB_FOLLOW
+VALUES (1, 3);
+INSERT INTO TB_FOLLOW
+VALUES (1, 4);
 
 INSERT INTO TB_MEMBER_DETAIL
 VALUES (1, 160, 43);
 
 INSERT INTO TB_MEMBER_DETAIL
 VALUES (2, 178, 67);
+
+INSERT INTO TB_BLOG
+VALUES (1, '저는 뽀리입니다. 꽤 귀엽구요\n잘 부탁합니다.', 120);
+INSERT INTO TB_BLOG
+VALUES (2, '저는 재롱이입니다. 굉장히 싸납구요\n조심하세요.', 57);
 
 -- 운동 공공데이터 (CSV)
 INSERT INTO TB_EXERCISE (EXERCISE_ID, NAME, MET, CATEGORY)
