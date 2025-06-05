@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BlogMapper {
     BlogDetail getBlogDetail(long blogId, long viewerId);
 
-    int unlikeBlog(long memberId, long viewerId);
+    int unlikeBlog(long blogId, long viewerId);
 
-    int likeBlog(long memberId, long viewerId);
+    int likeBlog(long blogId, long viewerId);
 }
