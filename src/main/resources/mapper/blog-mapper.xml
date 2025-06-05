@@ -28,4 +28,15 @@
         JOIN TB_MEMBER M USING(MEMBER_ID)
         WHERE MEMBER_ID = #{memberId}
     </select>
+
+    <delete id="unlikeBlog">
+        DELETE FROM TB_FOLLOW
+        WHERE FOLLOWED_MEMBER_ID = #{memberId}
+        AND FOLLOWER_MEMBER_ID = #{viewerId}
+    </delete>
+
+    <insert id="likeBlog">
+        INSERT INTO TB_FOLLOW
+        VALUES (#{memberId}, #{viewerId})
+    </insert>
 </mapper>

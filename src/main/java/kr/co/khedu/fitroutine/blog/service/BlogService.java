@@ -20,4 +20,12 @@ public final class BlogService {
 
         return blogDetail;
     }
+
+    public boolean unlikeBlog(long memberId, long viewerId) {
+        return blogMapper.unlikeBlog(memberId, viewerId) > 0;
+    }
+
+    public boolean likeBlog(long memberId, long viewerId) {
+        return blogMapper.likeBlog(memberId, viewerId) > 0;
+    }
 }
