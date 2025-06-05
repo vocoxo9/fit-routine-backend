@@ -17,7 +17,7 @@ public final class MemberController {
 
     @GetMapping
     public ResponseEntity<?> getMemberProfile() {
-        // 추후에 토큰에서 회원을 얻어도록 변경해야 합니다.
+        // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
         long memberId = 1;
 
         return ResponseEntity.ok(memberService.getMemberProfile(memberId));
