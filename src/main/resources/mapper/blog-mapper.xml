@@ -31,23 +31,12 @@
 
     <delete id="unlikeBlog">
         DELETE FROM TB_FOLLOW
-        WHERE FOLLOWED_MEMBER_ID = (
-            SELECT MEMBER_ID
-            FROM TB_MEMBER M JOIN TB_BLOG B USING (MEMBER_ID)
-            WHERE B.BLOG_ID = #{blogId}
-        )
+        WHERE FOLLOWED_MEMBER_ID = #{memberId}
         AND FOLLOWER_MEMBER_ID = #{viewerId}
     </delete>
 
     <insert id="likeBlog">
         INSERT INTO TB_FOLLOW
-        VALUES (
-            (
-                SELECT MEMBER_ID
-                FROM TB_MEMBER M JOIN TB_BLOG B USING (MEMBER_ID)
-                WHERE B.BLOG_ID = #{blogId}
-            ),
-            #{viewerId}
-        )
+        VALUES (#{memberId}, #{viewerId})
     </insert>
 </mapper>

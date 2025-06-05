@@ -2,14 +2,17 @@ package kr.co.khedu.fitroutine.blog.service;
 
 import kr.co.khedu.fitroutine.blog.mapper.BlogMapper;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogDetail;
+import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public final class BlogService {
     private final BlogMapper blogMapper;
+    private final MemberMapper memberMapper;
 
-    public BlogService(BlogMapper blogMapper) {
+    public BlogService(BlogMapper blogMapper, MemberMapper memberMapper) {
         this.blogMapper = blogMapper;
+        this.memberMapper = memberMapper;
     }
 
     public BlogDetail getBlogDetail(long blogId, long viewerId) {
@@ -22,10 +25,16 @@ public final class BlogService {
     }
 
     public boolean unlikeBlog(long blogId, long viewerId) {
-        return blogMapper.unlikeBlog(blogId, viewerId) > 0;
+        return blogMapper.unlikeBlog(
+                memberMapper.findMemberByBlogId(blogId).getMemberId(),
+                viewerId
+        ) > 0;
     }
 
     public boolean likeBlog(long blogId, long viewerId) {
-        return blogMapper.likeBlog(blogId, viewerId) > 0;
+        return blogMapper.likeBlog(
+                memberMapper.findMemberByBlogId(blogId).getMemberId(),
+                viewerId
+        ) > 0;
     }
 }

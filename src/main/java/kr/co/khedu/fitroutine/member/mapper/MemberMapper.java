@@ -6,4 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MemberMapper {
     Member findMemberById(int memberId);
+
+    Member findMemberByBlogId(long blogId);
 }

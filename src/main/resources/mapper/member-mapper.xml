@@ -8,4 +8,10 @@
         FROM TB_MEMBER
         WHERE MEMBER_ID = #{memberId}
     </select>
+    <select id="findMemberByBlogId" resultType="kr.co.khedu.fitroutine.member.model.vo.Member">
+        SELECT *
+        FROM TB_MEMBER M
+        JOIN TB_BLOG B USING (MEMBER_ID)
+        WHERE BLOG_ID = #{blogId}
+    </select>
 </mapper>
