@@ -37,4 +37,13 @@ public final class BlogService {
                 viewerId
         ) > 0;
     }
+
+    public boolean updateIntroduce(long blogId, long editorId, String intro) {
+        boolean result = blogMapper.updateIntroduce(blogId, editorId, intro) > 0;
+        if  (result) {
+//            String newIntro = blogMapper.
+        }
+
+        return result;
+    }
 }
