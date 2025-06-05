@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/board")
-public class BoardController {
-    private BoardService boardService;
-    public BoardController (BoardService boardService) {
+@RequestMapping("/boards")
+public final class BoardController {
+    private final BoardService boardService;
+
+    public BoardController(BoardService boardService) {
         this.boardService = boardService;
     }
 
     @GetMapping("/popular")
     public List<PopularBoardDTO> getPopularBoardTop3() {
-        List<PopularBoardDTO> boardList = boardService.getPopularBoardTop3();
-        return boardList;
+        return boardService.getPopularBoardTop3();
     }
 }
