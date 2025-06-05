@@ -1,11 +1,8 @@
 package kr.co.khedu.fitroutine.exercise.controller;
 
-import kr.co.khedu.fitroutine.exercise.model.vo.ExerciseOpenData;
 import kr.co.khedu.fitroutine.exercise.service.ExerciseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/exercises")
@@ -17,7 +14,7 @@ public final class ExerciseController {
     }
 
     @GetMapping("/open-data")
-    public ResponseEntity<List<? extends ExerciseOpenData>> getAllExerciseOpenDataList() {
+    public ResponseEntity<?> getAllExerciseOpenDataList() {
         return ResponseEntity.ok(exerciseService.getAllExerciseOpenDataList());
     }
 }
