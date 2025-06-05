@@ -21,21 +21,11 @@ public final class BlogService {
         return blogDetail;
     }
 
-    public String unlikeBlog(long memberId, long viewerId) {
-        int result = blogMapper.unlikeBlog(memberId, viewerId);
-        if (result > 0) {
-            return "success";
-        } else {
-            return "fail";
-        }
+    public boolean unlikeBlog(long memberId, long viewerId) {
+        return blogMapper.unlikeBlog(memberId, viewerId) > 0;
     }
 
-    public String likeBlog(long memberId, long viewerId) {
-        int result = blogMapper.likeBlog(memberId, viewerId);
-        if (result > 0) {
-            return "success";
-        } else {
-            return "fail";
-        }
+    public boolean likeBlog(long memberId, long viewerId) {
+        return blogMapper.likeBlog(memberId, viewerId) > 0;
     }
 }

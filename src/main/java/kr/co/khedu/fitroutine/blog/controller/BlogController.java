@@ -34,7 +34,7 @@ public final class BlogController {
         // 추후 토큰으로 로그인 유저 memberId만 추출
         long viewerId = Integer.parseInt(token); // 추후 변경 예정
 
-        return blogService.unlikeBlog(memberId, viewerId);
+        return blogService.unlikeBlog(memberId, viewerId) ? "success" : "failure";
     }
 
     @PostMapping("/{memberId}/likes")
@@ -45,7 +45,7 @@ public final class BlogController {
         // 추후 토큰으로 로그인 유저 memberId만 추출
         long viewerId = Integer.parseInt(token); // 추후 변경 예정
 
-        return blogService.likeBlog(memberId, viewerId);
+        return blogService.likeBlog(memberId, viewerId)  ? "success" : "failure";
     }
 
 }
