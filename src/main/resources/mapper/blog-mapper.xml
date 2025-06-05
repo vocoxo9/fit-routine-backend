@@ -30,10 +30,13 @@
     </select>
 
     <delete id="unlikeBlog">
-        DELETE FROM TB_FOLLOW WHERE FOLLOWED_MEMBER_ID = #{memberId} AND FOLLOWER_MEMBER_ID = #{viewerId}
+        DELETE FROM TB_FOLLOW
+        WHERE FOLLOWED_MEMBER_ID = #{memberId}
+        AND FOLLOWER_MEMBER_ID = #{viewerId}
     </delete>
 
     <insert id="likeBlog">
-        INSERT INTO TB_FOLLOW VALUES (#{memberId}, #{viewerId})
+        INSERT INTO TB_FOLLOW
+        VALUES (#{memberId}, #{viewerId})
     </insert>
 </mapper>
