@@ -10,4 +10,6 @@ public interface BlogMapper {
     int unlikeBlog(long blogId, long viewerId);
 
     int likeBlog(long blogId, long viewerId);
+
+    int updateIntroduce(long blogId, long editorId, String intro);
 }
