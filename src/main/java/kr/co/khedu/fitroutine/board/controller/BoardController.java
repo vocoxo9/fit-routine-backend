@@ -18,7 +18,7 @@ public final class BoardController {
     }
 
     @GetMapping("/popular")
-    public List<PopularBoardDTO> getPopularBoardTop3() {
+    public List<? extends PopularBoardDTO> getPopularBoardTop3() {
         return boardService.getPopularBoardTop3();
     }
 }

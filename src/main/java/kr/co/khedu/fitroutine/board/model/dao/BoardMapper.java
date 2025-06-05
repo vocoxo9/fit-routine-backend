@@ -7,5 +7,5 @@ import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    List<PopularBoardDTO> getPopularBoardTop3();
+    List<? extends PopularBoardDTO> getPopularBoardTop3();
 }

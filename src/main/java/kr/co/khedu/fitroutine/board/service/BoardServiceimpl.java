@@ -14,8 +14,8 @@ public class BoardServiceimpl implements BoardService {
     }
 
     @Override
-    public List<PopularBoardDTO> getPopularBoardTop3() {
-        List<PopularBoardDTO> boardList = boardMapper.getPopularBoardTop3();
+    public List<? extends PopularBoardDTO> getPopularBoardTop3() {
+        List<? extends PopularBoardDTO> boardList = boardMapper.getPopularBoardTop3();
         return boardList;
     }
 }
