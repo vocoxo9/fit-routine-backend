@@ -4,15 +4,35 @@ INSERT INTO TB_MENU
 VALUES (SEQ_MENU_ID.NEXTVAL, '메뉴2', 15, 10, 20, 'SOUPS');
 
 INSERT INTO TB_MEMBER
-VALUES (SEQ_MEMBER_ID.nextval, 'abc@gmail.com', 'asdf1234', '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'Y');
+VALUES (1, 'abc@gmail.com', 'asdf1234', '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'Y');
 INSERT INTO TB_MEMBER
-VALUES (SEQ_MEMBER_ID.nextval, 'qwer@gmail.com', 'qwer1234', '재롱이', 'M', sysdate, '010-1111-2222', sysdate, 'Y');
+VALUES (2, 'qwer@gmail.com', 'qwer1234', '재롱이', 'M', sysdate, '010-1111-2222', sysdate, 'Y');
+INSERT INTO TB_MEMBER
+VALUES (3, 'test1@gmail.com', 'qwer1234', '가나', 'M', sysdate, '010-1311-2222', sysdate, 'Y');
+INSERT INTO TB_MEMBER
+VALUES (4, 'test2@gmail.com', 'qwer1234', '다라', 'F', sysdate, '010-1611-2222', sysdate, 'Y');
+
+INSERT INTO TB_FOLLOW
+VALUES (1, 2);
+INSERT INTO TB_FOLLOW
+VALUES (1, 3);
+INSERT INTO TB_FOLLOW
+VALUES (1, 4);
 
 INSERT INTO TB_MEMBER_DETAIL
 VALUES (1, 160, 43);
 
 INSERT INTO TB_MEMBER_DETAIL
 VALUES (2, 178, 67);
+
+INSERT INTO TB_BLOG
+VALUES (SEQ_BLOG_ID.NEXTVAL, 1, '저는 뽀리입니다. 꽤 귀엽구요\n잘 부탁합니다.', 120);
+INSERT INTO TB_BLOG
+VALUES (SEQ_BLOG_ID.NEXTVAL, 2, '저는 재롱이입니다. 굉장히 싸납구요\n조심하세요.', 57);
+INSERT INTO TB_BLOG
+VALUES (SEQ_BLOG_ID.NEXTVAL, 3, '저는 담비입니다.\n구운게 아니라 원래 색깔입니다.', 1000);
+INSERT INTO TB_BLOG
+VALUES (SEQ_BLOG_ID.NEXTVAL, 4, '저는 환희입니다. \n항상 감사하구요.\n주인만 물어요.\n센척 엄청합니다.', 650);
 
 -- 운동 공공데이터 (CSV)
 INSERT INTO TB_EXERCISE (EXERCISE_ID, NAME, MET, CATEGORY)
@@ -722,3 +742,68 @@ VALUES (235, '힙 쓰러스트', 6, 'LOWER');
 
 INSERT INTO TB_EXERCISE (EXERCISE_ID, NAME, MET, CATEGORY)
 VALUES (236, '힙 어브덕션', 5, 'LOWER');
+
+INSERT INTO TB_BOARD
+VALUES (SEQ_BOARD_ID.NEXTVAL,
+        '부산 해운대 가자',
+        '이번 부산 해운대에서 선팅을 하기 위해서 몸을 만들기 시작했습니다.',
+        DEFAULT,
+        SYSDATE,
+        2
+        );
+
+INSERT INTO TB_IMAGE
+VALUES ('부산해운대.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 1);
+INSERT INTO TB_IMAGE
+VALUES ('파라솔.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 1);
+
+INSERT INTO TB_BOARD
+VALUES (SEQ_BOARD_ID.NEXTVAL,
+        '20년만에 처음 다이어트',
+        '19살까지 살이 찌지 않다가 20살때 급격히 식욕이 늘어나면서 10kg이 증가하였습니다.',
+        DEFAULT,
+        SYSDATE,
+        2
+        );
+
+INSERT INTO TB_IMAGE
+VALUES ('헬스장1일차.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 2);
+
+INSERT INTO TB_BOARD
+VALUES (SEQ_BOARD_ID.NEXTVAL,
+        '인생 첫 바디프로필',
+        '이번에 5개월 동안 식단과 운동을 병행하여 인생에서 처음으로 바디프로필을 찍어봤습니다.',
+        DEFAULT,
+        SYSDATE,
+        1
+        );
+
+INSERT INTO TB_IMAGE
+VALUES ('식단 1일차.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 3);
+INSERT INTO TB_IMAGE
+VALUES ('식단 2일차.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 3);
+INSERT INTO TB_IMAGE
+VALUES ('헬스장.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 3);
+
+INSERT INTO TB_BOARD
+VALUES (SEQ_BOARD_ID.NEXTVAL,
+        '두번째 바디프로필은 할만 하네',
+        '두번째라고 식단과 운동을 하는것에는 어렵지 않았는데, 운동에 대한 회의감을 견디는게 조금 힘들었습니다.',
+        DEFAULT,
+        SYSDATE,
+        1
+        );
+
+INSERT INTO TB_IMAGE
+VALUES ('식단.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 4);
+INSERT INTO TB_IMAGE
+VALUES ('헬스장.JPG', '7fa8b12a-d51e-4c4c-bfd4-9d9b6eab9f7e.JPG', 4);
+
+INSERT INTO TB_BOARD_LIKE
+VALUES (2, 3);
+
+INSERT INTO TB_BOARD_LIKE
+VALUES (1, 3);
+
+INSERT INTO TB_BOARD_LIKE
+VALUES (2, 2);

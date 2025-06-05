@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.khedu.fitroutine.blog.mapper.BlogMapper">
+    <select id="getBlogDetail" resultType="kr.co.khedu.fitroutine.blog.model.dto.BlogDetail">
+        SELECT
+            MEMBER_ID,
+            NICKNAME,
+            B.GRADE,
+            B.INTRODUCE,
+            M.GENDER,
+            (
+                SELECT COUNT(1)
+                FROM TB_FOLLOW F
+                WHERE F.FOLLOWED_MEMBER_ID = MEMBER_ID
+            ) AS LIKE_COUNT,
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM TB_FOLLOW F
+                    WHERE F.FOLLOWED_MEMBER_ID = MEMBER_ID
+                    AND F.FOLLOWER_MEMBER_ID = #{viewerId}
+                ) THEN 1
+                ELSE 0
+            END AS LIKED
+        FROM TB_BLOG B
+        JOIN TB_MEMBER M USING(MEMBER_ID)
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <delete id="unlikeBlog">
+        DELETE FROM TB_FOLLOW
+        WHERE FOLLOWED_MEMBER_ID = #{memberId}
+        AND FOLLOWER_MEMBER_ID = #{viewerId}
+    </delete>
+
+    <insert id="likeBlog">
+        INSERT INTO TB_FOLLOW
+        VALUES (#{memberId}, #{viewerId})
+    </insert>
+</mapper>
