@@ -3,8 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.khedu.fitroutine.member.model.dao.MemberMapper">
-    <select id="getMemberProfile" resultType="kr.co.khedu.fitroutine.member.model.dto.MemberDTO">
-        SELECT MEMBER_ID, EMAIL, NICKNAME, GENDER, BIRTH_AT AS BIRTH, PHONE, HEIGHT, WEIGHT
+    <select id="getMemberProfile" resultType="kr.co.khedu.fitroutine.member.model.dto.MemberProfile">
+        SELECT MEMBER_ID, EMAIL, NICKNAME, BIRTH_AT AS BIRTH, PHONE, GENDER, HEIGHT, WEIGHT
         FROM TB_MEMBER
             JOIN TB_MEMBER_DETAIL USING (MEMBER_ID)
         WHERE MEMBER_ID = #{memberId}
