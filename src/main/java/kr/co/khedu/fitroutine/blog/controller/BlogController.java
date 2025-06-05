@@ -26,7 +26,7 @@ public final class BlogController {
         return blogService.getBlogDetail(memberId, viewerId);
     }
 
-    @DeleteMapping("/unlike/{memberId}")
+    @DeleteMapping("/{memberId}/likes")
     public String unlikeBlog(
             @PathVariable long memberId,
             @RequestHeader("Authorization") String token
@@ -37,7 +37,7 @@ public final class BlogController {
         return blogService.unlikeBlog(memberId, viewerId);
     }
 
-    @PostMapping("/like/{memberId}")
+    @PostMapping("/{memberId}/likes")
     public String likeBlog(
             @PathVariable long memberId,
             @RequestHeader("Authorization") String token
