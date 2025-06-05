@@ -11,8 +11,7 @@ public final class BlogDetail {
     private final String introduce;
     private final String gender;
     private final int likeCount;
-    private final int liked;
-
+    private final boolean liked;
 
     @Builder
     private BlogDetail(
@@ -22,7 +21,7 @@ public final class BlogDetail {
             String introduce,
             String gender,
             int likeCount,
-            int liked
+            boolean liked
     ) {
         this.memberId = memberId;
         this.nickname = nickname;
