@@ -1,7 +1,7 @@
 package kr.co.khedu.fitroutine.member.service;
 
 import kr.co.khedu.fitroutine.member.model.dao.MemberMapper;
-import kr.co.khedu.fitroutine.member.model.dto.MemberDTO;
+import kr.co.khedu.fitroutine.member.model.dto.MemberProfile;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,10 +12,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDTO getMemberProfile(int memberId) {
-        System.out.println("111");
-        MemberDTO memberProfile = memberMapper.getMemberProfile(memberId);
-        System.out.println("222");
+    public MemberProfile getMemberProfile(int memberId) {
+        MemberProfile memberProfile = memberMapper.getMemberProfile(memberId);
         return memberProfile;
     }
 }
