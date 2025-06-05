@@ -14,7 +14,7 @@ public final class BlogService {
 
     public BlogDetail getBlogDetail(long memberId, long viewerId) {
         BlogDetail blogDetail = blogMapper.getBlogDetail(memberId, viewerId);
-        if (blogbuild == null) {
+        if (blogDetail == null) {
             throw new IllegalStateException("블로그를 찾을 수 없습니다: " + memberId);
         }
 
