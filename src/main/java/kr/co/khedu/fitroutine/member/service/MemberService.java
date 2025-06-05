@@ -12,7 +12,7 @@ public final class MemberService {
         this.memberMapper = memberMapper;
     }
 
-    public MemberProfile getMemberProfile(int memberId) {
+    public MemberProfile getMemberProfile(long memberId) {
         return memberMapper.getMemberProfile(memberId);
     }
 }
