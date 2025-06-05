@@ -38,6 +38,8 @@ public final class BlogController {
         // 추후 토큰으로 로그인 유저 memberId만 추출
         long viewerId = Integer.parseInt(token); // 추후 변경 예정
 
+        System.out.println("viewerId: " + viewerId+", blogId: " + blogId);
+
         return blogService.unlikeBlog(blogId, viewerId) ? "success" : "failure";
     }
 
@@ -58,8 +60,8 @@ public final class BlogController {
             @RequestHeader("Authorization") String token,
             @RequestBody IntroduceEdit introduce
     ) {
-        System.out.println("blogId: " + blogId+", introduce: " + introduce.getIntroduce());
         long editorId = Integer.parseInt(token);
+
         String intro = introduce.getIntroduce();
 
         return blogService.updateIntroduce(blogId, editorId, intro)
