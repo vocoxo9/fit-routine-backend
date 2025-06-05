@@ -1,7 +1,7 @@
 package kr.co.khedu.fitroutine.board.service;
 
 import kr.co.khedu.fitroutine.board.model.dao.BoardMapper;
-import kr.co.khedu.fitroutine.board.model.dto.PopularBoardDTO;
+import kr.co.khedu.fitroutine.board.model.dto.PopularBoard;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public final class BoardService {
         this.boardMapper = boardMapper;
     }
 
-    public List<? extends PopularBoardDTO> getPopularBoardTop3() {
+    public List<? extends PopularBoard> getPopularBoardTop3() {
         return boardMapper.getPopularBoardTop3();
     }
 }

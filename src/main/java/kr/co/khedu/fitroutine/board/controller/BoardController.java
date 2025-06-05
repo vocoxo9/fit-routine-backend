@@ -1,6 +1,6 @@
 package kr.co.khedu.fitroutine.board.controller;
 
-import kr.co.khedu.fitroutine.board.model.dto.PopularBoardDTO;
+import kr.co.khedu.fitroutine.board.model.dto.PopularBoard;
 import kr.co.khedu.fitroutine.board.service.BoardService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ public final class BoardController {
     }
 
     @GetMapping("/popular")
-    public List<? extends PopularBoardDTO> getPopularBoardTop3() {
+    public List<? extends PopularBoard> getPopularBoardTop3() {
         return boardService.getPopularBoardTop3();
     }
 }
