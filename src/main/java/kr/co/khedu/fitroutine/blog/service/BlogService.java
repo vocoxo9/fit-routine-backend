@@ -13,19 +13,11 @@ public final class BlogService {
     }
 
     public BlogDetail getBlogDetail(long memberId, long viewerId) {
-        BlogDetail blogbuild = blogMapper.getBlogDetail(memberId, viewerId);
+        BlogDetail blogDetail = blogMapper.getBlogDetail(memberId, viewerId);
         if (blogbuild == null) {
             throw new IllegalStateException("블로그를 찾을 수 없습니다: " + memberId);
         }
 
-        return BlogDetail.builder()
-                .introduce(blogbuild.getIntroduce())
-                .nickname(blogbuild.getNickname())
-                .grade(blogbuild.getGrade())
-                .liked(blogbuild.isLiked())
-                .likeCount(blogbuild.getLikeCount())
-                .gender(blogbuild.getGender().equals("M")?"male":"female")
-                .memberId(blogbuild.getMemberId())
-                .build();
+        return blogDetail;
     }
 }
