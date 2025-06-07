@@ -24,14 +24,13 @@ public final class MemberController {
 
     @PostMapping("/me")
     public ResponseEntity<?> editMemberProfile(@RequestBody MemberEditInfo memberEditInfo) {
-        System.out.println("요청 들어옴");
-        System.out.println("Controller에서 MemberEditInfo" + memberEditInfo);
         // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
         long memberId = 1;
+
         memberEditInfo.setMemberId(memberId);
 
-        return memberService.editMemberProfile(memberEditInfo)
-            ? ResponseEntity.ok("success")
-            : ResponseEntity.status(500).body("failure");
+        return memberService.editMemberProfile(memberEditInfo) ?
+                ResponseEntity.ok("success") :
+                ResponseEntity.status(500).body("failure");
     }
 }
