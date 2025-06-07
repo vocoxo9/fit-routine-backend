@@ -43,15 +43,6 @@ VALUES (1, 160, 43);
 INSERT INTO TB_MEMBER_DETAIL
 VALUES (2, 178, 67);
 
-INSERT INTO TB_BLOG
-VALUES (SEQ_BLOG_ID.NEXTVAL, 1, '저는 뽀리입니다. 꽤 귀엽구요\n잘 부탁합니다.', 120);
-INSERT INTO TB_BLOG
-VALUES (SEQ_BLOG_ID.NEXTVAL, 2, '저는 재롱이입니다. 굉장히 싸납구요\n조심하세요.', 57);
-INSERT INTO TB_BLOG
-VALUES (SEQ_BLOG_ID.NEXTVAL, 3, '저는 담비입니다.\n구운게 아니라 원래 색깔입니다.', 1000);
-INSERT INTO TB_BLOG
-VALUES (SEQ_BLOG_ID.NEXTVAL, 4, '저는 환희입니다. \n항상 감사하구요.\n주인만 물어요.\n센척 엄청합니다.', 650);
-
 -- 운동 공공데이터 (CSV)
 INSERT INTO TB_EXERCISE (EXERCISE_ID, NAME, MET, CATEGORY)
 VALUES (1, '108배', 2, 'LIFE');
