@@ -62,9 +62,9 @@ public final class BlogController {
 
         String intro = introduce.getIntroduce();
 
-        return blogService.updateIntroduce(blogId, editorId, intro)
-                ? ResponseEntity.ok("success")
-                : ResponseEntity.status(500).body("failure");
+        return blogService.updateIntroduce(blogId, editorId, intro) ?
+                    ResponseEntity.ok("success") :
+                    ResponseEntity.status(500).body("failure");
     }
 
 }
