@@ -21,6 +21,15 @@ VALUES (3, 3, '저는 담비입니다.\n구운게 아니라 원래 색깔입니�
 INSERT INTO TB_BLOG
 VALUES (4, 4, '저는 환희입니다. \n항상 감사하구요.\n주인만 물어요.\n센척 엄청합니다.', 650);
 
+INSERT INTO TB_MEMBER_DETAIL
+VALUES (1, 164, 66);
+INSERT INTO TB_MEMBER_DETAIL
+VALUES (2, 170, 70);
+INSERT INTO TB_MEMBER_DETAIL
+VALUES (3, 181, 85);
+INSERT INTO TB_MEMBER_DETAIL
+VALUES (4, 155, 45);
+
 INSERT INTO TB_FOLLOW
 VALUES (1, 2);
 INSERT INTO TB_FOLLOW
