@@ -37,4 +37,8 @@ public final class BlogService {
                 viewerId
         ) > 0;
     }
+
+    public boolean updateIntroduce(long blogId, long editorId, String intro) {
+        return blogMapper.updateIntroduce(blogId, editorId, intro) > 0;
+    }
 }
