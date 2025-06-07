@@ -38,8 +38,6 @@ public final class BlogController {
         // 추후 토큰으로 로그인 유저 memberId만 추출
         long viewerId = Integer.parseInt(token); // 추후 변경 예정
 
-        System.out.println("viewerId: " + viewerId+", blogId: " + blogId);
-
         return blogService.unlikeBlog(blogId, viewerId) ? "success" : "failure";
     }
 
