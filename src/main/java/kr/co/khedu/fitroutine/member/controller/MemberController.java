@@ -26,7 +26,6 @@ public final class MemberController {
     public ResponseEntity<?> editMemberProfile(@RequestBody MemberEditInfo memberEditInfo) {
         // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
         long memberId = 1;
-
         memberEditInfo.setMemberId(memberId);
 
         return memberService.editMemberProfile(memberEditInfo) ?
