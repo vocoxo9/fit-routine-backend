@@ -10,15 +10,13 @@ import lombok.ToString;
 @ToString
 public class BlogLikeList {
     private long memberId;
-    private long blogId;
     private String nickname;
     private char gender;
     private int grade;
 
     @Builder
-    public BlogLikeList(long memberId, long blogId, String nickname, char gender, int grade) {
+    public BlogLikeList(long memberId, String nickname, char gender, int grade) {
         this.memberId = memberId;
-        this.blogId = blogId;
         this.nickname = nickname;
         this.gender = gender;
         this.grade = grade;

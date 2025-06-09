@@ -26,7 +26,6 @@
     <select id="getLikeList" resultType="kr.co.khedu.fitroutine.member.model.dto.BlogLikeList">
         SELECT
             M.MEMBER_ID,
-            B.BLOG_ID,
             M.NICKNAME,
             M.GENDER,
             B.GRADE
