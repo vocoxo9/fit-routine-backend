@@ -21,7 +21,7 @@ public final class ExerciseController {
 
     @GetMapping("/random-routine")
     public ResponseEntity<?> getRandomExerciseRoutine(@RequestParam int dayRepeat){
-        return ResponseEntity.ok(exerciseService.getRandomExerciseRoutineByFront(dayRepeat));
+        return ResponseEntity.ok(exerciseService.getRandomExerciseRoutineTransform(dayRepeat));
     }
 
     @GetMapping("/{id}")

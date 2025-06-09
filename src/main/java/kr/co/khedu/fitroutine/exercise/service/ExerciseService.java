@@ -26,7 +26,7 @@ public final class ExerciseService {
     }
 
     // 운동 루틴 랜덤 추출을 통해 Front에서 사용할 형태로 변환
-    public ExerciseRoutine getRandomExerciseRoutineByFront(int dayRepeat) {
+    public ExerciseRoutine getRandomExerciseRoutineTransform(int dayRepeat) {
         List<Integer> randomExerciseList = (List<Integer>) getRandomExerciseRoutine(dayRepeat);
         /*
             0 : 0 ~ 4
