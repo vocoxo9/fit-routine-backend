@@ -1,7 +1,7 @@
 INSERT INTO TB_MENU
-VALUES (SEQ_MENU_ID.NEXTVAL, '메뉴1', 10, 10, 10, 'RICE');
+VALUES (1, '메뉴1', 10, 10, 10, 'RICE');
 INSERT INTO TB_MENU
-VALUES (SEQ_MENU_ID.NEXTVAL, '메뉴2', 15, 10, 20, 'SOUPS');
+VALUES (2, '메뉴2', 15, 10, 20, 'SOUPS');
 
 INSERT INTO TB_MEMBER
 VALUES (1, 'abc@gmail.com', 'asdf1234', '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'Y');
