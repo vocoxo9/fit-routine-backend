@@ -43,6 +43,31 @@
 
     <insert id="saveBoardImage">
         INSERT INTO TB_IMAGE
-        VALUES (#{originalFileName}, #{changedFileName}, #{boardId})
+        VALUES (SEQ_IMAGE_ID.NEXTVAL, #{originalFileName}, #{changedFileName}, #{boardId})
     </insert>
+
+    <select id="getBoardDetailForEdit" resultType="kr.co.khedu.fitroutine.board.model.dto.BoardDetailForEdit">
+        SELECT BOARD_ID, TITLE, CONTENT, CATEGORY
+        FROM TB_BOARD
+        WHERE BOARD_ID = #{boardId}
+        AND BLOG_ID = (SELECT BLOG_ID FROM TB_BLOG WHERE MEMBER_ID = #{ownerId})
+    </select>
+
+    <select id="getImagesByBoardId" resultType="kr.co.khedu.fitroutine.board.model.vo.Image">
+        SELECT IMAGE_ID, ORIGIN_NAME, CHANGE_NAME, BOARD_ID
+        FROM TB_IMAGE
+        WHERE BOARD_ID = #{boardId}
+    </select>
+
+    <update id="updateBoardDetail">
+        UPDATE TB_BOARD
+        SET TITLE = #{title}, CATEGORY = #{category}, CONTENT = #{content}
+        WHERE BOARD_ID = #{boardId} AND
+        BLOG_ID = (SELECT BLOG_ID FROM TB_BLOG WHERE MEMBER_ID = #{ownerId})
+    </update>
+
+    <delete id="deleteImage">
+        DELETE TB_IMAGE
+        WHERE IMAGE_ID = #{deleteImageId}
+    </delete>
 </mapper>

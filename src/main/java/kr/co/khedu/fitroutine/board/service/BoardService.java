@@ -2,8 +2,12 @@ package kr.co.khedu.fitroutine.board.service;
 
 import kr.co.khedu.fitroutine.board.model.dto.BoardCreate;
 import kr.co.khedu.fitroutine.board.mapper.BoardMapper;
+import kr.co.khedu.fitroutine.board.model.dto.BoardDetailForEdit;
 import kr.co.khedu.fitroutine.board.model.dto.PopularBoard;
+import kr.co.khedu.fitroutine.board.model.vo.Image;
+import kr.co.khedu.fitroutine.board.utils.ImageFileUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -34,5 +38,47 @@ public final class BoardService {
 
     public boolean saveBoardImage(String originalFileName , String changedFileName, long boardId) {
         return boardMapper.saveBoardImage(originalFileName, changedFileName, boardId) > 0;
+    }
+
+    public BoardDetailForEdit getBoardDetailForEdit(long boardId, String token) {
+
+        int ownerId = Integer.parseInt(token);
+
+        BoardDetailForEdit boardDetailForEdit = boardMapper.getBoardDetailForEdit(boardId, ownerId);
+
+        if(boardDetailForEdit != null) {
+            List<? extends Image> images = boardMapper.getImagesByBoardId(boardId);
+            boardDetailForEdit.setImages(images);
+        }
+
+        return boardDetailForEdit;
+    }
+
+    public boolean updateBoardDetail(String token, long boardId, String title, String category,
+                                     String content, MultipartFile[] images, long[] deleteImageIds) {
+        long ownerId = Long.parseLong(token);
+
+        int result = boardMapper.updateBoardDetail(ownerId, boardId, title, category, content);
+
+        if(result <= 0) {
+            return false;
+        }
+
+        for (MultipartFile image : images) {
+            String changedFileName = ImageFileUtil.saveFile(image);
+
+            result = boardMapper.saveBoardImage(image.getOriginalFilename(), changedFileName, boardId);
+            if (result <= 0) {
+                return false;
+            }
+        }
+
+        for(long deleteImageId : deleteImageIds) {
+            result = boardMapper.deleteImage(deleteImageId);
+            if (result <= 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
