@@ -24,7 +24,6 @@
         )
         WHERE ROWNUM &lt;= 3
     </select>
-
     <insert id="insertSelectBoard" parameterType="kr.co.khedu.fitroutine.board.model.dto.BoardCreate">
         <selectKey keyProperty="boardId" resultType="long" order="BEFORE">
             SELECT SEQ_BOARD_ID.NEXTVAL FROM DUAL
@@ -46,6 +45,11 @@
         VALUES (SEQ_IMAGE_ID.NEXTVAL, #{originalFileName}, #{changedFileName}, #{boardId})
     </insert>
 
+    <delete id="deleteImage">
+        DELETE TB_IMAGE
+        WHERE IMAGE_ID = #{deleteImageId}
+    </delete>
+
     <select id="getBoardDetailForEdit" resultType="kr.co.khedu.fitroutine.board.model.dto.BoardDetailForEdit">
         SELECT BOARD_ID, TITLE, CONTENT, CATEGORY
         FROM TB_BOARD
@@ -66,8 +70,25 @@
         BLOG_ID = (SELECT BLOG_ID FROM TB_BLOG WHERE MEMBER_ID = #{ownerId})
     </update>
 
-    <delete id="deleteImage">
-        DELETE TB_IMAGE
-        WHERE IMAGE_ID = #{deleteImageId}
-    </delete>
+    <select id="getBoardDetailWithLike" resultType="kr.co.khedu.fitroutine.board.model.dto.BoardDetailWithLike">
+        SELECT BOARD.TITLE, BOARD.CONTENT, M.NICKNAME, BOARD.CREATED_AT,
+        (
+            SELECT COUNT(1)
+            FROM TB_BOARD_LIKE
+            WHERE BOARD_ID = #{boardId}
+        ) AS LIKE_COUNT,
+        CASE
+            WHEN EXISTS (
+                SELECT 1
+                FROM TB_BOARD_LIKE
+                WHERE MEMBER_ID = #{viewerId}
+                AND BOARD_ID = #{boardId}
+            ) THEN 1
+        ELSE 0
+        END AS LIKED
+        FROM TB_BOARD "BOARD"
+        JOIN TB_BLOG "BLOG" ON BOARD.BLOG_ID = BLOG.BLOG_ID
+        JOIN TB_MEMBER M ON BLOG.MEMBER_ID = M.MEMBER_ID
+        WHERE BOARD.BOARD_ID = #{boardId}
+    </select>
 </mapper>
