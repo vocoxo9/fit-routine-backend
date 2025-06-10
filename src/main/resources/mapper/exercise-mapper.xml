@@ -7,4 +7,17 @@
         SELECT *
         FROM TB_EXERCISE
     </select>
+
+    <select id="getRandomExerciseRoutine" resultType="int">
+        SELECT *
+        FROM (SELECT EXERCISE_ID FROM TB_EXERCISE ORDER BY DBMS_RANDOM.RANDOM)
+        WHERE ROWNUM &lt;= 5 * #{dayRepeat}
+    </select>
+
+    <select id="getExerciseById"
+            resultType="kr.co.khedu.fitroutine.exercise.model.vo.ExerciseOpenData">
+        SELECT *
+        FROM TB_EXERCISE
+        WHERE EXERCISE_ID = #{id}
+    </select>
 </mapper>
