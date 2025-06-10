@@ -1,9 +1,13 @@
 package kr.co.khedu.fitroutine.member.controller;
 
+import kr.co.khedu.fitroutine.member.model.dto.BlogLikeList;
 import kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo;
+import kr.co.khedu.fitroutine.member.model.dto.MemberProfile;
 import kr.co.khedu.fitroutine.member.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/members")
@@ -15,7 +19,7 @@ public final class MemberController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getMemberProfile() {
+    public ResponseEntity<MemberProfile> getMemberProfile() {
         // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
         long memberId = 1;
 
@@ -23,7 +27,7 @@ public final class MemberController {
     }
 
     @PutMapping("/me")
-    public ResponseEntity<?> editMemberProfile(@RequestBody MemberEditInfo memberEditInfo) {
+    public ResponseEntity<String> editMemberProfile(@RequestBody MemberEditInfo memberEditInfo) {
         // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
         long memberId = 1;
         memberEditInfo.setMemberId(memberId);
@@ -34,7 +38,7 @@ public final class MemberController {
     }
 
     @GetMapping("/me/likes")
-    public ResponseEntity<?> getLikes() {
+    public ResponseEntity<List<? extends BlogLikeList>> getLikes() {
         // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
         long memberId = 1;
 

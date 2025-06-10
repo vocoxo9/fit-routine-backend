@@ -1,8 +1,8 @@
 package kr.co.khedu.fitroutine.blog.controller;
 
+import kr.co.khedu.fitroutine.blog.model.dto.BlogDetail;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogIntroEdit;
 import kr.co.khedu.fitroutine.blog.service.BlogService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +23,14 @@ public final class BlogController {
     }
 
     @GetMapping("/{blogId}")
-    public ResponseEntity<?> getBlogDetail(@PathVariable long blogId) {
+    public ResponseEntity<BlogDetail> getBlogDetail(@PathVariable long blogId) {
         long memberId = 4; // 추후 변경 예정
 
         return ResponseEntity.ok(blogService.getBlogDetail(blogId, memberId));
     }
 
     @PostMapping("/{blogId}/likes")
-    public ResponseEntity<?> likeBlog(@PathVariable long blogId) {
+    public ResponseEntity<Void> likeBlog(@PathVariable long blogId) {
         long memberId = 1; // 추후 변경 예정
 
         blogService.likeBlog(blogId, memberId);
@@ -38,7 +38,7 @@ public final class BlogController {
     }
 
     @DeleteMapping("/{blogId}/likes")
-    public ResponseEntity<?> unlikeBlog(@PathVariable long blogId) {
+    public ResponseEntity<Void> unlikeBlog(@PathVariable long blogId) {
         long memberId = 1; // 추후 변경 예정
 
         blogService.unlikeBlog(blogId, memberId);
@@ -46,7 +46,7 @@ public final class BlogController {
     }
 
     @PutMapping("/{blogId}")
-    public ResponseEntity<?> updateBlogIntro(
+    public ResponseEntity<Void> updateBlogIntro(
             @PathVariable long blogId,
             @RequestBody BlogIntroEdit introEdit
     ) {

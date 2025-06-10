@@ -1,6 +1,7 @@
 package kr.co.khedu.fitroutine.auth.controller;
 
 import kr.co.khedu.fitroutine.auth.model.dto.LoginRequest;
+import kr.co.khedu.fitroutine.auth.model.dto.LoginResponse;
 import kr.co.khedu.fitroutine.auth.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public final class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 }

@@ -29,7 +29,7 @@ public final class BoardController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> createBoard(
+    public ResponseEntity<String> createBoard(
             @RequestHeader("Authorization") String token,
             @RequestPart("title") String title,
             @RequestPart("category") String category,
@@ -57,7 +57,7 @@ public final class BoardController {
     }
 
     @GetMapping("/{boardId}")
-    public ResponseEntity<?> getBoardDetail(
+    public ResponseEntity<Object> getBoardDetail(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long boardId,
             @RequestParam(value = "includeLike", required = false, defaultValue = "false") boolean includeLike
@@ -78,7 +78,7 @@ public final class BoardController {
     }
 
     @PutMapping("/{boardId}")
-    public ResponseEntity<?> updateBoard(
+    public ResponseEntity<String> updateBoard(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestPart("title") String title,
             @RequestPart("category") String category,
