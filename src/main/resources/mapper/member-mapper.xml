@@ -37,6 +37,6 @@
             FROM TB_FOLLOW
             WHERE FOLLOWER_MEMBER_ID = #{memberId}
         )
-        AND M.IS_DELETED = 'Y'
+        AND M.IS_DELETED = 'N'
     </select>
 </mapper>
