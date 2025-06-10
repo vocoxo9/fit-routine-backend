@@ -1,10 +1,13 @@
 package kr.co.khedu.fitroutine.member.service;
 
 import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
+import kr.co.khedu.fitroutine.member.model.dto.BlogLikeList;
 import kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo;
 import kr.co.khedu.fitroutine.member.model.dto.MemberProfile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -44,5 +47,9 @@ public class MemberService {
         }
 
         return result;
+    }
+
+    public List<? extends BlogLikeList> getLikeList(long memberId) {
+        return memberMapper.getLikeList(memberId);
     }
 }

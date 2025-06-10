@@ -16,19 +16,18 @@
     </select>
     <select id="getMemberProfile" resultType="kr.co.khedu.fitroutine.member.model.dto.MemberProfile">
         SELECT
-            MEMBER_ID,
-            EMAIL,
-            NICKNAME,
-            BIRTH_AT,
-            PHONE,
-            GENDER,
-            HEIGHT,
-            WEIGHT
+        MEMBER_ID,
+        EMAIL,
+        NICKNAME,
+        BIRTH_AT,
+        PHONE,
+        GENDER,
+        HEIGHT,
+        WEIGHT
         FROM TB_MEMBER
         JOIN TB_MEMBER_DETAIL USING (MEMBER_ID)
         WHERE MEMBER_ID = #{memberId}
     </select>
-
     <update id="editMemberProfile" parameterType="kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo">
         UPDATE TB_MEMBER
         <set>
@@ -44,7 +43,6 @@
         </set>
         WHERE MEMBER_ID = #{memberId}
     </update>
-
     <update id="updateMemberDetail" parameterType="kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo">
         UPDATE TB_MEMBER_DETAIL
         <set>
@@ -57,4 +55,20 @@
         </set>
         WHERE MEMBER_ID = #{memberId}
     </update>
+    <select id="getLikeList" resultType="kr.co.khedu.fitroutine.member.model.dto.BlogLikeList">
+        SELECT
+            M.MEMBER_ID,
+            M.NICKNAME,
+            M.GENDER,
+            B.GRADE
+        FROM TB_MEMBER M
+        LEFT JOIN TB_BLOG B
+            ON B.MEMBER_ID = M.MEMBER_ID
+        WHERE M.MEMBER_ID IN (
+            SELECT FOLLOWED_MEMBER_ID
+            FROM TB_FOLLOW
+            WHERE FOLLOWER_MEMBER_ID = #{memberId}
+        )
+        AND M.IS_DELETED = 'N'
+    </select>
 </mapper>
