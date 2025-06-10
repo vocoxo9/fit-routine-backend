@@ -2,6 +2,7 @@ package kr.co.khedu.fitroutine.board.mapper;
 
 import kr.co.khedu.fitroutine.board.model.dto.BoardCreate;
 import kr.co.khedu.fitroutine.board.model.dto.BoardDetailForEdit;
+import kr.co.khedu.fitroutine.board.model.dto.BoardDetailWithLike;
 import kr.co.khedu.fitroutine.board.model.dto.PopularBoard;
 import kr.co.khedu.fitroutine.board.model.vo.Image;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,11 +17,13 @@ public interface BoardMapper {
 
     int saveBoardImage(String originalFileName, String changedFileName, long boardId);
 
-    BoardDetailForEdit getBoardDetailForEdit(long boardId, int ownerId);
+    BoardDetailForEdit getBoardDetailForEdit(long boardId, long ownerId);
 
     List<? extends Image> getImagesByBoardId(long boardId);
 
     int updateBoardDetail(long ownerId, long boardId, String title, String category, String content);
 
     int deleteImage(long deleteImageId);
+
+    BoardDetailWithLike getBoardDetailWithLike(long viewerId, long boardId);
 }

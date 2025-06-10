@@ -1,8 +1,9 @@
 package kr.co.khedu.fitroutine.board.service;
 
-import kr.co.khedu.fitroutine.board.model.dto.BoardCreate;
 import kr.co.khedu.fitroutine.board.mapper.BoardMapper;
+import kr.co.khedu.fitroutine.board.model.dto.BoardCreate;
 import kr.co.khedu.fitroutine.board.model.dto.BoardDetailForEdit;
+import kr.co.khedu.fitroutine.board.model.dto.BoardDetailWithLike;
 import kr.co.khedu.fitroutine.board.model.dto.PopularBoard;
 import kr.co.khedu.fitroutine.board.model.vo.Image;
 import kr.co.khedu.fitroutine.board.utils.ImageFileUtil;
@@ -40,9 +41,7 @@ public final class BoardService {
         return boardMapper.saveBoardImage(originalFileName, changedFileName, boardId) > 0;
     }
 
-    public BoardDetailForEdit getBoardDetailForEdit(long boardId, String token) {
-
-        int ownerId = Integer.parseInt(token);
+    public BoardDetailForEdit getBoardDetailForEdit(long boardId, long ownerId) {
 
         BoardDetailForEdit boardDetailForEdit = boardMapper.getBoardDetailForEdit(boardId, ownerId);
 
@@ -54,9 +53,8 @@ public final class BoardService {
         return boardDetailForEdit;
     }
 
-    public boolean updateBoardDetail(String token, long boardId, String title, String category,
+    public boolean updateBoardDetail(long ownerId, long boardId, String title, String category,
                                      String content, MultipartFile[] images, long[] deleteImageIds) {
-        long ownerId = Long.parseLong(token);
 
         int result = boardMapper.updateBoardDetail(ownerId, boardId, title, category, content);
 
@@ -80,5 +78,15 @@ public final class BoardService {
             }
         }
         return true;
+    }
+
+    public BoardDetailWithLike getBoardDetailWithLike(long viewerId, long boardId) {
+
+        BoardDetailWithLike boardDetailWithLike = boardMapper.getBoardDetailWithLike(viewerId, boardId);
+
+        List<? extends Image> images = boardMapper.getImagesByBoardId(boardId);
+        boardDetailWithLike.setImages(images);
+
+        return boardDetailWithLike;
     }
 }

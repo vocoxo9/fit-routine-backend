@@ -1,11 +1,14 @@
 package kr.co.khedu.fitroutine.board.controller;
 
 import kr.co.khedu.fitroutine.board.model.dto.BoardDetailForEdit;
+import kr.co.khedu.fitroutine.board.model.dto.BoardDetailWithLike;
 import kr.co.khedu.fitroutine.board.model.dto.PopularBoard;
 import kr.co.khedu.fitroutine.board.service.BoardService;
 import kr.co.khedu.fitroutine.board.utils.ImageFileUtil;
+import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,10 +58,17 @@ public final class BoardController {
 
     @GetMapping("/{boardId}")
     public ResponseEntity<?> getBoardDetail(
-            @RequestHeader("Authorization") String token,
-            @PathVariable long boardId
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long boardId,
+            @RequestParam(value = "includeLike", required = false, defaultValue = "false") boolean includeLike
     ) {
-        BoardDetailForEdit result = boardService.getBoardDetailForEdit(boardId, token);
+        if (includeLike) {   // 게시물 상세 정보 페이지
+            BoardDetailWithLike boardDetailWithLike = boardService.getBoardDetailWithLike(userDetails.getMemberId(), boardId);
+
+            return ResponseEntity.ok(boardDetailWithLike);
+        }
+
+        BoardDetailForEdit result = boardService.getBoardDetailForEdit(boardId, userDetails.getMemberId());
 
         if (result == null) {
             return ResponseEntity.status(404).body("해당 게시글을 찾을 수 없습니다.");
@@ -69,7 +79,7 @@ public final class BoardController {
 
     @PutMapping("/{boardId}")
     public ResponseEntity<?> updateBoard(
-            @RequestHeader("Authorization") String token,
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestPart("title") String title,
             @RequestPart("category") String category,
             @RequestPart("content") String content,
@@ -77,11 +87,11 @@ public final class BoardController {
             @RequestParam(value = "deleteImageIds", required = false) @Nullable long[] deleteImageIds,
             @PathVariable long boardId
     ) {
-        boolean result = boardService.updateBoardDetail(token, boardId, title, category, content, images, deleteImageIds);
+        boolean result = boardService.updateBoardDetail(userDetails.getMemberId(), boardId, title, category, content, images, deleteImageIds);
 
         return result ?
-                    ResponseEntity.status(200).body("success") :
-                    ResponseEntity.status(400).body("failure");
+                ResponseEntity.status(200).body("success") :
+                ResponseEntity.status(400).body("failure");
     }
 
 }
