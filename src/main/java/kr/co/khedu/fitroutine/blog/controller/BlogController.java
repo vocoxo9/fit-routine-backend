@@ -46,7 +46,7 @@ public final class BlogController {
     }
 
     @PutMapping("/{blogId}")
-    public ResponseEntity<?> updateIntroduce(
+    public ResponseEntity<?> updateBlogIntro(
             @PathVariable long blogId,
             @RequestBody BlogIntroEdit introEdit
     ) {
