@@ -4,6 +4,7 @@ import kr.co.khedu.fitroutine.blog.mapper.BlogMapper;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogDetail;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogIntroEdit;
 import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
+import kr.co.khedu.fitroutine.member.model.vo.Member;
 import org.springframework.stereotype.Service;
 
 @Service
