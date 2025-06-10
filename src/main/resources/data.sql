@@ -4,13 +4,13 @@ INSERT INTO TB_MENU
 VALUES (2, '메뉴2', 15, 10, 20, 'SOUPS');
 
 INSERT INTO TB_MEMBER
-VALUES (1, 'abc@gmail.com', 'asdf1234', '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'N');
+VALUES (1, 'test_1@gmail.com', '$2a$10$fIfhtxnZYd2hdA9S5x38Deq2HGotuk.ASz0DQe8sQz82umYm7OYMO', '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'N');
 INSERT INTO TB_MEMBER
-VALUES (2, 'qwer@gmail.com', 'qwer1234', '재롱이', 'M', sysdate, '010-1111-2222', sysdate, 'N');
+VALUES (2, 'test_2@gmail.com', '$2a$10$fIfhtxnZYd2hdA9S5x38Deq2HGotuk.ASz0DQe8sQz82umYm7OYMO', '재롱이', 'M', sysdate, '010-1111-2222', sysdate, 'N');
 INSERT INTO TB_MEMBER
-VALUES (3, 'test1@gmail.com', 'qwer1234', '가나', 'M', sysdate, '010-1311-2222', sysdate, 'N');
+VALUES (3, 'test_3@gmail.com', '$2a$10$fIfhtxnZYd2hdA9S5x38Deq2HGotuk.ASz0DQe8sQz82umYm7OYMO', '가나', 'M', sysdate, '010-1311-2222', sysdate, 'N');
 INSERT INTO TB_MEMBER
-VALUES (4, 'test2@gmail.com', 'qwer1234', '다라', 'F', sysdate, '010-1611-2222', sysdate, 'N');
+VALUES (4, 'test_4@gmail.com', '$2a$10$fIfhtxnZYd2hdA9S5x38Deq2HGotuk.ASz0DQe8sQz82umYm7OYMO', '다라', 'F', sysdate, '010-1611-2222', sysdate, 'N');
 
 INSERT INTO TB_BLOG
 VALUES (1, 1, '저는 뽀리입니다. 꽤 귀엽구요\n잘 부탁합니다.', 120);
@@ -39,7 +39,13 @@ VALUES (1, 1, 2);
 INSERT INTO TB_FOLLOW
 VALUES (2, 1, 3);
 INSERT INTO TB_FOLLOW
-VALUES (3, 1, 4);
+VALUES (1, 4);
+INSERT INTO TB_FOLLOW
+VALUES (2, 1);
+INSERT INTO TB_FOLLOW
+VALUES (3, 1);
+INSERT INTO TB_FOLLOW
+VALUES (4, 1);
 
 -- 운동 공공데이터 (CSV)
 INSERT INTO TB_EXERCISE (EXERCISE_ID, NAME, MET, CATEGORY)
