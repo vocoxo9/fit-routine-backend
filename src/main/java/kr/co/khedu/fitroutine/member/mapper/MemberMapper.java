@@ -8,9 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MemberMapper {
-    @Nullable Member findMemberByBlogId(long blogId);
-
     @Nullable MemberProfile getMemberProfile(long memberId);
+
+    @Nullable Member findMemberByBlogId(long blogId);
+  
+    @Nullable Member findMemberByEmail(String email);
 
     int editMemberProfile(MemberEditInfo memberEditInfo);
 
