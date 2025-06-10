@@ -1,4 +1,4 @@
-package kr.co.khedu.fitroutine.board.model.dao;
+package kr.co.khedu.fitroutine.board.mapper;
 
 import kr.co.khedu.fitroutine.board.model.dto.BoardCreate;
 import kr.co.khedu.fitroutine.board.model.dto.PopularBoard;

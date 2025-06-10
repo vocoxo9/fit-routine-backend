@@ -3,6 +3,7 @@ package kr.co.khedu.fitroutine.blog.service;
 import kr.co.khedu.fitroutine.blog.mapper.BlogMapper;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogDetail;
 import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
+import kr.co.khedu.fitroutine.member.model.vo.Member;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,17 +26,21 @@ public final class BlogService {
     }
 
     public boolean unlikeBlog(long blogId, long viewerId) {
-        return blogMapper.unlikeBlog(
-                memberMapper.findMemberByBlogId(blogId).getMemberId(),
-                viewerId
-        ) > 0;
+        Member member = memberMapper.findMemberByBlogId(blogId);
+        if (member == null) {
+            throw new IllegalStateException("블로그에 해당하는 회원을 찾을 수 없습니다: " + blogId);
+        }
+
+        return blogMapper.unlikeBlog(member.getMemberId(), viewerId) > 0;
     }
 
     public boolean likeBlog(long blogId, long viewerId) {
-        return blogMapper.likeBlog(
-                memberMapper.findMemberByBlogId(blogId).getMemberId(),
-                viewerId
-        ) > 0;
+        Member member = memberMapper.findMemberByBlogId(blogId);
+        if (member == null) {
+            throw new IllegalStateException("블로그에 해당하는 회원을 찾을 수 없습니다: " + blogId);
+        }
+
+        return blogMapper.likeBlog(member.getMemberId(), viewerId) > 0;
     }
 
     public boolean updateIntroduce(long blogId, long editorId, String intro) {

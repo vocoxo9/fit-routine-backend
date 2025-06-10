@@ -15,7 +15,12 @@ public class MemberService {
     }
 
     public MemberProfile getMemberProfile(long memberId) {
-        return memberMapper.getMemberProfile(memberId);
+        MemberProfile memberProfile = memberMapper.getMemberProfile(memberId);
+        if (memberProfile == null) {
+            throw new IllegalStateException("회원을 찾을 수 없습니다: " + memberId);
+        }
+
+        return memberProfile;
     }
 
     @Transactional
