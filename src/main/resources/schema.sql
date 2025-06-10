@@ -45,7 +45,7 @@ CREATE TABLE TB_MEMBER
     BIRTH_AT   DATE                                 NOT NULL,
     PHONE      VARCHAR2(13) UNIQUE                  NOT NULL,
     CREATED_AT DATE    DEFAULT SYSDATE              NOT NULL,
-    IS_DELETED CHAR(1) DEFAULT 'Y'                  NOT NULL,
+    IS_DELETED CHAR(1) DEFAULT 'N'                  NOT NULL,
     PRIMARY KEY (MEMBER_ID)
 );
 
