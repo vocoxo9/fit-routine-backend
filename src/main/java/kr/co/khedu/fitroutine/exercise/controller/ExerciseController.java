@@ -23,8 +23,8 @@ public final class ExerciseController {
     }
 
     @GetMapping("/random-routine")
-    public ResponseEntity<ExerciseRoutine> getRandomExerciseRoutine(@RequestParam int dayRepeat){
-        return ResponseEntity.ok(exerciseService.getRandomExerciseRoutineTransform(dayRepeat));
+    public ResponseEntity<ExerciseRoutine> getRandomExerciseRoutine(@RequestParam int dayRepeat, @RequestParam String purpose){
+        return ResponseEntity.ok(exerciseService.getRandomExerciseRoutineTransform(dayRepeat, purpose));
     }
 
     @GetMapping("/{id}")

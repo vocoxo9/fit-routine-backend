@@ -10,7 +10,16 @@
 
     <select id="getRandomExerciseRoutine" resultType="int">
         SELECT *
-        FROM (SELECT EXERCISE_ID FROM TB_EXERCISE ORDER BY DBMS_RANDOM.RANDOM)
+        FROM (
+            SELECT EXERCISE_ID
+            FROM TB_EXERCISE
+            <choose>
+                <when test='purpose == "DIET"'>
+                    WHERE MET BETWEEN 6 AND 12
+                </when>
+            </choose>
+            ORDER BY DBMS_RANDOM.RANDOM
+            )
         WHERE ROWNUM &lt;= 5 * #{dayRepeat}
     </select>
 

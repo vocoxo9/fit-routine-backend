@@ -10,7 +10,7 @@ import java.util.List;
 public interface ExerciseMapper {
     List<? extends ExerciseOpenData> getAllExerciseOpenDataList();
 
-    List<? extends Integer> getRandomExerciseRoutine(int dayRepeat);
+    List<? extends Integer> getRandomExerciseRoutine(int dayRepeat, String purpose);
 
     ExerciseOpenData getExerciseById(int id);
 }
