@@ -4,13 +4,13 @@ INSERT INTO TB_MENU
 VALUES (SEQ_MENU_ID.NEXTVAL, '메뉴2', 15, 10, 20, 'SOUPS');
 
 INSERT INTO TB_MEMBER
-VALUES (1, 'abc@gmail.com', 'asdf1234', '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'Y');
+VALUES (1, 'test_1@gmail.com', '$2a$10$fIfhtxnZYd2hdA9S5x38Deq2HGotuk.ASz0DQe8sQz82umYm7OYMO', '뽀리', 'F', sysdate, '010-1234-5678', sysdate, 'Y');
 INSERT INTO TB_MEMBER
-VALUES (2, 'qwer@gmail.com', 'qwer1234', '재롱이', 'M', sysdate, '010-1111-2222', sysdate, 'Y');
+VALUES (2, 'test_2@gmail.com', '$2a$10$fIfhtxnZYd2hdA9S5x38Deq2HGotuk.ASz0DQe8sQz82umYm7OYMO', '재롱이', 'M', sysdate, '010-1111-2222', sysdate, 'Y');
 INSERT INTO TB_MEMBER
-VALUES (3, 'test1@gmail.com', 'qwer1234', '가나', 'M', sysdate, '010-1311-2222', sysdate, 'Y');
+VALUES (3, 'test_3@gmail.com', '$2a$10$fIfhtxnZYd2hdA9S5x38Deq2HGotuk.ASz0DQe8sQz82umYm7OYMO', '가나', 'M', sysdate, '010-1311-2222', sysdate, 'Y');
 INSERT INTO TB_MEMBER
-VALUES (4, 'test2@gmail.com', 'qwer1234', '다라', 'F', sysdate, '010-1611-2222', sysdate, 'Y');
+VALUES (4, 'test_4@gmail.com', '$2a$10$fIfhtxnZYd2hdA9S5x38Deq2HGotuk.ASz0DQe8sQz82umYm7OYMO', '다라', 'F', sysdate, '010-1611-2222', sysdate, 'Y');
 
 INSERT INTO TB_BLOG
 VALUES (1, 1, '저는 뽀리입니다. 꽤 귀엽구요\n잘 부탁합니다.', 120);
