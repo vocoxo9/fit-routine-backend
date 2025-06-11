@@ -9,9 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface PostMapper {
-    List<? extends PostResponse> findPosts(long blogId, int offset, int size);
+    List<? extends PostResponse> selectPostsByBlogId(long blogId, int offset, int size);
 
-    @Nullable PostResponse findPost(long postId);
+    @Nullable PostResponse selectPostById(long postId);
 
     void insertPost(long blogId, PostCreateRequest createRequest);
 }

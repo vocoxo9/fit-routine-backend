@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.khedu.fitroutine.post.mapper.PostMapper">
-    <select id="findPosts" resultType="kr.co.khedu.fitroutine.post.model.dto.PostResponse">
+    <select id="selectPostsByBlogId" resultType="kr.co.khedu.fitroutine.post.model.dto.PostResponse">
         SELECT
             POST_ID,
             TITLE,
@@ -16,7 +16,7 @@
         ORDER BY CREATED_AT DESC
         OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
-    <select id="findPost" resultType="kr.co.khedu.fitroutine.post.model.dto.PostResponse">
+    <select id="selectPostById" resultType="kr.co.khedu.fitroutine.post.model.dto.PostResponse">
         SELECT
             POST_ID,
             TITLE,
