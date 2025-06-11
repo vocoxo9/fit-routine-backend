@@ -70,6 +70,20 @@
         JOIN TB_BLOG B ON F.FOLLOWED_BLOG_ID = B.BLOG_ID
         JOIN TB_MEMBER M ON B.MEMBER_ID = M.MEMBER_ID
     </select>
+    <select id="existsFollow">
+        SELECT
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM TB_FOLLOW
+                    WHERE FOLLOWER_BLOG_ID = #{followerId}
+                    AND FOLLOWED_BLOG_ID = #{followeeId}
+                )
+                THEN 1
+                ELSE 0
+            END
+        FROM DUAL
+    </select>
     <insert id="insertFollow">
         INSERT INTO TB_FOLLOW (FOLLOWER_BLOG_ID, FOLLOWED_BLOG_ID)
         SELECT BLOG_ID, #{followeeId}

@@ -1,10 +1,7 @@
 package kr.co.khedu.fitroutine.blog.service;
 
 import kr.co.khedu.fitroutine.blog.mapper.BlogMapper;
-import kr.co.khedu.fitroutine.blog.model.dto.BlogResponse;
-import kr.co.khedu.fitroutine.blog.model.dto.BlogUpdateRequest;
-import kr.co.khedu.fitroutine.blog.model.dto.FollowCountResponse;
-import kr.co.khedu.fitroutine.blog.model.dto.FollowResponse;
+import kr.co.khedu.fitroutine.blog.model.dto.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,6 +101,13 @@ public class BlogService {
     @Transactional(readOnly = true)
     public List<? extends FollowResponse> getMyFollowings(long memberId, int page, int size) {
         return getFollowings(getMyBlogId(memberId), page, size);
+    }
+
+    @Transactional(readOnly = true)
+    public FollowStatusResponse checkFollow(long followerMemberId, long followedBlogId) {
+        return FollowStatusResponse.builder()
+                .followed(blogMapper.existsFollow(getMyBlogId(followerMemberId), followedBlogId) > 0)
+                .build();
     }
 
     public void followBlog(long followerMemberId, long followedBlogId) {

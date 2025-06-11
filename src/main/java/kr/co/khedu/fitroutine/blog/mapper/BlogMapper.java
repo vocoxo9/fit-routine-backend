@@ -24,6 +24,8 @@ public interface BlogMapper {
 
     List<? extends FollowResponse> findFollowings(long blogId, int offset, int size);
 
+    int existsFollow(long followerId, long followeeId);
+
     int insertFollow(long followerId, long followeeId);
 
     int deleteFollow(long followerId, long followeeId);

@@ -3,10 +3,7 @@ package kr.co.khedu.fitroutine.blog.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import kr.co.khedu.fitroutine.blog.model.dto.BlogResponse;
-import kr.co.khedu.fitroutine.blog.model.dto.BlogUpdateRequest;
-import kr.co.khedu.fitroutine.blog.model.dto.FollowCountResponse;
-import kr.co.khedu.fitroutine.blog.model.dto.FollowResponse;
+import kr.co.khedu.fitroutine.blog.model.dto.*;
 import kr.co.khedu.fitroutine.blog.service.BlogService;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
@@ -98,6 +95,14 @@ public class BlogController {
     @GetMapping("/me/followings/count")
     public ResponseEntity<FollowCountResponse> getMyFollowingsCount(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity.ok(blogService.getMyFollowingsCount(userDetails.getMemberId()));
+    }
+
+    @GetMapping("/{blogId}/follow")
+    public ResponseEntity<FollowStatusResponse> checkFollow(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long blogId
+    ) {
+        return ResponseEntity.ok(blogService.checkFollow(userDetails.getMemberId(), blogId));
     }
 
     @PostMapping("/{blogId}/follow")
