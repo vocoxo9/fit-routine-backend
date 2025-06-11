@@ -28,17 +28,17 @@ public class BlogController {
         return ResponseEntity.ok(blogService.getBlog(blogId));
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<BlogResponse> getMyBlog(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseEntity.ok(blogService.getMyBlog(userDetails.getMemberId()));
-    }
-
     @PatchMapping("/me")
-    public ResponseEntity<BlogResponse> updateMyBlog(
+    public ResponseEntity<BlogResponse> updateBlog(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid BlogUpdateRequest blogUpdateRequest
     ) {
-        return ResponseEntity.ok(blogService.updateMyBlog(userDetails.getMemberId(), blogUpdateRequest));
+        return ResponseEntity.ok(
+                blogService.updateBlog(
+                        blogService.getBlogId(userDetails.getMemberId()),
+                        blogUpdateRequest
+                )
+        );
     }
 
     @GetMapping("/{blogId}/followers")
@@ -50,23 +50,9 @@ public class BlogController {
         return ResponseEntity.ok(blogService.getFollowers(blogId, page, size));
     }
 
-    @GetMapping("/me/followers")
-    public ResponseEntity<List<? extends FollowResponse>> getMyFollowers(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam @Min(0) int page,
-            @RequestParam @Min(1) @Max(12) int size
-    ) {
-        return ResponseEntity.ok(blogService.getMyFollowers(userDetails.getMemberId(), page, size));
-    }
-
     @GetMapping("/{blogId}/followers/count")
     public ResponseEntity<FollowCountResponse> getFollowersCount(@PathVariable long blogId) {
         return ResponseEntity.ok(blogService.getFollowersCount(blogId));
-    }
-
-    @GetMapping("/me/followers/count")
-    public ResponseEntity<FollowCountResponse> getMyFollowersCount(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseEntity.ok(blogService.getMyFollowersCount(userDetails.getMemberId()));
     }
 
     @GetMapping("/{blogId}/followings")
@@ -78,23 +64,9 @@ public class BlogController {
         return ResponseEntity.ok(blogService.getFollowings(blogId, page, size));
     }
 
-    @GetMapping("/me/followings")
-    public ResponseEntity<List<? extends FollowResponse>> getMyFollowings(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestParam @Min(0) int page,
-            @RequestParam @Min(1) @Max(12) int size
-    ) {
-        return ResponseEntity.ok(blogService.getMyFollowings(userDetails.getMemberId(), page, size));
-    }
-
     @GetMapping("/{blogId}/followings/count")
     public ResponseEntity<FollowCountResponse> getFollowingsCount(@PathVariable long blogId) {
         return ResponseEntity.ok(blogService.getFollowingsCount(blogId));
-    }
-
-    @GetMapping("/me/followings/count")
-    public ResponseEntity<FollowCountResponse> getMyFollowingsCount(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseEntity.ok(blogService.getMyFollowingsCount(userDetails.getMemberId()));
     }
 
     @GetMapping("/{blogId}/follow")
@@ -102,7 +74,12 @@ public class BlogController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long blogId
     ) {
-        return ResponseEntity.ok(blogService.checkFollow(userDetails.getMemberId(), blogId));
+        return ResponseEntity.ok(
+                blogService.checkFollow(
+                        blogService.getBlogId(userDetails.getMemberId()),
+                        blogId
+                )
+        );
     }
 
     @PostMapping("/{blogId}/follow")
@@ -110,7 +87,10 @@ public class BlogController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long blogId
     ) {
-        blogService.followBlog(userDetails.getMemberId(), blogId);
+        blogService.followBlog(
+                blogService.getBlogId(userDetails.getMemberId()),
+                blogId
+        );
         return ResponseEntity.noContent().build();
     }
 
@@ -119,7 +99,10 @@ public class BlogController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long blogId
     ) {
-        blogService.unfollowBlog(userDetails.getMemberId(), blogId);
+        blogService.unfollowBlog(
+                blogService.getBlogId(userDetails.getMemberId()),
+                blogId
+        );
         return ResponseEntity.noContent().build();
     }
 }

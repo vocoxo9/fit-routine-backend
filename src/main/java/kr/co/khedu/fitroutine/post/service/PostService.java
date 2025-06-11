@@ -1,6 +1,5 @@
 package kr.co.khedu.fitroutine.post.service;
 
-import kr.co.khedu.fitroutine.blog.service.BlogService;
 import kr.co.khedu.fitroutine.post.mapper.PostMapper;
 import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
@@ -14,14 +13,9 @@ import java.util.NoSuchElementException;
 @Transactional
 public class PostService {
     private final PostMapper postMapper;
-    private final BlogService blogService;
 
-    public PostService(
-            PostMapper postMapper,
-            BlogService blogService
-    ) {
+    public PostService(PostMapper postMapper) {
         this.postMapper = postMapper;
-        this.blogService = blogService;
     }
 
     @Transactional(readOnly = true)
@@ -39,8 +33,8 @@ public class PostService {
         return postResponse;
     }
 
-    public PostResponse createPost(long memberId, PostCreateRequest createRequest) {
-        postMapper.insertPost(blogService.getMyBlogId(memberId), createRequest);
+    public PostResponse createPost(long blogId, PostCreateRequest createRequest) {
+        postMapper.insertPost(blogId, createRequest);
 
         Long postId = createRequest.getPostId();
         if (postId == null) {

@@ -19,7 +19,7 @@ public class BlogService {
     }
 
     @Transactional(readOnly = true)
-    public long getMyBlogId(long memberId) {
+    public long getBlogId(long memberId) {
         Long blogId = blogMapper.selectBlogIdByMemberId(memberId);
         if (blogId == null) {
             throw new NoSuchElementException("멤버에 해당하는 블로그를 찾을 수 없습니다. id=" + memberId);
@@ -38,12 +38,7 @@ public class BlogService {
         return blogResponse;
     }
 
-    @Transactional(readOnly = true)
-    public BlogResponse getMyBlog(long memberId) {
-        return getBlog(getMyBlogId(memberId));
-    }
-
-    protected BlogResponse updateBlog(long blogId, BlogUpdateRequest updateRequest) {
+    public BlogResponse updateBlog(long blogId, BlogUpdateRequest updateRequest) {
         if (updateRequest.getIntroduce() == null) {
             throw new IllegalArgumentException("블로그에 수정할 내용이 없습니다. id=" + blogId);
         }
@@ -55,20 +50,11 @@ public class BlogService {
         return getBlog(blogId);
     }
 
-    public BlogResponse updateMyBlog(long memberId, BlogUpdateRequest updateRequest) {
-        return updateBlog(getMyBlogId(memberId), updateRequest);
-    }
-
     @Transactional(readOnly = true)
     public FollowCountResponse getFollowersCount(long blogId) {
         return FollowCountResponse.builder()
                 .count(blogMapper.countFollowersByBlogId(blogId))
                 .build();
-    }
-
-    @Transactional(readOnly = true)
-    public FollowCountResponse getMyFollowersCount(long memberId) {
-        return getFollowersCount(getMyBlogId(memberId));
     }
 
     @Transactional(readOnly = true)
@@ -79,18 +65,8 @@ public class BlogService {
     }
 
     @Transactional(readOnly = true)
-    public FollowCountResponse getMyFollowingsCount(long memberId) {
-        return getFollowingsCount(getMyBlogId(memberId));
-    }
-
-    @Transactional(readOnly = true)
     public List<? extends FollowResponse> getFollowers(long blogId, int page, int size) {
         return blogMapper.selectFollowersByBlogId(blogId, page * size, size);
-    }
-
-    @Transactional(readOnly = true)
-    public List<? extends FollowResponse> getMyFollowers(long memberId, int page, int size) {
-        return getFollowers(getMyBlogId(memberId), page, size);
     }
 
     @Transactional(readOnly = true)
@@ -99,19 +75,13 @@ public class BlogService {
     }
 
     @Transactional(readOnly = true)
-    public List<? extends FollowResponse> getMyFollowings(long memberId, int page, int size) {
-        return getFollowings(getMyBlogId(memberId), page, size);
-    }
-
-    @Transactional(readOnly = true)
-    public FollowStatusResponse checkFollow(long followerMemberId, long followedBlogId) {
+    public FollowStatusResponse checkFollow(long followerBlogId, long followedBlogId) {
         return FollowStatusResponse.builder()
-                .followed(blogMapper.existsFollowRelation(getMyBlogId(followerMemberId), followedBlogId) > 0)
+                .followed(blogMapper.existsFollowRelation(followerBlogId, followedBlogId) > 0)
                 .build();
     }
 
-    public void followBlog(long followerMemberId, long followedBlogId) {
-        long followerBlogId = getMyBlogId(followerMemberId);
+    public void followBlog(long followerBlogId, long followedBlogId) {
         if (followerBlogId == followedBlogId) {
             throw new IllegalArgumentException("자신의 블로그는 팔로우할 수 없습니다. id=" + followedBlogId);
         }
@@ -121,8 +91,7 @@ public class BlogService {
         }
     }
 
-    public void unfollowBlog(long followerMemberId, long followedBlogId) {
-        long followerBlogId = getMyBlogId(followerMemberId);
+    public void unfollowBlog(long followerBlogId, long followedBlogId) {
         if (blogMapper.deleteFollowRelation(followerBlogId, followedBlogId) != 1) {
             throw new NoSuchElementException("팔로우 관계가 존재하지 않습니다. follower=" + followerBlogId + ", followed=" + followedBlogId);
         }

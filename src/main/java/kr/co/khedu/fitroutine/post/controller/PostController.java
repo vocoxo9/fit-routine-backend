@@ -3,6 +3,7 @@ package kr.co.khedu.fitroutine.post.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import kr.co.khedu.fitroutine.blog.service.BlogService;
 import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
 import kr.co.khedu.fitroutine.post.service.PostService;
@@ -18,9 +19,14 @@ import java.util.List;
 @Validated
 public class PostController {
     private final PostService postService;
+    private final BlogService blogService;
 
-    public PostController(PostService postService) {
+    public PostController(
+            PostService postService,
+            BlogService blogService
+    ) {
         this.postService = postService;
+        this.blogService = blogService;
     }
 
     @GetMapping("/blogs/{blogId}/posts")
@@ -42,6 +48,11 @@ public class PostController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid PostCreateRequest createRequest
     ) {
-        return ResponseEntity.ok(postService.createPost(userDetails.getMemberId(), createRequest));
+        return ResponseEntity.ok(
+                postService.createPost(
+                        blogService.getBlogId(userDetails.getMemberId()),
+                        createRequest
+                )
+        );
     }
 }
