@@ -28,12 +28,12 @@
         </set>
         WHERE BLOG_ID = #{blogId}
     </update>
-    <select id="countFollowers">
+    <select id="countFollowers" resultType="int">
         SELECT COUNT(1)
         FROM TB_FOLLOW
         WHERE FOLLOWED_BLOG_ID = #{blogId}
     </select>
-    <select id="countFollowings">
+    <select id="countFollowings" resultType="int">
         SELECT COUNT(1)
         FROM TB_FOLLOW
         WHERE FOLLOWER_BLOG_ID = #{blogId}
@@ -70,7 +70,7 @@
         JOIN TB_BLOG B ON F.FOLLOWED_BLOG_ID = B.BLOG_ID
         JOIN TB_MEMBER M ON B.MEMBER_ID = M.MEMBER_ID
     </select>
-    <select id="existsFollow">
+    <select id="existsFollow" resultType="int">
         SELECT
             CASE
                 WHEN EXISTS (
