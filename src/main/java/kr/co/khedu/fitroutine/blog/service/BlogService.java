@@ -4,10 +4,12 @@ import kr.co.khedu.fitroutine.blog.mapper.BlogMapper;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogResponse;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogUpdateRequest;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogSummaryResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -22,7 +24,7 @@ public class BlogService {
     public BlogResponse getBlog(long blogId) {
         BlogResponse blogResponse = blogMapper.findBlog(blogId);
         if (blogResponse == null) {
-            throw new IllegalStateException();
+            throw new NoSuchElementException("블로그를 찾을 수 없습니다. id=" + blogId);
         }
 
         return blogResponse;
@@ -35,7 +37,7 @@ public class BlogService {
 
     private BlogResponse updateBlog(long blogId, BlogUpdateRequest updateRequest) {
         if (blogMapper.updateBlog(blogId, updateRequest) != 1) {
-            throw new IllegalStateException();
+            throw new DataIntegrityViolationException("블로그 수정 대상이 없습니다. id=" + blogId);
         }
 
         return getBlog(blogId);
@@ -66,14 +68,20 @@ public class BlogService {
     }
 
     public void followBlog(long followerMemberId, long followedBlogId) {
-        if (blogMapper.insertFollow(blogMapper.findBlogId(followerMemberId), followedBlogId) != 1) {
-            throw new IllegalStateException();
+        long followerBlogId = blogMapper.findBlogId(followerMemberId);
+        if (followerBlogId == followedBlogId) {
+            throw new IllegalArgumentException("자신의 블로그는 팔로우할 수 없습니다. id=" + followedBlogId);
+        }
+
+        if (blogMapper.insertFollow(followerBlogId, followedBlogId) != 1) {
+            throw new IllegalStateException("이미 팔로우한 블로그입니다. id=" + followedBlogId);
         }
     }
 
     public void unfollowBlog(long followerMemberId, long followedBlogId) {
-        if (blogMapper.deleteFollow(blogMapper.findBlogId(followerMemberId), followedBlogId) != 1) {
-            throw new IllegalStateException();
+        long followerBlogId = blogMapper.findBlogId(followerMemberId);
+        if (blogMapper.deleteFollow(followerBlogId, followedBlogId) != 1) {
+            throw new NoSuchElementException("팔로우 관계가 존재하지 않습니다. follower=" + followerBlogId + ", followed=" + followedBlogId);
         }
     }
 }
