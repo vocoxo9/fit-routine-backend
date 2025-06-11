@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface BlogMapper {
-    long findBlogId(long memberId);
+    @Nullable Long findBlogId(long memberId);
 
     @Nullable BlogResponse findBlog(long blogId);
 
