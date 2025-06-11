@@ -28,6 +28,16 @@
         </set>
         WHERE BLOG_ID = #{blogId}
     </update>
+    <select id="countFollowers">
+        SELECT COUNT(1)
+        FROM TB_FOLLOW
+        WHERE FOLLOWED_BLOG_ID = #{blogId}
+    </select>
+    <select id="countFollowings">
+        SELECT COUNT(1)
+        FROM TB_FOLLOW
+        WHERE FOLLOWER_BLOG_ID = #{blogId}
+    </select>
     <select id="findFollowers" resultType="kr.co.khedu.fitroutine.blog.model.dto.FollowResponse">
         SELECT
             B.BLOG_ID,

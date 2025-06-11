@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogResponse;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogUpdateRequest;
+import kr.co.khedu.fitroutine.blog.model.dto.FollowCountResponse;
 import kr.co.khedu.fitroutine.blog.model.dto.FollowResponse;
 import kr.co.khedu.fitroutine.blog.service.BlogService;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
@@ -61,6 +62,16 @@ public class BlogController {
         return ResponseEntity.ok(blogService.getMyFollowers(userDetails.getMemberId(), page, size));
     }
 
+    @GetMapping("/{blogId}/followers/count")
+    public ResponseEntity<FollowCountResponse> getFollowersCount(@PathVariable long blogId) {
+        return ResponseEntity.ok(blogService.getFollowersCount(blogId));
+    }
+
+    @GetMapping("/me/followers/count")
+    public ResponseEntity<FollowCountResponse> getMyFollowersCount(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity.ok(blogService.getMyFollowersCount(userDetails.getMemberId()));
+    }
+
     @GetMapping("/{blogId}/followings")
     public ResponseEntity<List<? extends FollowResponse>> getFollowings(
             @PathVariable long blogId,
@@ -77,6 +88,16 @@ public class BlogController {
             @RequestParam @Min(1) @Max(12) int size
     ) {
         return ResponseEntity.ok(blogService.getMyFollowings(userDetails.getMemberId(), page, size));
+    }
+
+    @GetMapping("/{blogId}/followings/count")
+    public ResponseEntity<FollowCountResponse> getFollowingsCount(@PathVariable long blogId) {
+        return ResponseEntity.ok(blogService.getFollowingsCount(blogId));
+    }
+
+    @GetMapping("/me/followings/count")
+    public ResponseEntity<FollowCountResponse> getMyFollowingsCount(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity.ok(blogService.getMyFollowingsCount(userDetails.getMemberId()));
     }
 
     @PostMapping("/{blogId}/follow")

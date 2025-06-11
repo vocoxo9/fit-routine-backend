@@ -3,6 +3,7 @@ package kr.co.khedu.fitroutine.blog.service;
 import kr.co.khedu.fitroutine.blog.mapper.BlogMapper;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogResponse;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogUpdateRequest;
+import kr.co.khedu.fitroutine.blog.model.dto.FollowCountResponse;
 import kr.co.khedu.fitroutine.blog.model.dto.FollowResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,30 @@ public class BlogService {
 
     public BlogResponse updateMyBlog(long memberId, BlogUpdateRequest updateRequest) {
         return updateBlog(getMyBlogId(memberId), updateRequest);
+    }
+
+    @Transactional(readOnly = true)
+    public FollowCountResponse getFollowersCount(long blogId) {
+        return FollowCountResponse.builder()
+                .count(blogMapper.countFollowers(blogId))
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public FollowCountResponse getMyFollowersCount(long memberId) {
+        return getFollowersCount(getMyBlogId(memberId));
+    }
+
+    @Transactional(readOnly = true)
+    public FollowCountResponse getFollowingsCount(long blogId) {
+        return FollowCountResponse.builder()
+                .count(blogMapper.countFollowings(blogId))
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public FollowCountResponse getMyFollowingsCount(long memberId) {
+        return getFollowingsCount(getMyBlogId(memberId));
     }
 
     @Transactional(readOnly = true)
