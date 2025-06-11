@@ -39,8 +39,8 @@ public class PostService {
         return postResponse;
     }
 
-    private PostResponse createPost(long blogId, PostCreateRequest createRequest) {
-        postMapper.insertPost(blogId, createRequest);
+    public PostResponse createPost(long memberId, PostCreateRequest createRequest) {
+        postMapper.insertPost(blogService.getMyBlogId(memberId), createRequest);
 
         Long postId = createRequest.getPostId();
         if (postId == null) {
@@ -48,9 +48,5 @@ public class PostService {
         }
 
         return getPost(postId);
-    }
-
-    public PostResponse createMyPost(long memberId, PostCreateRequest createRequest) {
-        return createPost(blogService.getMyBlogId(memberId), createRequest);
     }
 }

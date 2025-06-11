@@ -37,11 +37,11 @@ public class PostController {
         return ResponseEntity.ok(postService.getPost(postId));
     }
 
-    @PostMapping("/blogs/me/posts")
-    public ResponseEntity<PostResponse> createMyPost(
+    @PostMapping("/posts")
+    public ResponseEntity<PostResponse> createPost(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid PostCreateRequest createRequest
     ) {
-        return ResponseEntity.ok(postService.createMyPost(userDetails.getMemberId(), createRequest));
+        return ResponseEntity.ok(postService.createPost(userDetails.getMemberId(), createRequest));
     }
 }
