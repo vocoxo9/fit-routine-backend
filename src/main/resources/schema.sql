@@ -61,30 +61,30 @@ CREATE TABLE TB_BLOG
 
 CREATE TABLE TB_MENU
 (
-    MENU_ID      NUMBER NOT NULL,
-    NAME         VARCHAR2(100)                                                    NOT NULL,
-    CALORIE      NUMBER NOT NULL,
-    CARBOHYDRATE NUMBER NOT NULL,
-    PROTEIN      NUMBER NOT NULL,
+    MENU_ID      NUMBER                                                      NOT NULL,
+    NAME         VARCHAR2(100)                                               NOT NULL,
+    CALORIE      NUMBER                                                      NOT NULL,
+    CARBOHYDRATE NUMBER                                                      NOT NULL,
+    PROTEIN      NUMBER                                                      NOT NULL,
     CATEGORY     VARCHAR2(30) CHECK (CATEGORY IN ('RICE', 'SIDES', 'SOUPS')) NOT NULL,
     PRIMARY KEY (MENU_ID)
 );
 
 CREATE TABLE TB_EXERCISE
 (
-    EXERCISE_ID NUMBER NOT NULL,
-    NAME        VARCHAR2(100)                                                                  NOT NULL,
-    MET         NUMBER NOT NULL,
+    EXERCISE_ID NUMBER                                                                NOT NULL,
+    NAME        VARCHAR2(100)                                                         NOT NULL,
+    MET         NUMBER                                                                NOT NULL,
     CATEGORY    VARCHAR2(50) CHECK (CATEGORY IN ('UPPER', 'LOWER', 'CARDIO', 'LIFE')) NOT NULL,
     PRIMARY KEY (EXERCISE_ID)
 );
 
 CREATE TABLE TB_TODO
 (
-    TODO_ID     NUMBER NOT NULL,
-    MEMBER_ID   NUMBER NOT NULL,
-    STARTED_AT  DATE   NOT NULL,
-    ENDED_AT    DATE   NOT NULL,
+    TODO_ID     NUMBER                                                                           NOT NULL,
+    MEMBER_ID   NUMBER                                                                           NOT NULL,
+    STARTED_AT  DATE                                                                             NOT NULL,
+    ENDED_AT    DATE                                                                             NOT NULL,
     PURPOSE     VARCHAR2(30) CHECK (PURPOSE IN ('ENDURANCE', 'STRENGTH', 'MAINTENANCE', 'DIET')) NOT NULL,
     CATEGORY    VARCHAR2(8)                                                                      NOT NULL,
     DAY_REPEAT  NUMBER,
@@ -134,22 +134,22 @@ CREATE TABLE TB_EXERCISE_DETAIL
 
 CREATE TABLE TB_POST
 (
-    POST_ID   NUMBER               NOT NULL,
+    POST_ID    NUMBER                                                                                  NOT NULL,
     TITLE      VARCHAR2(150)                                                                           NOT NULL,
     CONTENT    VARCHAR2(1500),
     CATEGORY   VARCHAR2(20) DEFAULT 'ALL' CHECK (CATEGORY IN ('ALL', 'DIET', 'STRENGTH', 'ENDURANCE')) NOT NULL,
-    CREATED_AT DATE DEFAULT SYSDATE NOT NULL,
-    BLOG_ID    NUMBER               NOT NULL,
+    CREATED_AT DATE         DEFAULT SYSDATE                                                            NOT NULL,
+    BLOG_ID    NUMBER                                                                                  NOT NULL,
     PRIMARY KEY (POST_ID),
     FOREIGN KEY (BLOG_ID) REFERENCES TB_BLOG (BLOG_ID)
 );
 
 CREATE TABLE TB_IMAGE
 (
-    IMAGE_ID    NUMBER NOT NULL,
+    IMAGE_ID    NUMBER        NOT NULL,
     ORIGIN_NAME VARCHAR2(255) NOT NULL,
     CHANGE_NAME VARCHAR2(255) NOT NULL,
-    POST_ID    NUMBER NOT NULL,
+    POST_ID     NUMBER        NOT NULL,
     PRIMARY KEY (IMAGE_ID),
     FOREIGN KEY (POST_ID) REFERENCES TB_POST (POST_ID) ON DELETE CASCADE
 );
@@ -157,7 +157,7 @@ CREATE TABLE TB_IMAGE
 CREATE TABLE TB_REPLY
 (
     REPLY_ID   NUMBER               NOT NULL,
-    POST_ID   NUMBER               NOT NULL,
+    POST_ID    NUMBER               NOT NULL,
     MEMBER_ID  NUMBER               NOT NULL,
     CONTENT    VARCHAR2(1500)       NOT NULL,
     PARENT_ID  NUMBER,
@@ -180,7 +180,7 @@ CREATE TABLE TB_REPLY_LIKE
 CREATE TABLE TB_POST_LIKE
 (
     POST_LIKE_ID NUMBER NOT NULL,
-    MEMBER_ID     NUMBER NOT NULL,
+    MEMBER_ID    NUMBER NOT NULL,
     POST_ID      NUMBER NOT NULL,
     PRIMARY KEY (POST_LIKE_ID),
     FOREIGN KEY (POST_ID) REFERENCES TB_POST (POST_ID) ON DELETE CASCADE,
@@ -189,12 +189,12 @@ CREATE TABLE TB_POST_LIKE
 
 CREATE TABLE TB_ALARM
 (
-    NOTICE_ID          NUMBER               NOT NULL,
+    NOTICE_ID          NUMBER                                                               NOT NULL,
     CONTENT            VARCHAR2(100)                                                        NOT NULL,
     CATEGORY           VARCHAR2(30) CHECK (CATEGORY IN ('REPLY', 'TODO', 'FOLLOW', 'LIKE')) NOT NULL,
-    CREATED_AT         DATE DEFAULT SYSDATE NOT NULL,
-    RECEIVER_MEMBER_ID NUMBER               NOT NULL,
-    SENDER_MEMBER_ID   NUMBER               NOT NULL,
+    CREATED_AT         DATE DEFAULT SYSDATE                                                 NOT NULL,
+    RECEIVER_MEMBER_ID NUMBER                                                               NOT NULL,
+    SENDER_MEMBER_ID   NUMBER                                                               NOT NULL,
     PRIMARY KEY (NOTICE_ID),
     FOREIGN KEY (RECEIVER_MEMBER_ID) REFERENCES TB_MEMBER (MEMBER_ID) ON DELETE CASCADE,
     FOREIGN KEY (SENDER_MEMBER_ID) REFERENCES TB_MEMBER (MEMBER_ID) ON DELETE CASCADE
@@ -221,7 +221,7 @@ CREATE TABLE TB_MEMBER_DETAIL
 
 CREATE TABLE TB_WITHDRAW
 (
-    WITHDRAW_ID   NUMBER NOT NULL,
+    WITHDRAW_ID   NUMBER               NOT NULL,
     MEMBER_ID     NUMBER               NOT NULL,
     REASON_SELECT VARCHAR2(255),
     REASON_INPUT  VARCHAR2(3000),
