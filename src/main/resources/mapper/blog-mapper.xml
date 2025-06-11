@@ -28,7 +28,7 @@
         </set>
         WHERE BLOG_ID = #{blogId}
     </update>
-    <select id="findFollowers" resultType="kr.co.khedu.fitroutine.blog.model.dto.BlogSummaryResponse">
+    <select id="findFollowers" resultType="kr.co.khedu.fitroutine.blog.model.dto.FollowResponse">
         SELECT
             B.BLOG_ID,
             B.GRADE,
@@ -44,7 +44,7 @@
         JOIN TB_BLOG B ON F.FOLLOWER_BLOG_ID = B.BLOG_ID
         JOIN TB_MEMBER M ON B.MEMBER_ID = M.MEMBER_ID
     </select>
-    <select id="findFollowings" resultType="kr.co.khedu.fitroutine.blog.model.dto.BlogSummaryResponse">
+    <select id="findFollowings" resultType="kr.co.khedu.fitroutine.blog.model.dto.FollowResponse">
         SELECT
             B.BLOG_ID,
             B.GRADE,

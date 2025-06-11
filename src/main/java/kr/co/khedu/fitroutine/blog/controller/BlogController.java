@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogResponse;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogUpdateRequest;
-import kr.co.khedu.fitroutine.blog.model.dto.BlogSummaryResponse;
+import kr.co.khedu.fitroutine.blog.model.dto.FollowResponse;
 import kr.co.khedu.fitroutine.blog.service.BlogService;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +44,7 @@ public class BlogController {
     }
 
     @GetMapping("/{blogId}/followers")
-    public ResponseEntity<List<? extends BlogSummaryResponse>> getFollowers(
+    public ResponseEntity<List<? extends FollowResponse>> getFollowers(
             @PathVariable long blogId,
             @RequestParam @Min(0) int page,
             @RequestParam @Min(1) @Max(12) int size
@@ -53,7 +53,7 @@ public class BlogController {
     }
 
     @GetMapping("/me/followers")
-    public ResponseEntity<List<? extends BlogSummaryResponse>> getMyFollowers(
+    public ResponseEntity<List<? extends FollowResponse>> getMyFollowers(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestParam @Min(0) int page,
             @RequestParam @Min(1) @Max(12) int size
@@ -62,7 +62,7 @@ public class BlogController {
     }
 
     @GetMapping("/{blogId}/followings")
-    public ResponseEntity<List<? extends BlogSummaryResponse>> getFollowings(
+    public ResponseEntity<List<? extends FollowResponse>> getFollowings(
             @PathVariable long blogId,
             @RequestParam @Min(0) int page,
             @RequestParam @Min(1) @Max(12) int size
@@ -71,7 +71,7 @@ public class BlogController {
     }
 
     @GetMapping("/me/followings")
-    public ResponseEntity<List<? extends BlogSummaryResponse>> getMyFollowings(
+    public ResponseEntity<List<? extends FollowResponse>> getMyFollowings(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestParam @Min(0) int page,
             @RequestParam @Min(1) @Max(12) int size

@@ -3,7 +3,7 @@ package kr.co.khedu.fitroutine.blog.service;
 import kr.co.khedu.fitroutine.blog.mapper.BlogMapper;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogResponse;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogUpdateRequest;
-import kr.co.khedu.fitroutine.blog.model.dto.BlogSummaryResponse;
+import kr.co.khedu.fitroutine.blog.model.dto.FollowResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,22 +62,22 @@ public class BlogService {
     }
 
     @Transactional(readOnly = true)
-    public List<? extends BlogSummaryResponse> getFollowers(long blogId, int page, int size) {
+    public List<? extends FollowResponse> getFollowers(long blogId, int page, int size) {
         return blogMapper.findFollowers(blogId, page * size, size);
     }
 
     @Transactional(readOnly = true)
-    public List<? extends BlogSummaryResponse> getMyFollowers(long memberId, int page, int size) {
+    public List<? extends FollowResponse> getMyFollowers(long memberId, int page, int size) {
         return getFollowers(getMyBlogId(memberId), page, size);
     }
 
     @Transactional(readOnly = true)
-    public List<? extends BlogSummaryResponse> getFollowings(long blogId, int page, int size) {
+    public List<? extends FollowResponse> getFollowings(long blogId, int page, int size) {
         return blogMapper.findFollowings(blogId, page * size, size);
     }
 
     @Transactional(readOnly = true)
-    public List<? extends BlogSummaryResponse> getMyFollowings(long memberId, int page, int size) {
+    public List<? extends FollowResponse> getMyFollowings(long memberId, int page, int size) {
         return getFollowings(getMyBlogId(memberId), page, size);
     }
 

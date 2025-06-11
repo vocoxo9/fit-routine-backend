@@ -2,7 +2,7 @@ package kr.co.khedu.fitroutine.blog.mapper;
 
 import kr.co.khedu.fitroutine.blog.model.dto.BlogResponse;
 import kr.co.khedu.fitroutine.blog.model.dto.BlogUpdateRequest;
-import kr.co.khedu.fitroutine.blog.model.dto.BlogSummaryResponse;
+import kr.co.khedu.fitroutine.blog.model.dto.FollowResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.lang.Nullable;
 
@@ -16,9 +16,9 @@ public interface BlogMapper {
 
     int updateBlog(long blogId, BlogUpdateRequest updateRequest);
 
-    List<? extends BlogSummaryResponse> findFollowers(long blogId, int offset, int size);
+    List<? extends FollowResponse> findFollowers(long blogId, int offset, int size);
 
-    List<? extends BlogSummaryResponse> findFollowings(long blogId, int offset, int size);
+    List<? extends FollowResponse> findFollowings(long blogId, int offset, int size);
 
     int insertFollow(long followerId, long followeeId);
 
