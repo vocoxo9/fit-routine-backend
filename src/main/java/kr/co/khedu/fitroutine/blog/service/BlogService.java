@@ -1,46 +1,79 @@
 package kr.co.khedu.fitroutine.blog.service;
 
 import kr.co.khedu.fitroutine.blog.mapper.BlogMapper;
-import kr.co.khedu.fitroutine.blog.model.dto.BlogDetail;
-import kr.co.khedu.fitroutine.blog.model.dto.BlogIntroEdit;
-import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
-import kr.co.khedu.fitroutine.member.model.vo.Member;
+import kr.co.khedu.fitroutine.blog.model.dto.BlogResponse;
+import kr.co.khedu.fitroutine.blog.model.dto.BlogUpdateRequest;
+import kr.co.khedu.fitroutine.blog.model.dto.BlogSummaryResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
-public final class BlogService {
+@Transactional
+public class BlogService {
     private final BlogMapper blogMapper;
-    private final MemberMapper memberMapper;
 
-    public BlogService(BlogMapper blogMapper, MemberMapper memberMapper) {
+    public BlogService(BlogMapper blogMapper) {
         this.blogMapper = blogMapper;
-        this.memberMapper = memberMapper;
     }
 
-    public BlogDetail getBlogDetail(long blogId, long viewerId) {
-        BlogDetail blogDetail = blogMapper.getBlogDetail(blogId, viewerId);
-        if (blogDetail == null) {
-            throw new IllegalStateException("블로그를 찾을 수 없습니다: " + blogId);
+    @Transactional(readOnly = true)
+    public BlogResponse getBlog(long blogId) {
+        BlogResponse blogResponse = blogMapper.findBlog(blogId);
+        if (blogResponse == null) {
+            throw new IllegalStateException();
         }
 
-        return blogDetail;
+        return blogResponse;
     }
 
-    public void likeBlog(long blogId, long viewerId) {
-        if (blogMapper.likeBlog(memberMapper.findMemberByBlogId(blogId).getMemberId(), viewerId) <= 0) {
-            throw new IllegalStateException("좋아요 행을 삽입할 수 없습니다.");
+    @Transactional(readOnly = true)
+    public BlogResponse getMyBlog(long memberId) {
+        return getBlog(blogMapper.findBlogId(memberId));
+    }
+
+    private BlogResponse updateBlog(long blogId, BlogUpdateRequest updateRequest) {
+        if (blogMapper.updateBlog(blogId, updateRequest) != 1) {
+            throw new IllegalStateException();
+        }
+
+        return getBlog(blogId);
+    }
+
+    public BlogResponse updateMyBlog(long memberId, BlogUpdateRequest updateRequest) {
+        return updateBlog(blogMapper.findBlogId(memberId), updateRequest);
+    }
+
+    @Transactional(readOnly = true)
+    public List<? extends BlogSummaryResponse> getFollowers(long blogId, int page, int size) {
+        return blogMapper.findFollowers(blogId, page * size, size);
+    }
+
+    @Transactional(readOnly = true)
+    public List<? extends BlogSummaryResponse> getMyFollowers(long memberId, int page, int size) {
+        return getFollowers(blogMapper.findBlogId(memberId), page, size);
+    }
+
+    @Transactional(readOnly = true)
+    public List<? extends BlogSummaryResponse> getFollowings(long blogId, int page, int size) {
+        return blogMapper.findFollowings(blogId, page * size, size);
+    }
+
+    @Transactional(readOnly = true)
+    public List<? extends BlogSummaryResponse> getMyFollowings(long memberId, int page, int size) {
+        return getFollowings(blogMapper.findBlogId(memberId), page, size);
+    }
+
+    public void followBlog(long followerMemberId, long followedBlogId) {
+        if (blogMapper.insertFollow(blogMapper.findBlogId(followerMemberId), followedBlogId) != 1) {
+            throw new IllegalStateException();
         }
     }
 
-    public void unlikeBlog(long blogId, long viewerId) {
-        if (blogMapper.unlikeBlog(memberMapper.findMemberByBlogId(blogId).getMemberId(), viewerId) <= 0) {
-            throw new IllegalStateException("좋아요 행을 제거할 수 없습니다.");
-        }
-    }
-
-    public void updateBlogIntro(long blogId, long memberId, BlogIntroEdit introEdit) {
-        if (blogMapper.updateBlogIntro(blogId, memberId, introEdit.getIntro()) <= 0) {
-            throw new IllegalStateException("Introduce를 갱신할 수 없습니다.");
+    public void unfollowBlog(long followerMemberId, long followedBlogId) {
+        if (blogMapper.deleteFollow(blogMapper.findBlogId(followerMemberId), followedBlogId) != 1) {
+            throw new IllegalStateException();
         }
     }
 }

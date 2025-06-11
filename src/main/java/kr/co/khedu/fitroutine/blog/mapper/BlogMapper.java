@@ -1,16 +1,26 @@
 package kr.co.khedu.fitroutine.blog.mapper;
 
-import jakarta.annotation.Nullable;
-import kr.co.khedu.fitroutine.blog.model.dto.BlogDetail;
+import kr.co.khedu.fitroutine.blog.model.dto.BlogResponse;
+import kr.co.khedu.fitroutine.blog.model.dto.BlogUpdateRequest;
+import kr.co.khedu.fitroutine.blog.model.dto.BlogSummaryResponse;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.lang.Nullable;
+
+import java.util.List;
 
 @Mapper
 public interface BlogMapper {
-    @Nullable BlogDetail getBlogDetail(long blogId, long viewerId);
+    long findBlogId(long memberId);
 
-    int likeBlog(long memberId, long viewerId);
+    @Nullable BlogResponse findBlog(long blogId);
 
-    int unlikeBlog(long memberId, long viewerId);
+    int updateBlog(long blogId, BlogUpdateRequest updateRequest);
 
-    int updateBlogIntro(long blogId, long editorId, String intro);
+    List<? extends BlogSummaryResponse> findFollowers(long blogId, int offset, int size);
+
+    List<? extends BlogSummaryResponse> findFollowings(long blogId, int offset, int size);
+
+    int insertFollow(long followerId, long followeeId);
+
+    int deleteFollow(long followerId, long followeeId);
 }
