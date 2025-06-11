@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.khedu.fitroutine.post.mapper.PostMapper">
+    <select id="findPosts" resultType="kr.co.khedu.fitroutine.post.model.dto.PostResponse">
+        SELECT
+            POST_ID,
+            TITLE,
+            CONTENT,
+            CATEGORY,
+            CREATED_AT,
+            BLOG_ID
+        FROM TB_POST
+        WHERE BLOG_ID = #{blogId}
+        ORDER BY CREATED_AT DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
+    </select>
+    <select id="findPost" resultType="kr.co.khedu.fitroutine.post.model.dto.PostResponse">
+        SELECT
+            POST_ID,
+            TITLE,
+            CONTENT,
+            CATEGORY,
+            CREATED_AT,
+            BLOG_ID
+        FROM TB_POST
+        WHERE POST_ID = #{postId}
+    </select>
+</mapper>
