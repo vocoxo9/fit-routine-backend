@@ -19,7 +19,7 @@ public class BlogService {
     }
 
     @Transactional(readOnly = true)
-    protected long getMyBlogId(long memberId) {
+    public long getMyBlogId(long memberId) {
         Long blogId = blogMapper.findBlogId(memberId);
         if (blogId == null) {
             throw new NoSuchElementException("멤버에 해당하는 블로그를 찾을 수 없습니다. id=" + memberId);

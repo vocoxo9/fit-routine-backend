@@ -1,19 +1,22 @@
 package kr.co.khedu.fitroutine.post.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
 import kr.co.khedu.fitroutine.post.service.PostService;
+import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-public final class PostController {
+@Validated
+public class PostController {
     private final PostService postService;
 
     public PostController(PostService postService) {
@@ -32,5 +35,13 @@ public final class PostController {
     @GetMapping("/posts/{postId}")
     public ResponseEntity<PostResponse> getPost(@PathVariable long postId) {
         return ResponseEntity.ok(postService.getPost(postId));
+    }
+
+    @PostMapping("/blogs/me/posts")
+    public ResponseEntity<PostResponse> createMyPost(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody @Valid PostCreateRequest createRequest
+    ) {
+        return ResponseEntity.ok(postService.createMyPost(userDetails.getMemberId(), createRequest));
     }
 }

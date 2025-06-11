@@ -27,4 +27,24 @@
         FROM TB_POST
         WHERE POST_ID = #{postId}
     </select>
+    <insert id="insertPost">
+        <selectKey keyProperty="createRequest.postId" resultType="long" order="BEFORE">
+            SELECT SEQ_POST_ID.NEXTVAL
+            FROM dual
+        </selectKey>
+        INSERT INTO TB_POST (
+            POST_ID,
+            TITLE,
+            CONTENT,
+            CATEGORY,
+            BLOG_ID
+        )
+        VALUES (
+            #{createRequest.postId},
+            #{createRequest.title},
+            #{createRequest.content},
+            #{createRequest.category},
+            #{blogId}
+        )
+    </insert>
 </mapper>
