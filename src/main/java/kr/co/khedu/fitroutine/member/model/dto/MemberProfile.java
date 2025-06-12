@@ -5,7 +5,6 @@ import lombok.Getter;
 
 @Getter
 public final class MemberProfile {
-    private final long memberId;
     private final String email;
     private final String nickname;
     private final String birthAt;
@@ -16,7 +15,6 @@ public final class MemberProfile {
 
     @Builder
     private MemberProfile(
-            long memberId,
             String email,
             String nickname,
             String birthAt,
@@ -25,7 +23,6 @@ public final class MemberProfile {
             int height,
             int weight
     ) {
-        this.memberId = memberId;
         this.email = email;
         this.nickname = nickname;
         this.birthAt = birthAt;
