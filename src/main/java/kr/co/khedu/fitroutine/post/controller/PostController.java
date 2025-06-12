@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -49,12 +50,13 @@ public class PostController {
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid PostCreateRequest createRequest
     ) {
-        return ResponseEntity.ok(
-                postService.createPost(
-                        blogService.getBlogId(userDetails.getMemberId()),
-                        createRequest
-                )
+        PostResponse postResponse = postService.createPost(
+                blogService.getBlogId(userDetails.getMemberId()),
+                createRequest
         );
+        return ResponseEntity
+                .created(URI.create("/posts/" + postResponse.getPostId()))
+                .body(postResponse);
     }
 
     @PatchMapping("/posts/{postId}")

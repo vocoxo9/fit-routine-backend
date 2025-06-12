@@ -76,8 +76,8 @@
                 WHEN EXISTS (
                     SELECT 1
                     FROM TB_FOLLOW
-                    WHERE FOLLOWER_BLOG_ID = #{followerId}
-                    AND FOLLOWED_BLOG_ID = #{followeeId}
+                    WHERE FOLLOWER_BLOG_ID = #{followerBlogId}
+                    AND FOLLOWED_BLOG_ID = #{followedBlogId}
                 )
                 THEN 1
                 ELSE 0
@@ -86,17 +86,11 @@
     </select>
     <insert id="insertFollowRelation">
         INSERT INTO TB_FOLLOW (FOLLOWER_BLOG_ID, FOLLOWED_BLOG_ID)
-        SELECT BLOG_ID, #{followeeId}
-        FROM TB_BLOG
-        WHERE MEMBER_ID = #{followerId}
+        VALUES (#{followerBlogId}, #{followedBlogId})
     </insert>
     <delete id="deleteFollowRelation">
         DELETE FROM TB_FOLLOW
-        WHERE FOLLOWER_BLOG_ID IN (
-            SELECT BLOG_ID
-            FROM TB_BLOG
-            WHERE MEMBER_ID = #{followerId}
-        )
-        AND FOLLOWED_BLOG_ID = #{followeeId}
+        WHERE FOLLOWER_BLOG_ID = #{followerBlogId}
+        AND FOLLOWED_BLOG_ID = #{followedBlogId}
     </delete>
 </mapper>

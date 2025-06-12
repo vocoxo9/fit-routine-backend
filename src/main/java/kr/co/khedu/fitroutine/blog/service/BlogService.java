@@ -39,10 +39,6 @@ public class BlogService {
     }
 
     public BlogResponse updateBlog(long blogId, BlogUpdateRequest updateRequest) {
-        if (updateRequest.getIntroduce() == null) {
-            throw new IllegalArgumentException("블로그에 수정할 내용이 없습니다. id=" + blogId);
-        }
-
         if (blogMapper.updateBlog(blogId, updateRequest) != 1) {
             throw new DataIntegrityViolationException("블로그 수정 대상이 없습니다. id=" + blogId);
         }

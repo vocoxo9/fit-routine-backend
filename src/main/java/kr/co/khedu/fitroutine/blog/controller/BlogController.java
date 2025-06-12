@@ -44,8 +44,8 @@ public class BlogController {
     @GetMapping("/{blogId}/followers")
     public ResponseEntity<List<? extends FollowResponse>> getFollowers(
             @PathVariable long blogId,
-            @RequestParam @Min(0) int page,
-            @RequestParam @Min(1) @Max(12) int size
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "12") @Min(1) @Max(12) int size
     ) {
         return ResponseEntity.ok(blogService.getFollowers(blogId, page, size));
     }
@@ -58,8 +58,8 @@ public class BlogController {
     @GetMapping("/{blogId}/followings")
     public ResponseEntity<List<? extends FollowResponse>> getFollowings(
             @PathVariable long blogId,
-            @RequestParam @Min(0) int page,
-            @RequestParam @Min(1) @Max(12) int size
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "12") @Min(1) @Max(12) int size
     ) {
         return ResponseEntity.ok(blogService.getFollowings(blogId, page, size));
     }

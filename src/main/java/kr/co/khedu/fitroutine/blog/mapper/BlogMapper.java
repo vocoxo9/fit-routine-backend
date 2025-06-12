@@ -22,9 +22,9 @@ public interface BlogMapper {
 
     List<? extends FollowResponse> selectFollowingsByBlogId(long blogId, int offset, int size);
 
-    int existsFollowRelation(long followerId, long followeeId);
+    int existsFollowRelation(long followerBlogId, long followedBlogId);
 
-    int insertFollowRelation(long followerId, long followeeId);
+    int insertFollowRelation(long followerBlogId, long followedBlogId);
 
-    int deleteFollowRelation(long followerId, long followeeId);
+    int deleteFollowRelation(long followerBlogId, long followedBlogId);
 }
