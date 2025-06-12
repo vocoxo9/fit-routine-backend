@@ -44,6 +44,10 @@ public class PostReplyService {
                 throw new IllegalArgumentException("댓글의 지정된 부모가 유효하지 않습니다.");
             }
 
+            if (replyResponse.getParentId() != null) {
+                throw new IllegalArgumentException("댓글의 지정된 부모는 고아여야 합니다.");
+            }
+
             if (replyResponse.getPostId() != postId) {
                 throw new IllegalArgumentException("댓글의 지정된 부모가 다른 포스트에 있습니다.");
             }
