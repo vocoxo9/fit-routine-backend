@@ -4,31 +4,26 @@ import kr.co.khedu.fitroutine.post.mapper.PostImageMapper;
 import kr.co.khedu.fitroutine.post.model.dto.ImageCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.ImageResponse;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Value;
+import kr.co.khedu.fitroutine.storage.service.FileStorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 @Service
 @Transactional
 public class PostImageService {
     private final PostImageMapper postImageMapper;
-    private final String uploadDir;
+    private final FileStorageService fileStorageService;
 
     public PostImageService(
             PostImageMapper postImageMapper,
-            @Value("${file.upload-dir}") String uploadDir
+            FileStorageService fileStorageService
     ) {
         this.postImageMapper = postImageMapper;
-        this.uploadDir = uploadDir;
+        this.fileStorageService = fileStorageService;
     }
 
     @Transactional(readOnly = true)
@@ -54,7 +49,20 @@ public class PostImageService {
         ) == 1;
     }
 
-    public ImageResponse createImage(long postId, ImageCreateRequest createRequest) {
+    public ImageResponse createImage(long postId, MultipartFile multipartFile) {
+        if (multipartFile.getOriginalFilename() == null) {
+            throw new IllegalArgumentException("파일 이름이 유효하지 않습니다.");
+        }
+
+        ImageCreateRequest createRequest = ImageCreateRequest.builder()
+                .originName(
+                        multipartFile.getOriginalFilename()
+                )
+                .changeName(
+                        fileStorageService.store(multipartFile)
+                )
+                .build();
+
         postImageMapper.insertImage(postId, createRequest);
 
         Long imageId = createRequest.getImageId();
@@ -65,28 +73,9 @@ public class PostImageService {
         return getImage(createRequest.getImageId());
     }
 
-    public ImageCreateRequest toCreateRequest(MultipartFile multipartFile) {
-        if (multipartFile.getOriginalFilename() == null) {
-            throw new IllegalStateException("파일 이름이 유효하지 않습니다.");
-        }
-
-        String originName = multipartFile.getOriginalFilename();
-        String changeName = UUID.randomUUID() + "." + FilenameUtils.getExtension(originName);
-
-        File destination = new File(uploadDir, changeName);
-        try {
-            FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), destination);
-        } catch (IOException exception) {
-            throw new RuntimeException("파일 저장에 실패했습니다.", exception);
-        }
-
-        return ImageCreateRequest.builder()
-                .originName(originName)
-                .changeName(changeName)
-                .build();
-    }
-
     public void deleteImage(long imageId) {
+        fileStorageService.delete(getImage(imageId).getOriginName());
+
         if (postImageMapper.deleteImage(imageId) != 1) {
             throw new NoSuchElementException("이미지가 존재하지 않습니다. id=" + imageId);
         }

@@ -35,12 +35,7 @@ public class PostImageController {
             @PathVariable long postId,
             @RequestPart MultipartFile multipartFile
     ) {
-        return ResponseEntity.ok(
-                postService.createImage(
-                        postId,
-                        postService.toCreateRequest(multipartFile)
-                )
-        );
+        return ResponseEntity.ok(postService.createImage(postId, multipartFile));
     }
 
     @PreAuthorize("@postImageService.isImageOwner(#imageId, principal)")
