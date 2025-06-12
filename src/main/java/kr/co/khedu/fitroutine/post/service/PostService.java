@@ -1,7 +1,9 @@
 package kr.co.khedu.fitroutine.post.service;
 
 import kr.co.khedu.fitroutine.post.mapper.PostMapper;
-import kr.co.khedu.fitroutine.post.model.dto.*;
+import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
+import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
+import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

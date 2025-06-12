@@ -1,6 +1,7 @@
 package kr.co.khedu.fitroutine.post.mapper;
 
-import kr.co.khedu.fitroutine.post.model.dto.*;
+import kr.co.khedu.fitroutine.post.model.dto.ImageCreateRequest;
+import kr.co.khedu.fitroutine.post.model.dto.ImageResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.lang.Nullable;
 
