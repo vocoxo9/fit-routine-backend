@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.khedu.fitroutine.post.mapper.PostReplyMapper">
+    <select id="selectRepliesByPostId" resultType="kr.co.khedu.fitroutine.post.model.dto.ReplyResponse">
+        SELECT
+            REPLY_ID,
+            CONTENT,
+            CREATED_AT,
+            PARENT_ID,
+            POST_ID
+        FROM TB_REPLY
+        WHERE POST_ID = #{postId}
+    </select>
+    <select id="selectReplyById" resultType="kr.co.khedu.fitroutine.post.model.dto.ReplyResponse">
+        SELECT
+            REPLY_ID,
+            CONTENT,
+            CREATED_AT,
+            PARENT_ID,
+            POST_ID
+        FROM TB_REPLY
+        WHERE REPLY_ID = #{replyId}
+    </select>
+</mapper>
