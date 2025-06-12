@@ -4,6 +4,7 @@ import kr.co.khedu.fitroutine.post.mapper.PostMapper;
 import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
 import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
+import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,14 @@ public class PostService {
         return postResponse;
     }
 
+    @Transactional(readOnly = true)
+    public boolean isPostOwner(long postId, UserDetailsImpl userDetails) {
+        return postMapper.existsPostByMemberId(
+                postId,
+                userDetails.getMemberId()
+        ) == 1;
+    }
+
     public PostResponse createPost(long blogId, PostCreateRequest createRequest) {
         postMapper.insertPost(blogId, createRequest);
 
@@ -45,11 +54,7 @@ public class PostService {
         return getPost(postId);
     }
 
-    public PostResponse updatePost(long postId, long memberId, PostUpdateRequest updateRequest) {
-        if (postMapper.existsPostByMember(postId, memberId) != 1) {
-            throw new IllegalArgumentException("포스트는 본인만 수정할 수 있습니다. id=" + postId);
-        }
-
+    public PostResponse updatePost(long postId, PostUpdateRequest updateRequest) {
         if (postMapper.updatePost(postId, updateRequest) != 1) {
             throw new NoSuchElementException("포스트가 존재하지 않습니다. id=" + postId);
         }
@@ -57,11 +62,7 @@ public class PostService {
         return getPost(postId);
     }
 
-    public void deletePost(long postId, long memberId) {
-        if (postMapper.existsPostByMember(postId, memberId) != 1) {
-            throw new IllegalArgumentException("포스트는 본인만 수정할 수 있습니다. id=" + postId);
-        }
-
+    public void deletePost(long postId) {
         if (postMapper.deletePost(postId) != 1) {
             throw new NoSuchElementException("포스트가 존재하지 않습니다. id=" + postId);
         }

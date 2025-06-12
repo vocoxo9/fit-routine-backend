@@ -7,6 +7,7 @@ import kr.co.khedu.fitroutine.blog.model.dto.*;
 import kr.co.khedu.fitroutine.blog.service.BlogService;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +29,15 @@ public class BlogController {
         return ResponseEntity.ok(blogService.getBlog(blogId));
     }
 
-    @PatchMapping("/me")
+    @PreAuthorize("@blogService.isBlogOwner(#blogId, principal)")
+    @PatchMapping("/{blogId}")
     public ResponseEntity<BlogResponse> updateBlog(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long blogId,
             @RequestBody @Valid BlogUpdateRequest blogUpdateRequest
     ) {
         return ResponseEntity.ok(
                 blogService.updateBlog(
-                        blogService.getBlogId(userDetails.getMemberId()),
+                        blogId,
                         blogUpdateRequest
                 )
         );

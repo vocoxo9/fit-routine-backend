@@ -12,6 +12,8 @@ public interface BlogMapper {
 
     @Nullable BlogResponse selectBlogById(long blogId);
 
+    int existsBlogByMemberId(long blogId, long memberId);
+
     int updateBlog(long blogId, BlogUpdateRequest updateRequest);
 
     int countFollowersByBlogId(long blogId);

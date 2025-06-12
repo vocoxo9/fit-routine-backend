@@ -27,7 +27,7 @@
         FROM TB_POST
         WHERE POST_ID = #{postId}
     </select>
-    <select id="existsPostByMember" resultType="int">
+    <select id="existsPostByMemberId" resultType="int">
         SELECT
             CASE
                 WHEN EXISTS (

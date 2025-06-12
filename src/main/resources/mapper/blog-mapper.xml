@@ -19,6 +19,20 @@
         JOIN TB_MEMBER M ON B.MEMBER_ID = M.MEMBER_ID
         WHERE B.BLOG_ID = #{blogId}
     </select>
+    <select id="existsBlogByMemberId" resultType="int">
+        SELECT
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM TB_BLOG
+                    WHERE BLOG_ID = #{blogId}
+                    AND MEMBER_ID = #{memberId}
+                )
+                THEN 1
+                ELSE 0
+            END
+        FROM DUAL
+    </select>
     <update id="updateBlog">
         UPDATE TB_BLOG
         <set>

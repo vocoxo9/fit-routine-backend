@@ -3,14 +3,12 @@ package kr.co.khedu.fitroutine.post.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import kr.co.khedu.fitroutine.blog.service.BlogService;
 import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
 import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
 import kr.co.khedu.fitroutine.post.service.PostService;
-import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,14 +19,9 @@ import java.util.List;
 @Validated
 public class PostController {
     private final PostService postService;
-    private final BlogService blogService;
 
-    public PostController(
-            PostService postService,
-            BlogService blogService
-    ) {
+    public PostController(PostService postService) {
         this.postService = postService;
-        this.blogService = blogService;
     }
 
     @GetMapping("/blogs/{blogId}/posts")
@@ -45,13 +38,14 @@ public class PostController {
         return ResponseEntity.ok(postService.getPost(postId));
     }
 
-    @PostMapping("/posts")
+    @PreAuthorize("@blogService.isBlogOwner(#blogId, principal)")
+    @PostMapping("/blogs/{blogId}/posts")
     public ResponseEntity<PostResponse> createPost(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long blogId,
             @RequestBody @Valid PostCreateRequest createRequest
     ) {
         PostResponse postResponse = postService.createPost(
-                blogService.getBlogId(userDetails.getMemberId()),
+                blogId,
                 createRequest
         );
         return ResponseEntity
@@ -59,30 +53,24 @@ public class PostController {
                 .body(postResponse);
     }
 
+    @PreAuthorize("@postService.isPostOwner(#postId, principal)")
     @PatchMapping("/posts/{postId}")
     public ResponseEntity<PostResponse> updatePost(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long postId,
             @RequestBody@Valid PostUpdateRequest updateRequest
     ) {
         return ResponseEntity.ok(
                 postService.updatePost(
                         postId,
-                        userDetails.getMemberId(),
                         updateRequest
                 )
         );
     }
 
+    @PreAuthorize("@postService.isPostOwner(#postId, principal)")
     @DeleteMapping("/posts/{postId}")
-    public ResponseEntity<PostResponse> deletePost(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @PathVariable long postId
-    ) {
-        postService.deletePost(
-                postId,
-                userDetails.getMemberId()
-        );
+    public ResponseEntity<PostResponse> deletePost(@PathVariable long postId) {
+        postService.deletePost(postId);
         return ResponseEntity.noContent().build();
     }
 }

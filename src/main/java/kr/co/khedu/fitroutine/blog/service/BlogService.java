@@ -2,6 +2,7 @@ package kr.co.khedu.fitroutine.blog.service;
 
 import kr.co.khedu.fitroutine.blog.mapper.BlogMapper;
 import kr.co.khedu.fitroutine.blog.model.dto.*;
+import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,14 @@ public class BlogService {
         }
 
         return blogResponse;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isBlogOwner(long blogId, UserDetailsImpl userDetails) {
+        return blogMapper.existsBlogByMemberId(
+                blogId,
+                userDetails.getMemberId()
+        ) == 1;
     }
 
     public BlogResponse updateBlog(long blogId, BlogUpdateRequest updateRequest) {

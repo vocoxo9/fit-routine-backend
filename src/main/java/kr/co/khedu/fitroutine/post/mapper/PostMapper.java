@@ -14,7 +14,7 @@ public interface PostMapper {
 
     @Nullable PostResponse selectPostById(long postId);
 
-    int existsPostByMember(long postId, long memberId);
+    int existsPostByMemberId(long postId, long memberId);
 
     void insertPost(long blogId, PostCreateRequest createRequest);
 
