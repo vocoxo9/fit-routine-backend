@@ -72,7 +72,7 @@ public class PostController {
         );
     }
 
-    @PostMapping("/posts/{postId}")
+    @DeleteMapping("/posts/{postId}")
     public ResponseEntity<PostResponse> deletePost(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long postId
