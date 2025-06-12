@@ -96,4 +96,11 @@ public class PostController {
                 )
         );
     }
+
+    @PreAuthorize("@postService.isImageOwner(#imageId, principal)")
+    @DeleteMapping("/images/{imageId}")
+    public ResponseEntity<Void> deleteImage(@PathVariable long imageId) {
+        postService.deleteImage(imageId);
+        return ResponseEntity.noContent().build();
+    }
 }

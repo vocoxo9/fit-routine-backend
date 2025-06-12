@@ -132,4 +132,10 @@ public class PostService {
                 .changeName(changeName)
                 .build();
     }
+
+    public void deleteImage(long imageId) {
+        if (postMapper.deleteImage(imageId) != 1) {
+            throw new NoSuchElementException("이미지가 존재하지 않습니다. id=" + imageId);
+        }
+    }
 }

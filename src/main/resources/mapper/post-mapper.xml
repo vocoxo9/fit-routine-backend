@@ -135,4 +135,8 @@
             #{postId}
         )
     </insert>
+    <delete id="deleteImage">
+        DELETE FROM TB_IMAGE
+        WHERE IMAGE_ID = #{imageId}
+    </delete>
 </mapper>

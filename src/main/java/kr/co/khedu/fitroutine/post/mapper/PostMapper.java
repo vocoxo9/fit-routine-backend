@@ -27,4 +27,6 @@ public interface PostMapper {
     int existsImageByMemberId(long imageId, long memberId);
 
     void insertImage(long postId, ImageCreateRequest createRequest);
+
+    int deleteImage(long imageId);
 }
