@@ -24,5 +24,7 @@ public interface PostMapper {
 
     @Nullable ImageResponse selectImageById(long imageId);
 
+    int existsImageByMemberId(long imageId, long memberId);
+
     void insertImage(long postId, ImageCreateRequest createRequest);
 }

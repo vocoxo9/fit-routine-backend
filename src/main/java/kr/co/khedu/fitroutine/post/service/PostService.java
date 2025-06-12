@@ -93,6 +93,14 @@ public class PostService {
         return imageResponse;
     }
 
+    @Transactional(readOnly = true)
+    public boolean isImageOwner(long imageId, UserDetailsImpl userDetails) {
+        return postMapper.existsImageByMemberId(
+                imageId,
+                userDetails.getMemberId()
+        ) == 1;
+    }
+
     public ImageResponse createImage(long postId, ImageCreateRequest createRequest) {
         postMapper.insertImage(postId, createRequest);
 

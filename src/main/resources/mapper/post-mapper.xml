@@ -100,6 +100,23 @@
         FROM TB_IMAGE
         WHERE IMAGE_ID = #{imageId}
     </select>
+    <select id="existsImageByMemberId" resultType="int">
+        SELECT
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM TB_MEMBER M
+                    JOIN TB_BLOG B ON B.MEMBER_ID = M.MEMBER_ID
+                    JOIN TB_POST P ON P.BLOG_ID = B.BLOG_ID
+                    JOIN TB_IMAGE I ON I.POST_ID = P.POST_ID
+                    WHERE M.MEMBER_ID = #{memberId}
+                    AND I.IMAGE_ID = #{imageId}
+                )
+                THEN 1
+                ELSE 0
+            END
+        FROM DUAL
+    </select>
     <insert id="insertImage">
         <selectKey keyProperty="createRequest.imageId" resultType="long" order="BEFORE">
             SELECT SEQ_IMAGE_ID.NEXTVAL
