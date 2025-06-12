@@ -51,7 +51,7 @@ public final class FileStorageService {
         try {
             Files.deleteIfExists(location.resolve(filename));
         } catch (IOException exception) {
-            throw new RuntimeException("파일을 저장하는 도중 오류가 발생했습니다.", exception);
+            throw new RuntimeException("파일을 삭제하는 도중 오류가 발생했습니다.", exception);
         }
     }
 }
