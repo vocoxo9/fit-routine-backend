@@ -19,14 +19,4 @@ public interface PostMapper {
     int updatePost(long postId, PostUpdateRequest updateRequest);
 
     int deletePost(long postId);
-
-    List<? extends ImageResponse> selectImagesByPostId(long postId);
-
-    @Nullable ImageResponse selectImageById(long imageId);
-
-    int existsImageByMemberId(long imageId, long memberId);
-
-    void insertImage(long postId, ImageCreateRequest createRequest);
-
-    int deleteImage(long imageId);
 }
