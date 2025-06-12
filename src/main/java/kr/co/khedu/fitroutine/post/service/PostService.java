@@ -1,6 +1,7 @@
 package kr.co.khedu.fitroutine.post.service;
 
 import kr.co.khedu.fitroutine.post.mapper.PostMapper;
+import kr.co.khedu.fitroutine.post.model.dto.ImageResponse;
 import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
 import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
@@ -66,5 +67,20 @@ public class PostService {
         if (postMapper.deletePost(postId) != 1) {
             throw new NoSuchElementException("포스트가 존재하지 않습니다. id=" + postId);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<? extends ImageResponse> getImages(long postId) {
+        return postMapper.selectImagesByPostId(postId);
+    }
+
+    @Transactional(readOnly = true)
+    public ImageResponse getImage(long imageId) {
+        ImageResponse imageResponse = postMapper.selectImageById(imageId);
+        if (imageResponse == null) {
+            throw new NoSuchElementException("이미지를 찾을 수 없습니다. id=" + imageId);
+        }
+
+        return imageResponse;
     }
 }

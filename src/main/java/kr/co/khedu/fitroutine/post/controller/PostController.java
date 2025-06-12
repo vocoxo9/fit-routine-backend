@@ -3,6 +3,7 @@ package kr.co.khedu.fitroutine.post.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import kr.co.khedu.fitroutine.post.model.dto.ImageResponse;
 import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
 import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
@@ -72,5 +73,15 @@ public class PostController {
     public ResponseEntity<Void> deletePost(@PathVariable long postId) {
         postService.deletePost(postId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/posts/{postId}/images")
+    public ResponseEntity<List<? extends ImageResponse>> getImages(@PathVariable long postId) {
+        return ResponseEntity.ok(postService.getImages(postId));
+    }
+
+    @GetMapping("/images/{imageId}")
+    public ResponseEntity<ImageResponse> getImage(@PathVariable long imageId) {
+        return ResponseEntity.ok(postService.getImage(imageId));
     }
 }

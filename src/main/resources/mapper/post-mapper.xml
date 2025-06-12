@@ -82,4 +82,22 @@
         DELETE FROM TB_POST
         WHERE POST_ID = #{postId}
     </delete>
+    <select id="selectImagesByPostId" resultType="kr.co.khedu.fitroutine.post.model.dto.ImageResponse">
+        SELECT
+            IMAGE_ID,
+            ORIGIN_NAME,
+            CHANGE_NAME,
+            POST_ID
+        FROM TB_IMAGE
+        WHERE POST_ID = #{postId}
+    </select>
+    <select id="selectImageById" resultType="kr.co.khedu.fitroutine.post.model.dto.ImageResponse">
+        SELECT
+            IMAGE_ID,
+            ORIGIN_NAME,
+            CHANGE_NAME,
+            POST_ID
+        FROM TB_IMAGE
+        WHERE IMAGE_ID = #{imageId}
+    </select>
 </mapper>
