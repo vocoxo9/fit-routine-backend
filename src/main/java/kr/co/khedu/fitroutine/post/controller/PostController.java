@@ -34,8 +34,8 @@ public class PostController {
     @GetMapping("/blogs/{blogId}/posts")
     public ResponseEntity<List<? extends PostResponse>> getPosts(
             @PathVariable long blogId,
-            @RequestParam @Min(0) int page,
-            @RequestParam @Min(1) @Max(12) int size
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "12") @Min(1) @Max(12) int size
     ) {
         return ResponseEntity.ok(postService.getPosts(blogId, page, size));
     }
