@@ -1,9 +1,6 @@
 package kr.co.khedu.fitroutine.post.mapper;
 
-import kr.co.khedu.fitroutine.post.model.dto.ImageResponse;
-import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
-import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
-import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
+import kr.co.khedu.fitroutine.post.model.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.lang.Nullable;
 
@@ -26,4 +23,6 @@ public interface PostMapper {
     List<? extends ImageResponse> selectImagesByPostId(long postId);
 
     @Nullable ImageResponse selectImageById(long imageId);
+
+    void insertImage(long postId, ImageCreateRequest createRequest);
 }

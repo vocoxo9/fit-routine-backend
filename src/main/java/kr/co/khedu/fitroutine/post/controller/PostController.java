@@ -3,15 +3,13 @@ package kr.co.khedu.fitroutine.post.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import kr.co.khedu.fitroutine.post.model.dto.ImageResponse;
-import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
-import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
-import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
+import kr.co.khedu.fitroutine.post.model.dto.*;
 import kr.co.khedu.fitroutine.post.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.List;
@@ -83,5 +81,19 @@ public class PostController {
     @GetMapping("/images/{imageId}")
     public ResponseEntity<ImageResponse> getImage(@PathVariable long imageId) {
         return ResponseEntity.ok(postService.getImage(imageId));
+    }
+
+    @PreAuthorize("@postService.isPostOwner(#postId, principal)")
+    @PostMapping("/posts/{postId}/images")
+    public ResponseEntity<ImageResponse> createImage(
+            @PathVariable long postId,
+            @RequestPart MultipartFile multipartFile
+    ) {
+        return ResponseEntity.ok(
+                postService.createImage(
+                        postId,
+                        postService.toCreateRequest(multipartFile)
+                )
+        );
     }
 }
