@@ -2,6 +2,7 @@ package kr.co.khedu.fitroutine.post.controller;
 
 import kr.co.khedu.fitroutine.post.model.dto.ImageResponse;
 import kr.co.khedu.fitroutine.post.service.PostImageService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +31,10 @@ public class PostImageController {
     }
 
     @PreAuthorize("@postService.isPostOwner(#postId, principal)")
-    @PostMapping("/posts/{postId}/images")
+    @PostMapping(
+            value = "/posts/{postId}/images",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
     public ResponseEntity<ImageResponse> createImage(
             @PathVariable long postId,
             @RequestPart MultipartFile multipartFile
