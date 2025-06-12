@@ -23,4 +23,24 @@
         FROM TB_REPLY
         WHERE REPLY_ID = #{replyId}
     </select>
+    <insert id="insertReply">
+        <selectKey keyProperty="createRequest.replyId" resultType="long" order="BEFORE">
+            SELECT SEQ_REPLY_ID.NEXTVAL
+            FROM dual
+        </selectKey>
+        INSERT INTO TB_REPLY (
+            REPLY_ID,
+            POST_ID,
+            MEMBER_ID,
+            CONTENT,
+            PARENT_ID
+        )
+        VALUES (
+            #{createRequest.replyId},
+            #{postId},
+            #{memberId},
+            #{createRequest.content},
+            #{createRequest.parentId, jdbcType=NUMERIC}
+        )
+    </insert>
 </mapper>
