@@ -3,6 +3,7 @@ package kr.co.khedu.fitroutine.post.service;
 import kr.co.khedu.fitroutine.post.mapper.PostReplyMapper;
 import kr.co.khedu.fitroutine.post.model.dto.ReplyCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.ReplyResponse;
+import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,14 @@ public class PostReplyService {
 
     public ReplyResponse getReply(long replyId) {
         return postReplyMapper.selectReplyById(replyId);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isReplyOwner(long replyId, UserDetailsImpl userDetails) {
+        return postReplyMapper.existsReplyByMemberId(
+                replyId,
+                userDetails.getMemberId()
+        ) == 1;
     }
 
     public ReplyResponse createReply(long postId, long memberId, ReplyCreateRequest createRequest) {

@@ -23,6 +23,21 @@
         FROM TB_REPLY
         WHERE REPLY_ID = #{replyId}
     </select>
+    <select id="existsReplyByMemberId" resultType="int">
+        SELECT
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM TB_REPLY R
+                    JOIN TB_MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+                    WHERE R.REPLY_ID = #{replyId}
+                    AND M.MEMBER_ID = #{memberId}
+                )
+                THEN 1
+                ELSE 0
+            END
+        FROM DUAL
+    </select>
     <insert id="insertReply">
         <selectKey keyProperty="createRequest.replyId" resultType="long" order="BEFORE">
             SELECT SEQ_REPLY_ID.NEXTVAL

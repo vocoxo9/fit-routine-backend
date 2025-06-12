@@ -13,5 +13,7 @@ public interface PostReplyMapper {
 
     @Nullable ReplyResponse selectReplyById(long replyId);
 
+    int existsReplyByMemberId(long replyId, long memberId);
+
     void insertReply(long postId, long memberId, ReplyCreateRequest createRequest);
 }
