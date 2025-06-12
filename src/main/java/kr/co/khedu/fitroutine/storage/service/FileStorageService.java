@@ -36,10 +36,10 @@ public final class FileStorageService {
         String oldName = StringUtils.cleanPath(file.getOriginalFilename());
         String newName = UUID.randomUUID() + "." + StringUtils.getFilenameExtension(oldName);
 
-        Path target = location.resolve(newName);
+        Path path = location.resolve(newName);
 
         try (InputStream inputStream = file.getInputStream()) {
-            Files.copy(inputStream, target, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException exception) {
             throw new RuntimeException("파일을 저장하는 도중 오류가 발생했습니다.", exception);
         }
@@ -48,8 +48,10 @@ public final class FileStorageService {
     }
 
     public void delete(String filename) {
+        Path path = location.resolve(filename);
+
         try {
-            Files.deleteIfExists(location.resolve(filename));
+            Files.deleteIfExists(path);
         } catch (IOException exception) {
             throw new RuntimeException("파일을 삭제하는 도중 오류가 발생했습니다.", exception);
         }

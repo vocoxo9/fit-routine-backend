@@ -74,7 +74,7 @@ public class PostImageService {
     }
 
     public void deleteImage(long imageId) {
-        fileStorageService.delete(getImage(imageId).getOriginName());
+        fileStorageService.delete(getImage(imageId).getChangeName());
 
         if (postImageMapper.deleteImage(imageId) != 1) {
             throw new NoSuchElementException("이미지가 존재하지 않습니다. id=" + imageId);
