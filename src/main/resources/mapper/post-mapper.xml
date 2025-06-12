@@ -41,7 +41,7 @@
                 THEN 1
                 ELSE 0
             END
-        FROM DUAL;
+        FROM DUAL
     </select>
     <insert id="insertPost">
         <selectKey keyProperty="createRequest.postId" resultType="long" order="BEFORE">
