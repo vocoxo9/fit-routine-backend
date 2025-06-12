@@ -67,7 +67,7 @@
         UPDATE TB_POST
         <set>
             <if test="updateRequest.title != null">
-                INTRODUCE = #{updateRequest.title},
+                TITLE = #{updateRequest.title},
             </if>
             <if test="updateRequest.content != null">
                 CONTENT = #{updateRequest.content},
