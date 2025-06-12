@@ -28,6 +28,7 @@ public final class UserDetailsServiceImpl implements UserDetailsService {
                 .memberId(member.getMemberId())
                 .email(member.getEmail())
                 .password(member.getPassword())
+                .nickname(member.getNickname())
                 .build();
     }
 }
