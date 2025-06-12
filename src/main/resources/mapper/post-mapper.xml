@@ -27,6 +27,22 @@
         FROM TB_POST
         WHERE POST_ID = #{postId}
     </select>
+    <select id="existsPostByMember" resultType="int">
+        SELECT
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM TB_MEMBER M
+                    JOIN TB_BLOG B ON M.MEMBER_ID = B.MEMBER_ID
+                    JOIN TB_POST P ON B.BLOG_ID = P.BLOG_ID
+                    WHERE M.MEMBER_ID = #{memberId}
+                    AND P.POST_ID = #{postId}
+                )
+                THEN 1
+                ELSE 0
+            END
+        FROM DUAL;
+    </select>
     <insert id="insertPost">
         <selectKey keyProperty="createRequest.postId" resultType="long" order="BEFORE">
             SELECT SEQ_POST_ID.NEXTVAL
@@ -47,4 +63,23 @@
             #{blogId}
         )
     </insert>
+    <update id="updatePost">
+        UPDATE TB_POST
+        <set>
+            <if test="updateRequest.title != null">
+                INTRODUCE = #{updateRequest.title},
+            </if>
+            <if test="updateRequest.content != null">
+                CONTENT = #{updateRequest.content},
+            </if>
+            <if test="updateRequest.category != null">
+                CATEGORY = #{updateRequest.category},
+            </if>
+        </set>
+        WHERE POST_ID = #{postId}
+    </update>
+    <delete id="deletePost">
+        DELETE FROM TB_POST
+        WHERE POST_ID = #{postId}
+    </delete>
 </mapper>

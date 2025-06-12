@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min;
 import kr.co.khedu.fitroutine.blog.service.BlogService;
 import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
+import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
 import kr.co.khedu.fitroutine.post.service.PostService;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
@@ -54,5 +55,32 @@ public class PostController {
                         createRequest
                 )
         );
+    }
+
+    @PatchMapping("/posts/{postId}")
+    public ResponseEntity<PostResponse> updatePost(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long postId,
+            @RequestBody@Valid PostUpdateRequest updateRequest
+    ) {
+        return ResponseEntity.ok(
+                postService.updatePost(
+                        postId,
+                        userDetails.getMemberId(),
+                        updateRequest
+                )
+        );
+    }
+
+    @PostMapping("/posts/{postId}")
+    public ResponseEntity<PostResponse> deletePost(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long postId
+    ) {
+        postService.deletePost(
+                postId,
+                userDetails.getMemberId()
+        );
+        return ResponseEntity.noContent().build();
     }
 }

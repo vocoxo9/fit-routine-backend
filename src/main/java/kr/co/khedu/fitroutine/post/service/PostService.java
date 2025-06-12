@@ -3,6 +3,7 @@ package kr.co.khedu.fitroutine.post.service;
 import kr.co.khedu.fitroutine.post.mapper.PostMapper;
 import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
+import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,5 +43,27 @@ public class PostService {
         }
 
         return getPost(postId);
+    }
+
+    public PostResponse updatePost(long postId, long memberId, PostUpdateRequest updateRequest) {
+        if (postMapper.existsPostByMember(postId, memberId) != 1) {
+            throw new IllegalArgumentException("포스트는 본인만 수정할 수 있습니다. id=" + postId);
+        }
+
+        if (postMapper.updatePost(postId, updateRequest) != 1) {
+            throw new NoSuchElementException("포스트가 존재하지 않습니다. id=" + postId);
+        }
+
+        return getPost(postId);
+    }
+
+    public void deletePost(long postId, long memberId) {
+        if (postMapper.existsPostByMember(postId, memberId) != 1) {
+            throw new IllegalArgumentException("포스트는 본인만 수정할 수 있습니다. id=" + postId);
+        }
+
+        if (postMapper.deletePost(postId) != 1) {
+            throw new NoSuchElementException("포스트가 존재하지 않습니다. id=" + postId);
+        }
     }
 }

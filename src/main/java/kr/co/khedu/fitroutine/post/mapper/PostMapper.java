@@ -2,6 +2,7 @@ package kr.co.khedu.fitroutine.post.mapper;
 
 import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
+import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.lang.Nullable;
 
@@ -13,5 +14,11 @@ public interface PostMapper {
 
     @Nullable PostResponse selectPostById(long postId);
 
+    int existsPostByMember(long postId, long memberId);
+
     void insertPost(long blogId, PostCreateRequest createRequest);
+
+    int updatePost(long postId, PostUpdateRequest updateRequest);
+
+    int deletePost(long postId);
 }
