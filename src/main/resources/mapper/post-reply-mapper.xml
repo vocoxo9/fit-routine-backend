@@ -38,6 +38,19 @@
             END
         FROM DUAL
     </select>
+    <select id="existsChildReplies" resultType="int">
+        SELECT
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM TB_REPLY
+                    WHERE PARENT_ID = #{replyId}
+                )
+                THEN 1
+                ELSE 0
+            END
+        FROM DUAL
+    </select>
     <insert id="insertReply">
         <selectKey keyProperty="createRequest.replyId" resultType="long" order="BEFORE">
             SELECT SEQ_REPLY_ID.NEXTVAL
@@ -58,4 +71,8 @@
             #{createRequest.parentId, jdbcType=NUMERIC}
         )
     </insert>
+    <delete id="deleteReply">
+        DELETE FROM TB_REPLY
+        WHERE REPLY_ID = #{replyId}
+    </delete>
 </mapper>

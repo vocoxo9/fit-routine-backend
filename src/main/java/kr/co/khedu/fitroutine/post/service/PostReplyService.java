@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -61,5 +62,15 @@ public class PostReplyService {
         }
 
         return getReply(replyId);
+    }
+
+    public void deleteReply(long replyId) {
+        if (postReplyMapper.existsChildReplies(replyId) == 1) {
+            throw new IllegalStateException("댓글에 자식이 존재합니다. id=" + replyId);
+        }
+
+        if (postReplyMapper.deleteReply(replyId) != 1) {
+            throw new NoSuchElementException("댓글이 존재하지 않습니다. id=" + replyId);
+        }
     }
 }

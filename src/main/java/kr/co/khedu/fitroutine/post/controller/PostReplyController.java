@@ -6,6 +6,7 @@ import kr.co.khedu.fitroutine.post.model.dto.ReplyResponse;
 import kr.co.khedu.fitroutine.post.service.PostReplyService;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +45,12 @@ public class PostReplyController {
                         createRequest
                 )
         );
+    }
+
+    @PreAuthorize("@postReplyService.isReplyOwner(#replyId, principal)")
+    @DeleteMapping("/replies/{replyId}")
+    public ResponseEntity<Void> deleteReply(@PathVariable long replyId) {
+        postReplyService.deleteReply(replyId);
+        return ResponseEntity.noContent().build();
     }
 }

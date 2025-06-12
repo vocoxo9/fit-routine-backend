@@ -15,5 +15,9 @@ public interface PostReplyMapper {
 
     int existsReplyByMemberId(long replyId, long memberId);
 
+    int existsChildReplies(long replyId);
+
     void insertReply(long postId, long memberId, ReplyCreateRequest createRequest);
+
+    int deleteReply(long replyId);
 }
