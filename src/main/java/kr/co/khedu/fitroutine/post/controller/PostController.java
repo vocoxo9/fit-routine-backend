@@ -69,7 +69,7 @@ public class PostController {
 
     @PreAuthorize("@postService.isPostOwner(#postId, principal)")
     @DeleteMapping("/posts/{postId}")
-    public ResponseEntity<PostResponse> deletePost(@PathVariable long postId) {
+    public ResponseEntity<Void> deletePost(@PathVariable long postId) {
         postService.deletePost(postId);
         return ResponseEntity.noContent().build();
     }
