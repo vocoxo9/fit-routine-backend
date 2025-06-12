@@ -34,7 +34,7 @@ public final class FileStorageService {
         }
 
         String oldName = StringUtils.cleanPath(file.getOriginalFilename());
-        String newName = UUID.randomUUID() + StringUtils.getFilenameExtension(oldName);
+        String newName = UUID.randomUUID() + "." + StringUtils.getFilenameExtension(oldName);
 
         Path target = location.resolve(newName);
 
