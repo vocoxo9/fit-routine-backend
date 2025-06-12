@@ -18,10 +18,12 @@ public class PostReplyService {
         this.postReplyMapper = postReplyMapper;
     }
 
+    @Transactional(readOnly = true)
     public List<? extends ReplyResponse> getReplies(long postId) {
         return postReplyMapper.selectRepliesByPostId(postId);
     }
 
+    @Transactional(readOnly = true)
     public ReplyResponse getReply(long replyId) {
         return postReplyMapper.selectReplyById(replyId);
     }
