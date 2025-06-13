@@ -32,5 +32,4 @@ public final class ExerciseController {
     public ResponseEntity<ExerciseOpenData> getExerciseById(@PathVariable int id){
         return ResponseEntity.ok(exerciseService.getExerciseById(id));
     }
-
 }
