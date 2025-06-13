@@ -8,8 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Value("${client.origins}")
-    private String origins;
+    private final String[] origins;
+
+    public WebConfig(@Value("${client.origins}") String origins) {
+        this.origins = origins.split(",");
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
