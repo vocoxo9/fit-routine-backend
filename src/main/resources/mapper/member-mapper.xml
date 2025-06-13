@@ -3,18 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.khedu.fitroutine.member.mapper.MemberMapper">
-    <select id="findMemberByEmail" resultType="kr.co.khedu.fitroutine.member.model.vo.Member">
-        SELECT *
-        FROM TB_MEMBER
-        WHERE EMAIL = #{email}
-    </select>
-    <select id="findMemberByBlogId" resultType="kr.co.khedu.fitroutine.member.model.vo.Member">
-        SELECT *
-        FROM TB_MEMBER M
-        JOIN TB_BLOG B USING (MEMBER_ID)
-        WHERE BLOG_ID = #{blogId}
-    </select>
-    <select id="getMemberProfile" resultType="kr.co.khedu.fitroutine.member.model.dto.MemberProfile">
+    <select id="selectMemberById" resultType="kr.co.khedu.fitroutine.member.model.dto.MemberResponse">
         SELECT
             EMAIL,
             NICKNAME,
@@ -24,10 +13,25 @@
             HEIGHT,
             WEIGHT
         FROM TB_MEMBER
-        JOIN TB_MEMBER_DETAIL USING (MEMBER_ID)
+            JOIN TB_MEMBER_DETAIL USING (MEMBER_ID)
         WHERE MEMBER_ID = #{memberId}
     </select>
-    <update id="editMemberProfile" parameterType="kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo">
+    <select id="selectMemberDetailById" resultType="kr.co.khedu.fitroutine.member.model.dto.MemberDetailResponse">
+        SELECT
+            WEIGHT,
+            HEIGHT,
+            BIRTH_AT,
+            GENDER
+        FROM TB_MEMBER
+            JOIN TB_MEMBER_DETAIL USING (MEMBER_ID)
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+    <select id="selectMemberByEmail" resultType="kr.co.khedu.fitroutine.member.model.vo.Member">
+        SELECT *
+        FROM TB_MEMBER
+        WHERE EMAIL = #{email}
+    </select>
+    <update id="updateMember" parameterType="kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo">
         UPDATE TB_MEMBER
         <set>
             <if test="nickname != null">
@@ -54,29 +58,4 @@
         </set>
         WHERE MEMBER_ID = #{memberId}
     </update>
-    <select id="getLikeList" resultType="kr.co.khedu.fitroutine.member.model.dto.BlogLikeList">
-        SELECT
-        M.MEMBER_ID,
-        M.NICKNAME,
-        M.GENDER,
-        B.GRADE
-        FROM TB_MEMBER M
-        LEFT JOIN TB_BLOG B
-        ON B.MEMBER_ID = M.MEMBER_ID
-        WHERE M.MEMBER_ID IN (
-        SELECT FOLLOWED_MEMBER_ID
-        FROM TB_FOLLOW
-        WHERE FOLLOWER_MEMBER_ID = #{memberId}
-        )
-        AND M.IS_DELETED = 'N'
-    </select>
-
-
-    <select id="getMemberDetail"
-            resultType="kr.co.khedu.fitroutine.member.model.dto.MemberDetail">
-        SELECT WEIGHT, HEIGHT, BIRTH_AT, GENDER
-        FROM TB_MEMBER
-        JOIN TB_MEMBER_DETAIL USING (MEMBER_ID)
-        WHERE MEMBER_ID = #{memberId}
-    </select>
 </mapper>

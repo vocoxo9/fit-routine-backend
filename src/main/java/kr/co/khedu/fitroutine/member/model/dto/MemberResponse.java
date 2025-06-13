@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public final class MemberProfile {
+public final class MemberResponse {
     private final String email;
     private final String nickname;
     private final String birthAt;
@@ -14,7 +14,7 @@ public final class MemberProfile {
     private final int weight;
 
     @Builder
-    private MemberProfile(
+    private MemberResponse(
             String email,
             String nickname,
             String birthAt,
