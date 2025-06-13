@@ -3,7 +3,6 @@ package kr.co.khedu.fitroutine.exercise.controller;
 import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutine;
 import kr.co.khedu.fitroutine.exercise.model.vo.ExerciseOpenData;
 import kr.co.khedu.fitroutine.exercise.service.ExerciseService;
-import kr.co.khedu.fitroutine.member.model.dto.MemberDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
