@@ -2,22 +2,23 @@ package kr.co.khedu.fitroutine.member.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.lang.Nullable;
 
 @Getter
 public final class MemberUpdateRequest {
-    private final String nickname;
-    private final String newPassword;
-    private final String phone;
-    private final Integer height;
-    private final Integer weight;
+    private final @Nullable String nickname;
+    private final @Nullable String newPassword;
+    private final @Nullable String phone;
+    private final @Nullable Integer height;
+    private final @Nullable Integer weight;
 
     @Builder
     private MemberUpdateRequest(
-            String nickname,
-            String newPassword,
-            String phone,
-            Integer height,
-            Integer weight
+            @Nullable String nickname,
+            @Nullable String newPassword,
+            @Nullable String phone,
+            @Nullable Integer height,
+            @Nullable Integer weight
     ) {
         this.nickname = nickname;
         this.newPassword = newPassword;

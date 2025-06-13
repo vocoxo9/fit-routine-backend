@@ -34,14 +34,14 @@
     <update id="updateMember" parameterType="kr.co.khedu.fitroutine.member.model.dto.MemberUpdateRequest">
         UPDATE TB_MEMBER
         <set>
-            <if test="nickname != null">
-                NICKNAME = #{nickname},
+            <if test="updateRequest.nickname != null">
+                NICKNAME = #{updateRequest.nickname},
             </if>
-            <if test="newPassword != null">
-                PASSWORD = #{newPassword},
+            <if test="updateRequest.password != null">
+                PASSWORD = #{updateRequest.newPassword},
             </if>
-            <if test="phone != null">
-                PHONE = #{phone}
+            <if test="updateRequest.phone != null">
+                PHONE = #{updateRequest.phone}
             </if>
         </set>
         WHERE MEMBER_ID = #{memberId}
@@ -49,11 +49,11 @@
     <update id="updateMemberDetail" parameterType="kr.co.khedu.fitroutine.member.model.dto.MemberUpdateRequest">
         UPDATE TB_MEMBER_DETAIL
         <set>
-            <if test="height != null">
-                HEIGHT = #{height},
+            <if test="updateRequest.height != null">
+                HEIGHT = #{updateRequest.height},
             </if>
-            <if test="weight != null">
-                WEIGHT = #{weight}
+            <if test="updateRequest.weight != null">
+                WEIGHT = #{updateRequest.weight}
             </if>
         </set>
         WHERE MEMBER_ID = #{memberId}
