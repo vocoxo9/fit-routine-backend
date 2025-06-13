@@ -10,8 +10,11 @@
             P.CONTENT,
             P.CATEGORY,
             P.CREATED_AT,
-            P.BLOG_ID
+            P.BLOG_ID,
+            M.NICKNAME
         FROM TB_POST P
+            JOIN TB_BLOG B ON B.BLOG_ID = P.BLOG_ID
+            JOIN TB_MEMBER M ON M.MEMBER_ID = B.MEMBER_ID
         <where>
             <if test="blogId != null">
                 P.BLOG_ID = #{blogId}
@@ -33,14 +36,17 @@
     </select>
     <select id="selectPostById" resultType="kr.co.khedu.fitroutine.post.model.dto.PostResponse">
         SELECT
-            POST_ID,
-            TITLE,
-            CONTENT,
-            CATEGORY,
-            CREATED_AT,
-            BLOG_ID
-        FROM TB_POST
-        WHERE POST_ID = #{postId}
+            P.POST_ID,
+            P.TITLE,
+            P.CONTENT,
+            P.CATEGORY,
+            P.CREATED_AT,
+            P.BLOG_ID,
+            M.NICKNAME
+        FROM TB_POST P
+        WHERE P.POST_ID = #{postId}
+            JOIN TB_BLOG B ON B.BLOG_ID = P.BLOG_ID
+            JOIN TB_MEMBER M ON M.MEMBER_ID = B.MEMBER_ID
     </select>
     <select id="existsPostByMemberId" resultType="int">
         SELECT
