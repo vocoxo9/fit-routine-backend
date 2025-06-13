@@ -2,7 +2,6 @@ package kr.co.khedu.fitroutine.exercise.mapper;
 
 import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutine;
 import kr.co.khedu.fitroutine.exercise.model.vo.ExerciseOpenData;
-import kr.co.khedu.fitroutine.member.model.dto.MemberDetail;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
