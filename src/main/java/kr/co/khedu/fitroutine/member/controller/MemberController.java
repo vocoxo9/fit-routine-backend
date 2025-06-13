@@ -1,6 +1,7 @@
 package kr.co.khedu.fitroutine.member.controller;
 
 import kr.co.khedu.fitroutine.member.model.dto.BlogLikeList;
+import kr.co.khedu.fitroutine.member.model.dto.MemberDetail;
 import kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo;
 import kr.co.khedu.fitroutine.member.model.dto.MemberProfile;
 import kr.co.khedu.fitroutine.member.service.MemberService;
@@ -43,5 +44,12 @@ public final class MemberController {
         long memberId = 1;
 
         return ResponseEntity.ok(memberService.getLikeList(memberId));
+    }
+    
+    @GetMapping("/detail")
+    public ResponseEntity<MemberDetail> getMemberDetail(){
+        // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
+        long memberId = 1;
+        return ResponseEntity.ok(memberService.getMemberDetail(memberId));
     }
 }

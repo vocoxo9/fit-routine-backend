@@ -50,7 +50,4 @@ public final class ExerciseService {
         return exerciseMapper.getExerciseById(id);
     }
 
-    public MemberDetail getMemberDetail(long memberId){
-        return exerciseMapper.getMemberDetail(memberId);
-    }
 }

@@ -15,6 +15,4 @@ public interface ExerciseMapper {
 
     ExerciseOpenData getExerciseById(int id);
 
-    MemberDetail getMemberDetail(long memberId);
-
 }

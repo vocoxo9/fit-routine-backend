@@ -71,4 +71,13 @@
         )
         AND M.IS_DELETED = 'N'
     </select>
+
+
+    <select id="getMemberDetail"
+            resultType="kr.co.khedu.fitroutine.member.model.dto.MemberDetail">
+        SELECT WEIGHT, HEIGHT, BIRTH_AT, GENDER
+        FROM TB_MEMBER
+        JOIN TB_MEMBER_DETAIL USING (MEMBER_ID)
+        WHERE MEMBER_ID = #{memberId}
+    </select>
 </mapper>

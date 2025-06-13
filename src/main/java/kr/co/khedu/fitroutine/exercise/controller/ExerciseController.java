@@ -33,9 +33,4 @@ public final class ExerciseController {
         return ResponseEntity.ok(exerciseService.getExerciseById(id));
     }
 
-    @GetMapping("/member-detail")
-    public ResponseEntity<MemberDetail> getMemberDetail(){
-        long memberId = 1;
-        return ResponseEntity.ok(exerciseService.getMemberDetail(memberId));
-    }
 }
