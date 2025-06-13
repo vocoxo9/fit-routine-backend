@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.khedu.fitroutine.post.mapper.PostReplyMapper">
+    <select id="selectRepliesByPostId" resultType="kr.co.khedu.fitroutine.post.model.dto.ReplyResponse">
+        SELECT
+            REPLY_ID,
+            CONTENT,
+            CREATED_AT,
+            PARENT_ID,
+            POST_ID
+        FROM TB_REPLY
+        WHERE POST_ID = #{postId}
+    </select>
+    <select id="selectReplyById" resultType="kr.co.khedu.fitroutine.post.model.dto.ReplyResponse">
+        SELECT
+            REPLY_ID,
+            CONTENT,
+            CREATED_AT,
+            PARENT_ID,
+            POST_ID
+        FROM TB_REPLY
+        WHERE REPLY_ID = #{replyId}
+    </select>
+    <select id="existsReplyByMemberId" resultType="int">
+        SELECT
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM TB_REPLY R
+                    JOIN TB_MEMBER M ON R.MEMBER_ID = M.MEMBER_ID
+                    WHERE R.REPLY_ID = #{replyId}
+                    AND M.MEMBER_ID = #{memberId}
+                )
+                THEN 1
+                ELSE 0
+            END
+        FROM DUAL
+    </select>
+    <select id="existsChildReplies" resultType="int">
+        SELECT
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM TB_REPLY
+                    WHERE PARENT_ID = #{replyId}
+                )
+                THEN 1
+                ELSE 0
+            END
+        FROM DUAL
+    </select>
+    <insert id="insertReply">
+        <selectKey keyProperty="createRequest.replyId" resultType="long" order="BEFORE">
+            SELECT SEQ_REPLY_ID.NEXTVAL
+            FROM dual
+        </selectKey>
+        INSERT INTO TB_REPLY (
+            REPLY_ID,
+            POST_ID,
+            MEMBER_ID,
+            CONTENT,
+            PARENT_ID
+        )
+        VALUES (
+            #{createRequest.replyId},
+            #{postId},
+            #{memberId},
+            #{createRequest.content},
+            #{createRequest.parentId, jdbcType=NUMERIC}
+        )
+    </insert>
+    <delete id="deleteReply">
+        DELETE FROM TB_REPLY
+        WHERE REPLY_ID = #{replyId}
+    </delete>
+</mapper>

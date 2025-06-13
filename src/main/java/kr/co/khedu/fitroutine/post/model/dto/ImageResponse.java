@@ -1,20 +1,25 @@
-package kr.co.khedu.fitroutine.board.model.vo;
+package kr.co.khedu.fitroutine.post.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public final class Image {
+public final class ImageResponse {
     private final long imageId;
     private final String originName;
     private final String changeName;
-    private final long boardId;
+    private final long postId;
 
     @Builder
-    private Image(long imageId, String originName, String changeName, long boardId) {
+    private ImageResponse(
+            long imageId,
+            String originName,
+            String changeName,
+            long postId
+    ) {
         this.imageId = imageId;
         this.originName = originName;
         this.changeName = changeName;
-        this.boardId = boardId;
+        this.postId = postId;
     }
 }
