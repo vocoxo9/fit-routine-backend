@@ -2,6 +2,7 @@ package kr.co.khedu.fitroutine.post.controller;
 
 import jakarta.validation.Valid;
 import kr.co.khedu.fitroutine.post.model.dto.ReplyCreateRequest;
+import kr.co.khedu.fitroutine.post.model.dto.ReplyLikesResponse;
 import kr.co.khedu.fitroutine.post.model.dto.ReplyResponse;
 import kr.co.khedu.fitroutine.post.service.PostReplyService;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
@@ -51,6 +52,32 @@ public class PostReplyController {
     @DeleteMapping("/replies/{replyId}")
     public ResponseEntity<Void> deleteReply(@PathVariable long replyId) {
         postReplyService.deleteReply(replyId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/replies/{replyId}/likes")
+    public ResponseEntity<ReplyLikesResponse> getPostLikes(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long replyId
+    ) {
+        return ResponseEntity.ok(postReplyService.getReplyLikes(userDetails.getMemberId(), replyId));
+    }
+
+    @PostMapping("/replies/{replyId}/likes")
+    public ResponseEntity<Void> likePost(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long replyId
+    ) {
+        postReplyService.likeReply(userDetails.getMemberId(), replyId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/replies/{replyId}/likes")
+    public ResponseEntity<Void> unlikePost(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long replyId
+    ) {
+        postReplyService.unlikeReply(userDetails.getMemberId(), replyId);
         return ResponseEntity.noContent().build();
     }
 }

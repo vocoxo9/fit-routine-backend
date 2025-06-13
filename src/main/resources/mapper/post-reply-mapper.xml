@@ -75,4 +75,31 @@
         DELETE FROM TB_REPLY
         WHERE REPLY_ID = #{replyId}
     </delete>
+    <select id="selectReplyLikes" resultType="kr.co.khedu.fitroutine.post.model.dto.ReplyLikesResponse">
+        SELECT
+            NVL(
+                MAX(
+                    CASE
+                        WHEN MEMBER_ID = #{memberId} THEN 1
+                        ELSE 0
+                    END
+                ),
+                0
+            ) AS liked,
+            COUNT(*) AS count
+        FROM TB_REPLY_LIKE
+        WHERE REPLY_ID = #{replyId}
+    </select>
+    <insert id="likeReply">
+        INSERT INTO TB_REPLY_LIKE
+        VALUES (
+            #{memberId},
+            #{replyId}
+        )
+    </insert>
+    <delete id="unlikeReply">
+        DELETE FROM TB_REPLY_LIKE
+        WHERE MEMBER_ID = #{memberId}
+        AND REPLY_ID = #{replyId}
+    </delete>
 </mapper>

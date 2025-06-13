@@ -2,6 +2,7 @@ package kr.co.khedu.fitroutine.post.service;
 
 import kr.co.khedu.fitroutine.post.mapper.PostReplyMapper;
 import kr.co.khedu.fitroutine.post.model.dto.ReplyCreateRequest;
+import kr.co.khedu.fitroutine.post.model.dto.ReplyLikesResponse;
 import kr.co.khedu.fitroutine.post.model.dto.ReplyResponse;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.stereotype.Service;
@@ -71,6 +72,27 @@ public class PostReplyService {
 
         if (postReplyMapper.deleteReply(replyId) != 1) {
             throw new NoSuchElementException("댓글이 존재하지 않습니다. id=" + replyId);
+        }
+    }
+
+    public ReplyLikesResponse getReplyLikes(long memberId, long postId) {
+        ReplyLikesResponse postLikesResponse = postReplyMapper.selectReplyLikes(memberId, postId);
+        if (postLikesResponse == null) {
+            throw new IllegalStateException("포스트의 좋아요 목록을 불러올 수 없습니다.");
+        }
+
+        return postLikesResponse;
+    }
+
+    public void likeReply(long memberId, long postId) {
+        if (postReplyMapper.likeReply(memberId, postId) != 1) {
+            throw new IllegalStateException("이미 좋아요한 포스트입니다. id=" + postId + ", followed=" + memberId);
+        }
+    }
+
+    public void unlikeReply(long memberId, long postId) {
+        if (postReplyMapper.unlikeReply(memberId, postId) != 1) {
+            throw new NoSuchElementException("포스트 좋아요가 존재하지 않습니다. id=" + postId + ", followed=" + memberId);
         }
     }
 }
