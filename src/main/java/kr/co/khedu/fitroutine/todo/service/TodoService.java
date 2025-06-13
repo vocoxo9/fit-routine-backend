@@ -1,5 +1,6 @@
 package kr.co.khedu.fitroutine.todo.service;
 
+import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
 import kr.co.khedu.fitroutine.todo.model.dto.MyRank;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3;
 import kr.co.khedu.fitroutine.todo.mapper.TodoMapper;
@@ -27,5 +28,9 @@ public class TodoService {
                     .build();
         }
         return myRank;
+    }
+
+    public int registExerciseRoutine(long memberId, RoutineInfo routineInfo){
+        return todoMapper.registExerciseRoutine(memberId, routineInfo);
     }
 }

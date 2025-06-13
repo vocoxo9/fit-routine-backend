@@ -31,4 +31,10 @@
         JOIN TB_MEMBER USING(NICKNAME)
         WHERE MEMBER_ID = #{memberId}
     </select>
+
+    <insert id="registExerciseRoutine">
+        INSERT INTO TB_TODO VALUES
+        (SEQ_TODO_ID.NEXTVAL, #{memberId}, #{startedAt}, #{endedAt}, #{purpose}, #{category}, #{dayRepeat}, #{tdee}, #{goalWeight})
+    </insert>
+
 </mapper>

@@ -1,6 +1,6 @@
 package kr.co.khedu.fitroutine.exercise.mapper;
 
-import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutine;
+import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
 import kr.co.khedu.fitroutine.exercise.model.vo.ExerciseOpenData;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,4 +14,5 @@ public interface ExerciseMapper {
 
     ExerciseOpenData getExerciseById(int id);
 
+    int registExerciseRoutine(long memberId, RoutineInfo routineInfo);
 }
