@@ -13,16 +13,19 @@ public final class UserDetailsImpl implements UserDetails {
     private final long memberId;
     private final String email;
     private final String password;
+    private final String nickname;
 
     @Builder
     private UserDetailsImpl(
             long memberId,
             String email,
-            String password
+            String password,
+            String nickname
     ) {
         this.memberId = memberId;
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
     }
 
     @Override
