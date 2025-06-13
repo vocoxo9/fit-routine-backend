@@ -3,6 +3,7 @@ package kr.co.khedu.fitroutine.exercise.controller;
 import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutine;
 import kr.co.khedu.fitroutine.exercise.model.vo.ExerciseOpenData;
 import kr.co.khedu.fitroutine.exercise.service.ExerciseService;
+import kr.co.khedu.fitroutine.member.model.dto.MemberDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +31,11 @@ public final class ExerciseController {
     @GetMapping("/{id}")
     public ResponseEntity<ExerciseOpenData> getExerciseById(@PathVariable int id){
         return ResponseEntity.ok(exerciseService.getExerciseById(id));
+    }
+
+    @GetMapping("/member-detail")
+    public ResponseEntity<MemberDetail> getMemberDetail(){
+        long memberId = 1;
+        return ResponseEntity.ok(exerciseService.getMemberDetail(memberId));
     }
 }

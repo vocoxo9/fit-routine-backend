@@ -3,6 +3,7 @@ package kr.co.khedu.fitroutine.exercise.service;
 import kr.co.khedu.fitroutine.exercise.mapper.ExerciseMapper;
 import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutine;
 import kr.co.khedu.fitroutine.exercise.model.vo.ExerciseOpenData;
+import kr.co.khedu.fitroutine.member.model.dto.MemberDetail;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -47,5 +48,9 @@ public final class ExerciseService {
 
     public ExerciseOpenData getExerciseById(int id) {
         return exerciseMapper.getExerciseById(id);
+    }
+
+    public MemberDetail getMemberDetail(long memberId){
+        return exerciseMapper.getMemberDetail(memberId);
     }
 }

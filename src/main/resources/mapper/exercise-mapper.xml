@@ -29,4 +29,11 @@
         FROM TB_EXERCISE
         WHERE EXERCISE_ID = #{id}
     </select>
+
+    <select id="getMemberDetail"
+        resultType="kr.co.khedu.fitroutine.member.model.dto.MemberDetail">
+        SELECT HEIGHT, WEIGHT
+        FROM TB_MEMBER_DETAIL
+        WHERE MEMBER_ID = #{memberId}
+    </select>
 </mapper>
