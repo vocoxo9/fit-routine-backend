@@ -20,11 +20,8 @@ public class TodoService {
 
     public MyRank getgetRoutineMvpMyRank(long memberId) {
         MyRank myRank = todoMapper.getRoutineMvpMyRank(memberId);
-        if (myRank == null) {
-            myRank = MyRank.builder()
-                    .rank(0)
-                    .count(0)
-                    .build();
+        if(myRank == null){
+            throw new IllegalStateException("등록된 루틴을 찾을 수 없습니다. " + memberId);
         }
         return myRank;
     }
