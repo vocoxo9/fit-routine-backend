@@ -46,7 +46,7 @@ public final class MemberController {
         return ResponseEntity.ok(memberService.getLikeList(memberId));
     }
     
-    @GetMapping("/detail")
+    @GetMapping("/me/detail")
     public ResponseEntity<MemberDetail> getMemberDetail(){
         // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
         long memberId = 1;
