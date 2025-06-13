@@ -55,6 +55,10 @@ public class MemberService {
     }
 
     public MemberDetail getMemberDetail(long memberId){
-        return memberMapper.getMemberDetail(memberId);
+        MemberDetail memberDetail = memberMapper.getMemberDetail(memberId);
+        if(memberDetail == null){
+            throw new IllegalStateException("회원 상세 정보를 찾을 수 없습니다. " + memberId);
+        }
+        return memberDetail;
     }
 }
