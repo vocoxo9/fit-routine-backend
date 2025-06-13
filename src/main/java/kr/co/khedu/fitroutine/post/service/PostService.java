@@ -1,10 +1,7 @@
 package kr.co.khedu.fitroutine.post.service;
 
 import kr.co.khedu.fitroutine.post.mapper.PostMapper;
-import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
-import kr.co.khedu.fitroutine.post.model.dto.PostLikesResponse;
-import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
-import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
+import kr.co.khedu.fitroutine.post.model.dto.*;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -23,8 +20,14 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<? extends PostResponse> getPosts(@Nullable Long blogId, int page, int size) {
-        return postMapper.selectPostsByBlogId(blogId, page * size, size);
+    public List<? extends PostResponse> getPosts(
+            @Nullable Long blogId,
+            int page,
+            int size,
+            PostSort sort,
+            PostSortOrder order
+    ) {
+        return postMapper.selectPostsByBlogId(blogId, page * size, size, sort, order);
     }
 
     @Transactional(readOnly = true)

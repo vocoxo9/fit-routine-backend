@@ -3,10 +3,7 @@ package kr.co.khedu.fitroutine.post.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
-import kr.co.khedu.fitroutine.post.model.dto.PostLikesResponse;
-import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
-import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
+import kr.co.khedu.fitroutine.post.model.dto.*;
 import kr.co.khedu.fitroutine.post.service.PostService;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
@@ -30,18 +27,22 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity<List<? extends PostResponse>> getPosts(
             @RequestParam(defaultValue = "0") @Min(0) int page,
-            @RequestParam(defaultValue = "12") @Min(1) @Max(12) int size
+            @RequestParam(defaultValue = "12") @Min(1) @Max(12) int size,
+            @RequestParam(defaultValue = "date") PostSort sort,
+            @RequestParam(defaultValue = "desc") PostSortOrder order
     ) {
-        return ResponseEntity.ok(postService.getPosts(null, page, size));
+        return ResponseEntity.ok(postService.getPosts(null, page, size, sort, order));
     }
 
     @GetMapping("/blogs/{blogId}/posts")
     public ResponseEntity<List<? extends PostResponse>> getPosts(
             @PathVariable long blogId,
             @RequestParam(defaultValue = "0") @Min(0) int page,
-            @RequestParam(defaultValue = "12") @Min(1) @Max(12) int size
+            @RequestParam(defaultValue = "12") @Min(1) @Max(12) int size,
+            @RequestParam(defaultValue = "date") PostSort sort,
+            @RequestParam(defaultValue = "desc") PostSortOrder order
     ) {
-        return ResponseEntity.ok(postService.getPosts(blogId, page, size));
+        return ResponseEntity.ok(postService.getPosts(blogId, page, size, sort, order));
     }
 
     @GetMapping("/posts/{postId}")

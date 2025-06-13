@@ -5,19 +5,30 @@
 <mapper namespace="kr.co.khedu.fitroutine.post.mapper.PostMapper">
     <select id="selectPostsByBlogId" resultType="kr.co.khedu.fitroutine.post.model.dto.PostResponse">
         SELECT
-            POST_ID,
-            TITLE,
-            CONTENT,
-            CATEGORY,
-            CREATED_AT,
-            BLOG_ID
-        FROM TB_POST
+            P.POST_ID,
+            P.TITLE,
+            P.CONTENT,
+            P.CATEGORY,
+            P.CREATED_AT,
+            P.BLOG_ID
+        FROM TB_POST P
         <where>
             <if test="blogId != null">
-                BLOG_ID = #{blogId}
+                P.BLOG_ID = #{blogId}
             </if>
         </where>
-        ORDER BY CREATED_AT DESC
+        <choose>
+            <when test="sort.name() == 'likes'">
+                ORDER BY (
+                    SELECT COUNT(1)
+                    FROM TB_POST_LIKE L
+                    WHERE L.POST_ID = P.POST_ID
+                ) ${order.name()}
+            </when>
+            <otherwise>
+                ORDER BY P.CREATED_AT ${order.name()}
+            </otherwise>
+        </choose>
         OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
     <select id="selectPostById" resultType="kr.co.khedu.fitroutine.post.model.dto.PostResponse">
