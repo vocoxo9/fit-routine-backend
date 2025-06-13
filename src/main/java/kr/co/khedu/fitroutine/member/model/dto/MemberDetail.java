@@ -1,9 +1,6 @@
 package kr.co.khedu.fitroutine.member.model.dto;
 
-import jakarta.annotation.Nullable;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.sql.Date;
 
