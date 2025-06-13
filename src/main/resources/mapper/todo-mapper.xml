@@ -14,4 +14,20 @@
         )
         WHERE ROWNUM &lt;= 3
     </select>
+    <select id="getRoutineMvpMyRank" resultType="kr.co.khedu.fitroutine.todo.dto.MyRank">
+        SELECT RANK, COUNT
+        FROM (
+        SELECT NICKNAME, COUNT, ROWNUM RANK
+        FROM (
+        SELECT NICKNAME, COUNT(*) COUNT
+        FROM TB_TODO
+        JOIN TB_MEMBER USING(MEMBER_ID)
+        WHERE EXTRACT(MONTH FROM STARTED_AT) = EXTRACT(MONTH FROM SYSDATE)
+        GROUP BY NICKNAME
+        ORDER BY 2 DESC
+        )
+        )
+        JOIN TB_MEMBER USING(NICKNAME)
+        WHERE MEMBER_ID = #{memberId}
+    </select>
 </mapper>
