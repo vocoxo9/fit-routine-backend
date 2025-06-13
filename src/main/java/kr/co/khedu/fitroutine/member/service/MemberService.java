@@ -1,14 +1,11 @@
 package kr.co.khedu.fitroutine.member.service;
 
 import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
-import kr.co.khedu.fitroutine.member.model.dto.BlogLikeList;
-import kr.co.khedu.fitroutine.member.model.dto.MemberDetail;
-import kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo;
-import kr.co.khedu.fitroutine.member.model.dto.MemberProfile;
+import kr.co.khedu.fitroutine.member.model.dto.MemberDetailResponse;
+import kr.co.khedu.fitroutine.member.model.dto.MemberUpdateRequest;
+import kr.co.khedu.fitroutine.member.model.dto.MemberResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class MemberService {
@@ -18,43 +15,41 @@ public class MemberService {
         this.memberMapper = memberMapper;
     }
 
-    public MemberProfile getMemberProfile(long memberId) {
-        MemberProfile memberProfile = memberMapper.getMemberProfile(memberId);
-        if (memberProfile == null) {
+    public MemberResponse getMember(long memberId) {
+        MemberResponse memberResponse = memberMapper.selectMemberById(memberId);
+        if (memberResponse == null) {
             throw new IllegalStateException("회원을 찾을 수 없습니다: " + memberId);
         }
 
-        return memberProfile;
+        return memberResponse;
+    }
+
+    public MemberDetailResponse getMemberDetail(long memberId){
+        MemberDetailResponse memberDetailResponse = memberMapper.selectMemberDetailById(memberId);
+        if (memberDetailResponse == null) {
+            throw new IllegalStateException("회원을 찾을 수 없습니다: " + memberId);
+        }
+
+        return memberDetailResponse;
     }
 
     @Transactional
-    public boolean editMemberProfile(MemberEditInfo memberEditInfo) {
-        boolean result = true;
-        if (memberEditInfo.getNickname() != null ||
-                memberEditInfo.getPhone() != null ||
-                memberEditInfo.getNewPassword() != null
+    public void updateMember(long memberId, MemberUpdateRequest updateRequest) {
+        if (updateRequest.getNickname() != null ||
+                updateRequest.getPhone() != null ||
+                updateRequest.getNewPassword() != null
         ) {
-            if (memberMapper.editMemberProfile(memberEditInfo) <= 0) {
-                result = false;
+            if (memberMapper.updateMember(memberId, updateRequest) != 0) {
+                throw new IllegalStateException("회원 프로필을 수정할 수 없습니다.");
             }
         }
 
-        if (memberEditInfo.getHeight() != null ||
-                memberEditInfo.getWeight() != null
+        if (updateRequest.getHeight() != null ||
+                updateRequest.getWeight() != null
         ) {
-            if (memberMapper.updateMemberDetail(memberEditInfo) <= 0) {
-                result = false;
+            if (memberMapper.updateMemberDetail(memberId, updateRequest) <= 0) {
+                throw new IllegalStateException("회원 상세 정보를 수정할 수 없습니다.");
             }
         }
-
-        return result;
-    }
-
-    public List<? extends BlogLikeList> getLikeList(long memberId) {
-        return memberMapper.getLikeList(memberId);
-    }
-
-    public MemberDetail getMemberDetail(long memberId){
-        return memberMapper.getMemberDetail(memberId);
     }
 }

@@ -18,7 +18,7 @@ public final class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberMapper.findMemberByEmail(username);
+        Member member = memberMapper.selectMemberByEmail(username);
 
         if (member == null) {
             throw new UsernameNotFoundException(username);

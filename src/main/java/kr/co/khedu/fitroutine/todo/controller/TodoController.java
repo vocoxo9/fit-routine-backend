@@ -17,4 +17,9 @@ public final class TodoController {
         return ResponseEntity.ok(todoService.getRoutineMvpTOP3());
     }
 
+    @GetMapping("/routine-rankings/monthly/me")
+    public ResponseEntity<?> getRoutineMvpMyRank() {
+        long memberId = 1;
+        return ResponseEntity.ok(todoService.getgetRoutineMvpMyRank(memberId));
+    }
 }

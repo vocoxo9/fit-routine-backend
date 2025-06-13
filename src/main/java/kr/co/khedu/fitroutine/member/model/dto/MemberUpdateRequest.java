@@ -2,12 +2,9 @@ package kr.co.khedu.fitroutine.member.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
-public final class MemberEditInfo {
-    private Long memberId;
+public final class MemberUpdateRequest {
     private final String nickname;
     private final String newPassword;
     private final String phone;
@@ -15,15 +12,13 @@ public final class MemberEditInfo {
     private final Integer weight;
 
     @Builder
-    private MemberEditInfo(
-            Long memberId,
+    private MemberUpdateRequest(
             String nickname,
             String newPassword,
             String phone,
             Integer height,
             Integer weight
     ) {
-        this.memberId = memberId;
         this.nickname = nickname;
         this.newPassword = newPassword;
         this.phone = phone;

@@ -1,14 +1,13 @@
 package kr.co.khedu.fitroutine.member.controller;
 
-import kr.co.khedu.fitroutine.member.model.dto.BlogLikeList;
-import kr.co.khedu.fitroutine.member.model.dto.MemberDetail;
-import kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo;
-import kr.co.khedu.fitroutine.member.model.dto.MemberProfile;
+import kr.co.khedu.fitroutine.member.model.dto.MemberDetailResponse;
+import kr.co.khedu.fitroutine.member.model.dto.MemberUpdateRequest;
+import kr.co.khedu.fitroutine.member.model.dto.MemberResponse;
 import kr.co.khedu.fitroutine.member.service.MemberService;
+import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/members")
@@ -20,36 +19,25 @@ public final class MemberController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<MemberProfile> getMemberProfile() {
-        // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
-        long memberId = 1;
+    public ResponseEntity<MemberResponse> getMember(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        return ResponseEntity.ok(memberService.getMember(userDetails.getMemberId()));
+    }
 
-        return ResponseEntity.ok(memberService.getMemberProfile(memberId));
+    @GetMapping("/me/detail")
+    public ResponseEntity<MemberDetailResponse> getMemberDetail(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        return ResponseEntity.ok(memberService.getMemberDetail(userDetails.getMemberId()));
     }
 
     @PatchMapping("/me")
-    public ResponseEntity<String> editMemberProfile(@RequestBody MemberEditInfo memberEditInfo) {
-        // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
-        long memberId = 1;
-        memberEditInfo.setMemberId(memberId);
-
-        return memberService.editMemberProfile(memberEditInfo) ?
-                ResponseEntity.ok("success") :
-                ResponseEntity.status(500).body("failure");
-    }
-
-    @GetMapping("/me/likes")
-    public ResponseEntity<List<? extends BlogLikeList>> getLikes() {
-        // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
-        long memberId = 1;
-
-        return ResponseEntity.ok(memberService.getLikeList(memberId));
-    }
-    
-    @GetMapping("/me/detail")
-    public ResponseEntity<MemberDetail> getMemberDetail(){
-        // 추후에 토큰에서 회원을 얻도록 변경해야 합니다.
-        long memberId = 1;
-        return ResponseEntity.ok(memberService.getMemberDetail(memberId));
+    public ResponseEntity<Void> updateMember(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody MemberUpdateRequest updateRequest
+    ) {
+        memberService.updateMember(userDetails.getMemberId(), updateRequest);
+        return ResponseEntity.noContent().build();
     }
 }
