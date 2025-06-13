@@ -1,9 +1,6 @@
 package kr.co.khedu.fitroutine.post.mapper;
 
-import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
-import kr.co.khedu.fitroutine.post.model.dto.PostLikesResponse;
-import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
-import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
+import kr.co.khedu.fitroutine.post.model.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.lang.Nullable;
 
@@ -11,7 +8,13 @@ import java.util.List;
 
 @Mapper
 public interface PostMapper {
-    List<? extends PostResponse> selectPostsByBlogId(long blogId, int offset, int size);
+    List<? extends PostResponse> selectPostsByBlogId(
+            @Nullable Long blogId,
+            int offset,
+            int size,
+            PostSort sort,
+            PostSortOrder order
+    );
 
     @Nullable PostResponse selectPostById(long postId);
 
