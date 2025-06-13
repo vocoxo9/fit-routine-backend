@@ -48,4 +48,5 @@ public final class ExerciseService {
     public ExerciseOpenData getExerciseById(int id) {
         return exerciseMapper.getExerciseById(id);
     }
+
 }

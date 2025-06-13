@@ -1,6 +1,7 @@
 package kr.co.khedu.fitroutine.member.mapper;
 
 import jakarta.annotation.Nullable;
+import kr.co.khedu.fitroutine.member.model.dto.MemberDetail;
 import kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo;
 import kr.co.khedu.fitroutine.member.model.dto.BlogLikeList;
 import kr.co.khedu.fitroutine.member.model.dto.MemberProfile;
@@ -22,4 +23,6 @@ public interface MemberMapper {
     int updateMemberDetail(MemberEditInfo memberEditInfo);
 
     List<? extends BlogLikeList> getLikeList(long memberId);
+
+    MemberDetail getMemberDetail(long memberId);
 }

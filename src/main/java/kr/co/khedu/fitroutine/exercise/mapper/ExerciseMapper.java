@@ -13,4 +13,5 @@ public interface ExerciseMapper {
     List<? extends Integer> getRandomExerciseRoutine(int dayRepeat, String purpose);
 
     ExerciseOpenData getExerciseById(int id);
+
 }
