@@ -1,4 +1,4 @@
-package kr.co.khedu.fitroutine.todo.dto;
+package kr.co.khedu.fitroutine.todo.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;

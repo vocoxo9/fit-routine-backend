@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.khedu.fitroutine.todo.mapper.TodoMapper">
-    <select id="getRoutineMvpTOP3" resultType="kr.co.khedu.fitroutine.todo.dto.RoutineMvpTOP3">
+    <select id="getRoutineMvpTOP3" resultType="kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3">
         SELECT NICKNAME, COUNT
         FROM (
             SELECT NICKNAME, COUNT(*) COUNT
@@ -14,5 +14,21 @@
             ORDER BY 2 DESC
         )
         WHERE ROWNUM &lt;= 3
+    </select>
+    <select id="getRoutineMvpMyRank" resultType="kr.co.khedu.fitroutine.todo.model.dto.MyRank">
+        SELECT RANK, COUNT
+        FROM (
+            SELECT NICKNAME, COUNT, ROWNUM RANK
+            FROM (
+                SELECT NICKNAME, COUNT(*) COUNT
+                FROM TB_TODO
+                JOIN TB_MEMBER USING(MEMBER_ID)
+                WHERE EXTRACT(MONTH FROM STARTED_AT) = EXTRACT(MONTH FROM SYSDATE)
+                GROUP BY NICKNAME
+                ORDER BY 2 DESC
+            )
+        )
+        JOIN TB_MEMBER USING(NICKNAME)
+        WHERE MEMBER_ID = #{memberId}
     </select>
 </mapper>
