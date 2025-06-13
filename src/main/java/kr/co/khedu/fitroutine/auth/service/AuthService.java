@@ -27,7 +27,7 @@ public class AuthService {
     }
 
     public LoginResponse login(LoginRequest request) {
-        Member member = memberMapper.findMemberByEmail(request.getEmail());
+        Member member = memberMapper.selectMemberByEmail(request.getEmail());
 
         if (member == null || !passwordEncoder.matches(request.getPassword(), member.getPassword())) {
             throw new IllegalStateException("이메일 또는 비밀번호가 틀렸습니다.");
