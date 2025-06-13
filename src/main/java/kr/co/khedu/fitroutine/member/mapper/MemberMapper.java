@@ -24,5 +24,5 @@ public interface MemberMapper {
 
     List<? extends BlogLikeList> getLikeList(long memberId);
 
-    MemberDetail getMemberDetail(long memberId);
+    @Nullable MemberDetail getMemberDetail(long memberId);
 }
