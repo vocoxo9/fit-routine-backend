@@ -56,7 +56,7 @@ public class PostReplyController {
     }
 
     @GetMapping("/replies/{replyId}/likes")
-    public ResponseEntity<ReplyLikesResponse> getPostLikes(
+    public ResponseEntity<ReplyLikesResponse> getReplyLikes(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long replyId
     ) {
@@ -64,7 +64,7 @@ public class PostReplyController {
     }
 
     @PostMapping("/replies/{replyId}/likes")
-    public ResponseEntity<Void> likePost(
+    public ResponseEntity<Void> likeReply(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long replyId
     ) {
@@ -73,7 +73,7 @@ public class PostReplyController {
     }
 
     @DeleteMapping("/replies/{replyId}/likes")
-    public ResponseEntity<Void> unlikePost(
+    public ResponseEntity<Void> unlikeReply(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long replyId
     ) {
