@@ -1,6 +1,7 @@
 package kr.co.khedu.fitroutine.post.mapper;
 
 import kr.co.khedu.fitroutine.post.model.dto.PostCreateRequest;
+import kr.co.khedu.fitroutine.post.model.dto.PostLikesResponse;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
 import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,4 +22,10 @@ public interface PostMapper {
     int updatePost(long postId, PostUpdateRequest updateRequest);
 
     int deletePost(long postId);
+
+    @Nullable PostLikesResponse selectPostLikes(long memberId, long postId);
+
+    int likePost(long memberId, long postId);
+
+    int unlikePost(long memberId, long postId);
 }

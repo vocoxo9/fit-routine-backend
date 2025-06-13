@@ -82,4 +82,31 @@
         DELETE FROM TB_POST
         WHERE POST_ID = #{postId}
     </delete>
+    <select id="selectPostLikes" resultType="kr.co.khedu.fitroutine.post.model.dto.PostLikesResponse">
+        SELECT
+            NVL(
+                MAX(
+                    CASE
+                        WHEN MEMBER_ID = #{memberId} THEN 1
+                        ELSE 0
+                    END
+                ),
+                0
+            ) AS liked,
+            COUNT(*) AS count
+        FROM TB_POST_LIKE
+        WHERE POST_ID = #{postId}
+    </select>
+    <insert id="likePost">
+        INSERT INTO TB_POST_LIKE
+        VALUES (
+            #{memberId},
+            #{postId}
+        )
+    </insert>
+    <delete id="unlikePost">
+        DELETE FROM TB_POST_LIKE
+        WHERE MEMBER_ID = #{memberId}
+        AND POST_ID = #{postId}
+    </delete>
 </mapper>
