@@ -7,18 +7,21 @@ import java.sql.Date;
 
 @Getter
 public final class MemberDetail {
-
     private final double height;
     private final double weight;
     private final Date birthAt;
     private final String gender;
 
     @Builder
-    public MemberDetail(double height, double weight, Date birthAt, String gender) {
+    private MemberDetail(
+            final double height,
+            final double weight,
+            final Date birthAt,
+            final String gender
+    ) {
         this.height = height;
         this.weight = weight;
         this.birthAt = birthAt;
         this.gender = gender;
     }
-
 }
