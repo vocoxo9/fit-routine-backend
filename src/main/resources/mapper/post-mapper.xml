@@ -12,7 +12,11 @@
             CREATED_AT,
             BLOG_ID
         FROM TB_POST
-        WHERE BLOG_ID = #{blogId}
+        <where>
+            <if test="blogId != null">
+                BLOG_ID = #{blogId}
+            </if>
+        </where>
         ORDER BY CREATED_AT DESC
         OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>

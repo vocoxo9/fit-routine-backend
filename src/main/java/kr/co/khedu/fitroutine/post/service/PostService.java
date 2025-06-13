@@ -6,6 +6,7 @@ import kr.co.khedu.fitroutine.post.model.dto.PostLikesResponse;
 import kr.co.khedu.fitroutine.post.model.dto.PostResponse;
 import kr.co.khedu.fitroutine.post.model.dto.PostUpdateRequest;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<? extends PostResponse> getPosts(long blogId, int page, int size) {
+    public List<? extends PostResponse> getPosts(@Nullable Long blogId, int page, int size) {
         return postMapper.selectPostsByBlogId(blogId, page * size, size);
     }
 

@@ -27,6 +27,14 @@ public class PostController {
         this.postService = postService;
     }
 
+    @GetMapping("/posts")
+    public ResponseEntity<List<? extends PostResponse>> getPosts(
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "12") @Min(1) @Max(12) int size
+    ) {
+        return ResponseEntity.ok(postService.getPosts(null, page, size));
+    }
+
     @GetMapping("/blogs/{blogId}/posts")
     public ResponseEntity<List<? extends PostResponse>> getPosts(
             @PathVariable long blogId,
