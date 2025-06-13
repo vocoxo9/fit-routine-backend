@@ -31,7 +31,7 @@
         FROM TB_MEMBER
         WHERE EMAIL = #{email}
     </select>
-    <update id="updateMember" parameterType="kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo">
+    <update id="updateMember" parameterType="kr.co.khedu.fitroutine.member.model.dto.MemberUpdateRequest">
         UPDATE TB_MEMBER
         <set>
             <if test="nickname != null">
@@ -46,7 +46,7 @@
         </set>
         WHERE MEMBER_ID = #{memberId}
     </update>
-    <update id="updateMemberDetail" parameterType="kr.co.khedu.fitroutine.member.model.dto.MemberEditInfo">
+    <update id="updateMemberDetail" parameterType="kr.co.khedu.fitroutine.member.model.dto.MemberUpdateRequest">
         UPDATE TB_MEMBER_DETAIL
         <set>
             <if test="height != null">
