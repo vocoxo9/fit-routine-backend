@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface ExerciseMapper {
-    List<? extends ExerciseOpenData> getAllExerciseOpenDataList();
+    List<? extends ExerciseOpenData> getAllExerciseOpenDataList(String purpose);
 
     List<? extends Integer> getRandomExerciseRoutine(int dayRepeat, String purpose);
 

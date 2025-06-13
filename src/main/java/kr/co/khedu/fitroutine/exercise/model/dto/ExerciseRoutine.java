@@ -7,7 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 public final class ExerciseRoutine {
 
     private final long memberId;
@@ -15,7 +14,7 @@ public final class ExerciseRoutine {
     private final Date endedAt;
     private final String purpose;
     private final int dayRepeat;
-    private final int tdee;
+    private final double tdee;
     private final double goalWeight;
     private final List<List<Integer>> exerciseList;
 
@@ -25,7 +24,7 @@ public final class ExerciseRoutine {
                            Date endedAt,
                            String purpose,
                            int dayRepeat,
-                           int tdee,
+                           double tdee,
                            double goalWeight,
                            List<List<Integer>> exerciseList) {
         this.memberId = memberId;

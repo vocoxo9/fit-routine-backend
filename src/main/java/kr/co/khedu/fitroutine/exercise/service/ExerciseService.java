@@ -16,8 +16,8 @@ public final class ExerciseService {
         this.exerciseMapper = exerciseMapper;
     }
 
-    public List<? extends ExerciseOpenData> getAllExerciseOpenDataList() {
-        return exerciseMapper.getAllExerciseOpenDataList();
+    public List<? extends ExerciseOpenData> getAllExerciseOpenDataList(String purpose) {
+        return exerciseMapper.getAllExerciseOpenDataList(purpose);
     }
 
     // 운동 루틴 랜덤 추출
@@ -37,7 +37,7 @@ public final class ExerciseService {
          */
         List<List<Integer>> exerciseList = new ArrayList<>();
         for (int i = 0; i < dayRepeat; i++) {
-            int start = i * dayRepeat;
+            int start = i * 5;
             int end = start + 5;
 
             exerciseList.add(randomExerciseList.subList(start, end));

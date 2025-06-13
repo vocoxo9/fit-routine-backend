@@ -18,8 +18,8 @@ public final class ExerciseController {
     }
 
     @GetMapping("/open-data")
-    public ResponseEntity<List<? extends ExerciseOpenData>> getAllExerciseOpenDataList() {
-        return ResponseEntity.ok(exerciseService.getAllExerciseOpenDataList());
+    public ResponseEntity<List<? extends ExerciseOpenData>> getAllExerciseOpenDataList(@RequestParam String purpose) {
+        return ResponseEntity.ok(exerciseService.getAllExerciseOpenDataList(purpose));
     }
 
     @GetMapping("/random-routine")
@@ -30,5 +30,11 @@ public final class ExerciseController {
     @GetMapping("/{id}")
     public ResponseEntity<ExerciseOpenData> getExerciseById(@PathVariable int id){
         return ResponseEntity.ok(exerciseService.getExerciseById(id));
+    }
+
+    @PutMapping("/regist")
+    public ResponseEntity<?> registExerciseRoutine(@RequestBody ExerciseRoutine exerciseRoutine){
+        System.out.println(exerciseRoutine);
+        return ResponseEntity.ok(null);
     }
 }
