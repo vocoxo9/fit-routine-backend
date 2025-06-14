@@ -25,11 +25,10 @@ public final class MemberController {
     }
 
     @PatchMapping("/me")
-    public ResponseEntity<Void> updateMember(
+    public ResponseEntity<MemberResponse> updateMember(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody MemberUpdateRequest updateRequest
     ) {
-        memberService.updateMember(userDetails.getMemberId(), updateRequest);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(memberService.updateMember(userDetails.getMemberId(), updateRequest));
     }
 }

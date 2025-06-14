@@ -24,7 +24,7 @@ public class MemberService {
     }
 
     @Transactional
-    public void updateMember(long memberId, MemberUpdateRequest updateRequest) {
+    public MemberResponse updateMember(long memberId, MemberUpdateRequest updateRequest) {
         if (updateRequest.getNickname() != null ||
                 updateRequest.getPhone() != null ||
                 updateRequest.getNewPassword() != null
@@ -41,5 +41,7 @@ public class MemberService {
                 throw new IllegalStateException("회원 상세 정보를 수정할 수 없습니다.");
             }
         }
+
+        return getMember(memberId);
     }
 }
