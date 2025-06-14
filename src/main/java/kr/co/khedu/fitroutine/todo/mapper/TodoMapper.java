@@ -1,7 +1,6 @@
 package kr.co.khedu.fitroutine.todo.mapper;
 
-import kr.co.khedu.fitroutine.todo.model.dto.MyRank;
-import kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3;
+import kr.co.khedu.fitroutine.todo.model.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.lang.Nullable;
 
@@ -12,4 +11,12 @@ public interface TodoMapper {
     List<? extends RoutineMvpTOP3> getRoutineMvpTOP3();
 
     @Nullable MyRank getRoutineMvpMyRank(long memberId);
+
+    List<? extends Menu> getTodayMenuList(long memberId);
+
+    List<? extends Exercise> getTodayExerciseList(long memberId);
+
+    MenuTodoListResponse getMenuTodoList(long memberId);
+
+    ExerciseTodoListResponse getExerciseTodoList(long memberId);
 }

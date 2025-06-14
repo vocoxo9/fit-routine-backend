@@ -1,6 +1,8 @@
 package kr.co.khedu.fitroutine.todo.controller;
 
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
+import kr.co.khedu.fitroutine.todo.model.dto.ExerciseTodoListResponse;
+import kr.co.khedu.fitroutine.todo.model.dto.MenuTodoListResponse;
 import kr.co.khedu.fitroutine.todo.service.TodoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,17 +31,17 @@ public final class TodoController {
         return ResponseEntity.ok(todoService.getgetRoutineMvpMyRank(userDetails.getMemberId()));
     }
 
-    @GetMapping("/todo/{blogId}/menu")
-    public ResponseEntity<> getMenuTodoList(
-            @PathVariable long blogId
+    @GetMapping("/todos/menu")
+    public ResponseEntity<MenuTodoListResponse> getMenuTodoList(
+            @AuthenticationPrincipal final UserDetailsImpl userDetails
     ) {
-
+        return ResponseEntity.ok(todoService.getMenuTodoList(userDetails.getMemberId()));
     }
 
-    @GetMapping("/todo/{blogId}/exercise")
-    public ResponseEntity<> getExerciseTodoList(
-            @PathVariable long blogId
+    @GetMapping("/todos/exercise")
+    public ResponseEntity<ExerciseTodoListResponse> getExerciseTodoList(
+            @AuthenticationPrincipal final UserDetailsImpl userDetails
     ) {
-
+        return ResponseEntity.ok(todoService.getExerciseTodoList(userDetails.getMemberId()));
     }
 }

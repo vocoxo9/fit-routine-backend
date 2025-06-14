@@ -1,7 +1,6 @@
 package kr.co.khedu.fitroutine.todo.service;
 
-import kr.co.khedu.fitroutine.todo.model.dto.MyRank;
-import kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3;
+import kr.co.khedu.fitroutine.todo.model.dto.*;
 import kr.co.khedu.fitroutine.todo.mapper.TodoMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +23,25 @@ public class TodoService {
             throw new IllegalStateException("등록된 루틴을 찾을 수 없습니다. " + memberId);
         }
         return myRank;
+    }
+
+    private List<? extends Menu> getTodayMenuList(long memberId) {
+        return todoMapper.getTodayMenuList(memberId);
+    }
+
+    private List<? extends Exercise> getTodayExerciseList(long memberId) {
+        return todoMapper.getTodayExerciseList(memberId);
+    }
+
+    public MenuTodoListResponse getMenuTodoList(long memberId) {
+        MenuTodoListResponse menuTodoListResponse = todoMapper.getMenuTodoList(memberId);
+        menuTodoListResponse.setTodos(getTodayMenuList(memberId));
+        return menuTodoListResponse;
+    }
+
+    public ExerciseTodoListResponse getExerciseTodoList(long memberId) {
+        ExerciseTodoListResponse exerciseTodoListResponse = todoMapper.getExerciseTodoList(memberId);
+        exerciseTodoListResponse.setTodos(getTodayExerciseList(memberId));
+        return exerciseTodoListResponse;
     }
 }
