@@ -1,7 +1,7 @@
 package kr.co.khedu.fitroutine.todo.controller;
 
-import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
+import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
 import kr.co.khedu.fitroutine.todo.service.TodoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,9 +23,10 @@ public final class TodoController {
     }
 
     @GetMapping("/routine-rankings/monthly/me")
-    public ResponseEntity<?> getRoutineMvpMyRank() {
-        long memberId = 1;
-        return ResponseEntity.ok(todoService.getgetRoutineMvpMyRank(memberId));
+    public ResponseEntity<?> getRoutineMvpMyRank(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        return ResponseEntity.ok(todoService.getgetRoutineMvpMyRank(userDetails.getMemberId()));
     }
 
     @PostMapping("/todos/exercise")
