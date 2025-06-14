@@ -16,9 +16,6 @@ public class TodoService {
 
     public List<? extends RoutineMvpTOP3> getRoutineMvpTOP3() {
         List<? extends RoutineMvpTOP3> mvpList = todoMapper.getRoutineMvpTOP3();
-        if(mvpList == null) {
-            throw new IllegalStateException("Routine등록 데이터가 부족합니다..");
-        }
         return mvpList;
     }
 
