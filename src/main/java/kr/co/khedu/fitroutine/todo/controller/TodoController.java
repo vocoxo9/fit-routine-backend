@@ -29,12 +29,12 @@ public final class TodoController {
     }
 
     @PostMapping("/todos/exercise")
-    public ResponseEntity<Integer> registExerciseRoutine(
+    public ResponseEntity<Void> insertRoutineInfo(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody RoutineInfo routineInfo
     ){
         System.out.println(routineInfo);
-        todoService.registExerciseRoutine(userDetails.getMemberId(), routineInfo);
+        todoService.insertRoutineInfo(userDetails.getMemberId(), routineInfo);
         return ResponseEntity.noContent().build();
     }
 }

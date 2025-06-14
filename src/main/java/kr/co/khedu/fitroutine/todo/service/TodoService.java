@@ -30,7 +30,7 @@ public class TodoService {
         return myRank;
     }
 
-    public int registExerciseRoutine(long memberId, RoutineInfo routineInfo){
-        return todoMapper.registExerciseRoutine(memberId, routineInfo);
+    public int insertRoutineInfo(long memberId, RoutineInfo routineInfo){
+        return todoMapper.insertRoutineInfo(memberId, routineInfo);
     }
 }

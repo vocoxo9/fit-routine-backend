@@ -32,9 +32,19 @@
         WHERE MEMBER_ID = #{memberId}
     </select>
 
-    <insert id="registExerciseRoutine">
+    <insert id="insertRoutineInfo" parameterType="kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo">
         INSERT INTO TB_TODO VALUES
-        (SEQ_TODO_ID.NEXTVAL, #{memberId}, #{startedAt}, #{endedAt}, #{purpose}, #{category}, #{dayRepeat}, #{tdee}, #{goalWeight})
+        (
+            SEQ_TODO_ID.NEXTVAL,
+            #{memberId},
+            #{routineInfo.startedAt},
+            #{routineInfo.endedAt},
+            #{routineInfo.purpose},
+            #{routineInfo.category},
+            #{routineInfo.dayRepeat},
+            #{routineInfo.tdee},
+            #{routineInfo.goalWeight}
+        )
     </insert>
 
 </mapper>

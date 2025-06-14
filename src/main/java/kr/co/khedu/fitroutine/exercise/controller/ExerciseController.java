@@ -32,4 +32,9 @@ public final class ExerciseController {
         return ResponseEntity.ok(exerciseService.getExerciseById(id));
     }
 
+    @PostMapping("/routines")
+    public ResponseEntity<Void> registExerciseRoutines(@RequestBody ExerciseRoutineList exerciseRoutineList){
+        System.out.println(exerciseRoutineList);
+        return null;
+    }
 }

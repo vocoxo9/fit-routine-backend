@@ -14,5 +14,5 @@ public interface TodoMapper {
 
     @Nullable MyRank getRoutineMvpMyRank(long memberId);
 
-    int registExerciseRoutine(long memberId, RoutineInfo routineInfo);
+    int insertRoutineInfo(long memberId, RoutineInfo routineInfo);
 }
