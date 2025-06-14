@@ -2,16 +2,14 @@ package kr.co.khedu.fitroutine.todo.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
-public class MyRank {
-    private int rank;
-    private long count;
+public final class MyRank {
+    private final int rank;
+    private final long count;
 
     @Builder
-    public MyRank(int rank, long count) {
+    private MyRank(int rank, long count) {
         this.rank = rank;
         this.count = count;
     }
