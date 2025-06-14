@@ -35,9 +35,9 @@ public class MemberController {
 
     @PostMapping
     public ResponseEntity<MemberCreateResponse> createMember(
-            @RequestBody @Valid MemberCreateRequest memberCreateRequest
+            @RequestBody @Valid MemberCreateRequest createRequest
     ) {
-        return ResponseEntity.ok(memberService.createMember(memberCreateRequest));
+        return ResponseEntity.ok(memberService.createMember(createRequest));
     }
 
     @PatchMapping("/me")
