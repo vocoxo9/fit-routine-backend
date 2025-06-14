@@ -32,7 +32,7 @@ public final class MemberCreateRequest {
     @NotNull
     private final LocalDate birthAt;
 
-    @Pattern(regexp = "^01[0-9]{8,9}$")
+    @Pattern(regexp = "^0\\d{1,2}-\\d{3,4}-\\d{4}$")
     private final String phone;
 
     @Range(min = 1, max = 499)
