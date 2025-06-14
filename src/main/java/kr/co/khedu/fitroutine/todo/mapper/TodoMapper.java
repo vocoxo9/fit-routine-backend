@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface TodoMapper {
-    @Nullable List<? extends RoutineMvpTOP3> getRoutineMvpTOP3();
+    List<? extends RoutineMvpTOP3> getRoutineMvpTOP3();
 
     @Nullable MyRank getRoutineMvpMyRank(long memberId);
 }
