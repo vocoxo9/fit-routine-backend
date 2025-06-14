@@ -43,7 +43,7 @@ public class MemberController {
     @PatchMapping("/me")
     public ResponseEntity<Void> updateMember(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestBody MemberUpdateRequest updateRequest
+            @RequestBody @Valid MemberUpdateRequest updateRequest
     ) {
         memberService.updateMember(userDetails.getMemberId(), updateRequest);
         return ResponseEntity.noContent().build();
