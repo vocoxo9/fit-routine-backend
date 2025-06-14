@@ -2,6 +2,7 @@ package kr.co.khedu.fitroutine.member.service;
 
 import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
 import kr.co.khedu.fitroutine.member.model.dto.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,9 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MemberService {
     private final MemberMapper memberMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public MemberService(MemberMapper memberMapper) {
+    public MemberService(
+            MemberMapper memberMapper,
+            PasswordEncoder passwordEncoder
+    ) {
         this.memberMapper = memberMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -35,6 +41,8 @@ public class MemberService {
     }
 
     public MemberCreateResponse createMember(MemberCreateRequest createRequest) {
+        createRequest.setPassword(passwordEncoder.encode(createRequest.getPassword()));
+
         if (memberMapper.insertMember(createRequest) != 1 ||
                 memberMapper.insertMemberDetail(createRequest) != 1 ||
                 createRequest.getMemberId() == null

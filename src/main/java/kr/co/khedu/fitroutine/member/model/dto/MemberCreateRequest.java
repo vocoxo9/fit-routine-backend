@@ -22,7 +22,7 @@ public final class MemberCreateRequest {
 
     @ValidPassword
     @NotNull
-    private final String password;
+    private String password;
 
     @ValidNickname
     @NotNull
