@@ -1,13 +1,12 @@
 package kr.co.khedu.fitroutine.member.service;
 
 import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
-import kr.co.khedu.fitroutine.member.model.dto.MemberDetailResponse;
-import kr.co.khedu.fitroutine.member.model.dto.MemberUpdateRequest;
-import kr.co.khedu.fitroutine.member.model.dto.MemberResponse;
+import kr.co.khedu.fitroutine.member.model.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class MemberService {
     private final MemberMapper memberMapper;
 
@@ -15,6 +14,7 @@ public class MemberService {
         this.memberMapper = memberMapper;
     }
 
+    @Transactional(readOnly = true)
     public MemberResponse getMember(long memberId) {
         MemberResponse memberResponse = memberMapper.selectMemberById(memberId);
         if (memberResponse == null) {
@@ -24,7 +24,8 @@ public class MemberService {
         return memberResponse;
     }
 
-    public MemberDetailResponse getMemberDetail(long memberId){
+    @Transactional(readOnly = true)
+    public MemberDetailResponse getMemberDetail(long memberId) {
         MemberDetailResponse memberDetailResponse = memberMapper.selectMemberDetailById(memberId);
         if (memberDetailResponse == null) {
             throw new IllegalStateException("회원을 찾을 수 없습니다: " + memberId);
@@ -33,7 +34,21 @@ public class MemberService {
         return memberDetailResponse;
     }
 
-    @Transactional
+    public MemberCreateResponse createMember(MemberCreateRequest createRequest) {
+        if (memberMapper.insertMember(createRequest) != 1 ||
+                memberMapper.insertMemberDetail(createRequest) != 1 ||
+                createRequest.getMemberId() == null
+        ) {
+            throw new IllegalStateException("회원을 생성할 수 없습니다.");
+        }
+
+        return MemberCreateResponse.builder()
+                .nickname(
+                        getMember(createRequest.getMemberId()).getNickname()
+                )
+                .build();
+    }
+
     public void updateMember(long memberId, MemberUpdateRequest updateRequest) {
         if (updateRequest.getNickname() != null ||
                 updateRequest.getPhone() != null ||
