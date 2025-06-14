@@ -2,11 +2,10 @@ package kr.co.khedu.fitroutine.member.model.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
-import jakarta.validation.constraints.Pattern;
+import kr.co.khedu.fitroutine.member.validator.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
@@ -17,13 +16,16 @@ public final class MemberCreateRequest {
     @Null
     private @Nullable Long memberId;
 
-    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+    @ValidEmail
+    @NotNull
     private final String email;
 
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d!@#$%^&*()_+=\\-{}\\[\\]|:;\"'<>,.?/~`]{8,}$")
+    @ValidPassword
+    @NotNull
     private final String password;
 
-    @Pattern(regexp = "^[a-zA-Z0-9]{2,16}$")
+    @ValidNickname
+    @NotNull
     private final String nickname;
 
     @NotNull
@@ -32,13 +34,16 @@ public final class MemberCreateRequest {
     @NotNull
     private final LocalDate birthAt;
 
-    @Pattern(regexp = "^0\\d{1,2}-\\d{3,4}-\\d{4}$")
+    @ValidPhone
+    @NotNull
     private final String phone;
 
-    @Range(min = 1, max = 499)
+    @ValidHeight
+    @NotNull
     private final int height;
 
-    @Range(min = 1, max = 499)
+    @ValidWeight
+    @NotNull
     private final int weight;
 
     @Builder
