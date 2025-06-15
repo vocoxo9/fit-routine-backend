@@ -6,8 +6,11 @@ import lombok.*;
 import java.sql.Date;
 
 @Getter
+@Setter
+@ToString
 public final class RoutineInfo {
 
+    private final @Nullable long todoId;
     private final Date startedAt;
     private final Date endedAt;
     private final String purpose;
@@ -17,13 +20,15 @@ public final class RoutineInfo {
     private final @Nullable double goalWeight;
 
     @Builder
-    private RoutineInfo(Date startedAt,
+    private RoutineInfo(long todoId,
+                       Date startedAt,
                        Date endedAt,
                        String purpose,
                        String category,
                        int dayRepeat,
                        double tdee,
                        double goalWeight) {
+        this.todoId=todoId;
         this.startedAt = startedAt;
         this.endedAt = endedAt;
         this.purpose = purpose;

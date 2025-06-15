@@ -2,10 +2,12 @@ package kr.co.khedu.fitroutine.exercise.model.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
+@ToString
 public final class ExerciseRoutineList {
 
     private final List<List<Integer>> exerciseList;

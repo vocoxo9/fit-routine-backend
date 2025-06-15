@@ -1,5 +1,7 @@
 package kr.co.khedu.fitroutine.todo.mapper;
 
+import kr.co.khedu.fitroutine.exercise.model.dto.DailyExercises;
+import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutineList;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
 import kr.co.khedu.fitroutine.todo.model.dto.MyRank;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3;
@@ -14,5 +16,13 @@ public interface TodoMapper {
 
     @Nullable MyRank getRoutineMvpMyRank(long memberId);
 
-    int insertRoutineInfo(long memberId, RoutineInfo routineInfo);
+    Long createRoutineInfo(long memberId, RoutineInfo routineInfo);
+
+    @Nullable int getTodoIdByMemberId(long memberId);
+
+    int insertDailyExercise(DailyExercises dailyExercises);
+
+    int insertExerciseDetail(long dailyExerciseId, int exerciseId);
+
+    int createExerciseRoutine(long memberId, ExerciseRoutineList exerciseRoutineList);
 }
