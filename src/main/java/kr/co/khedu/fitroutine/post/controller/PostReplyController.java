@@ -86,20 +86,18 @@ public class PostReplyController {
 
     @GetMapping("/replies/{replyId}/permissions")
     public ResponseEntity<Boolean> checkPermissionReply (
-//            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long replyId
     ) {
-//        return ResponseEntity.ok(postService.checkPermissionReply(userDetails.getMemberId(), replyId))
-        return ResponseEntity.ok(postReplyService.checkPermissionReply(1, replyId));
+        return ResponseEntity.ok(postReplyService.checkPermissionReply(userDetails.getMemberId(), replyId));
     }
 
     @PatchMapping("/replies/{replyId}")
     public ResponseEntity<ReplyResponse> updateReply(
-//            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long replyId,
             @RequestBody ReplyUpdateRequest replyUpdateRequest
     ) {
-//        return ResponseEntity.ok(postService.checkPermissionReply(userDetails.getMemberId(), replyId, replyUpdateRequest.getContent()))
-        return ResponseEntity.ok(postReplyService.updateReply(1, replyId, replyUpdateRequest.getContent()));
+        return ResponseEntity.ok(postReplyService.updateReply(userDetails.getMemberId(), replyId, replyUpdateRequest.getContent()));
     }
 }
