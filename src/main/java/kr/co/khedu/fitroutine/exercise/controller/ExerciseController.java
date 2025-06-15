@@ -31,10 +31,4 @@ public final class ExerciseController {
     public ResponseEntity<ExerciseOpenData> getExerciseById(@PathVariable int id){
         return ResponseEntity.ok(exerciseService.getExerciseById(id));
     }
-
-    @PostMapping("/routines")
-    public ResponseEntity<Void> registExerciseRoutines(@RequestBody ExerciseRoutineList exerciseRoutineList){
-        System.out.println(exerciseRoutineList);
-        return null;
-    }
 }
