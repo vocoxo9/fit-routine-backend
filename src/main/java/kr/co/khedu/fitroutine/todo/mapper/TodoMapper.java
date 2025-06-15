@@ -16,7 +16,9 @@ public interface TodoMapper {
 
     List<? extends Exercise> getTodayExerciseList(long memberId);
 
-    MenuTodoListResponse getMenuTodoList(long memberId);
+    @Nullable MenuTodoListResponse getMenuTodoList(long memberId);
 
-    ExerciseTodoListResponse getExerciseTodoList(long memberId);
+    @Nullable ExerciseTodoListResponse getExerciseTodoList(long memberId);
+
+    int deleteTodo(long memberId, Long todoId);
 }

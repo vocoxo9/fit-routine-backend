@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
@@ -96,5 +97,8 @@ public class PostService {
 
     public Boolean checkPermissionPost(long memberId, long postId) {
         return (postMapper.checkPermissionPost(memberId, postId) == 1);
+    }
+
+    public Map<String, List<SimplePost>> getSimplePosts(long memberId) {
     }
 }

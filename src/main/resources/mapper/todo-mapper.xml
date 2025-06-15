@@ -63,4 +63,9 @@
         WHERE MEMBER_ID = #{memberId} AND
         CATEGORY='EXERCISE'
     </select>
+
+    <delete id="deleteTodo">
+        DELETE TB_TODO
+        WHERE TODO_ID = #{todoId} AND MEMBER_ID = #{memberId}
+    </delete>
 </mapper>

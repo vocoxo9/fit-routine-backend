@@ -6,11 +6,11 @@ import lombok.Getter;
 @Getter
 public final class Exercise {
     private final String name;
-    private final int calorie;
+    private final double met;
 
     @Builder
-    private Exercise(String name, int calorie) {
+    private Exercise(String name, double met) {
         this.name = name;
-        this.calorie = calorie;
+        this.met = met;
     }
 }

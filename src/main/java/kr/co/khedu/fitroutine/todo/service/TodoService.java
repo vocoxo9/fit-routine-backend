@@ -5,6 +5,7 @@ import kr.co.khedu.fitroutine.todo.mapper.TodoMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class TodoService {
@@ -35,13 +36,23 @@ public class TodoService {
 
     public MenuTodoListResponse getMenuTodoList(long memberId) {
         MenuTodoListResponse menuTodoListResponse = todoMapper.getMenuTodoList(memberId);
-        menuTodoListResponse.setTodos(getTodayMenuList(memberId));
+        if (menuTodoListResponse != null) {
+            menuTodoListResponse.setTodos(getTodayMenuList(memberId));
+        }
         return menuTodoListResponse;
     }
 
     public ExerciseTodoListResponse getExerciseTodoList(long memberId) {
         ExerciseTodoListResponse exerciseTodoListResponse = todoMapper.getExerciseTodoList(memberId);
-        exerciseTodoListResponse.setTodos(getTodayExerciseList(memberId));
+        if (exerciseTodoListResponse != null) {
+            exerciseTodoListResponse.setTodos(getTodayExerciseList(memberId));
+        }
         return exerciseTodoListResponse;
+    }
+
+    public void deleteTodo(long memberId, Long todoId) {
+        if(todoMapper.deleteTodo(memberId, todoId) != 1) {
+            throw new NoSuchElementException("해당하는 TODO가 존재하지 않습니다. todoId=" + todoId);
+        }
     }
 }

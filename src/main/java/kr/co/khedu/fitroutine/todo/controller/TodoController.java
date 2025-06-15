@@ -6,11 +6,10 @@ import kr.co.khedu.fitroutine.todo.model.dto.MenuTodoListResponse;
 import kr.co.khedu.fitroutine.todo.service.TodoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public final class TodoController {
@@ -43,5 +42,14 @@ public final class TodoController {
             @AuthenticationPrincipal final UserDetailsImpl userDetails
     ) {
         return ResponseEntity.ok(todoService.getExerciseTodoList(userDetails.getMemberId()));
+    }
+
+    @DeleteMapping("/todos/{todoId}")
+    public ResponseEntity<Void> deleteTodo(
+            @AuthenticationPrincipal final UserDetailsImpl userDetails,
+            @PathVariable final Long todoId
+    ) {
+        todoService.deleteTodo(userDetails.getMemberId(), todoId);
+        return ResponseEntity.noContent().build();
     }
 }
