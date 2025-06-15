@@ -40,14 +40,12 @@ public final class TodoController {
         return ResponseEntity.ok(todoId);
     }
 
-    @PostMapping("/todos/{todoId}")
+    @PostMapping("/todos/exercises/{todoId}")
     public ResponseEntity<Void> createExerciseRoutine(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long todoId,
             @RequestBody ExerciseRoutineList exerciseRoutineList
     ){
-        System.out.println("todoId :: " + todoId);
-        System.out.println("exerciseRoutineList :: " + exerciseRoutineList);
         todoService.createExerciseRoutine(todoId, exerciseRoutineList);
         return ResponseEntity.noContent().build();
     }
