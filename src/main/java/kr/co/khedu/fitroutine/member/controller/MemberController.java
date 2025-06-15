@@ -26,13 +26,6 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getMember(userDetails.getMemberId()));
     }
 
-    @GetMapping("/me/detail")
-    public ResponseEntity<MemberDetailResponse> getMemberDetail(
-            @AuthenticationPrincipal UserDetailsImpl userDetails
-    ) {
-        return ResponseEntity.ok(memberService.getMemberDetail(userDetails.getMemberId()));
-    }
-
     @PostMapping
     public ResponseEntity<MemberCreateResponse> createMember(
             @RequestBody @Valid MemberCreateRequest createRequest
@@ -41,11 +34,10 @@ public class MemberController {
     }
 
     @PatchMapping("/me")
-    public ResponseEntity<Void> updateMember(
+    public ResponseEntity<MemberResponse> updateMember(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid MemberUpdateRequest updateRequest
     ) {
-        memberService.updateMember(userDetails.getMemberId(), updateRequest);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(memberService.updateMember(userDetails.getMemberId(), updateRequest));
     }
 }
