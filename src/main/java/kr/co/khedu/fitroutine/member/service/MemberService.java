@@ -52,6 +52,7 @@ public class MemberService {
                 updateRequest.getPhone() != null ||
                 updateRequest.getNewPassword() != null
         ) {
+            updateRequest.setNewPassword(passwordEncoder.encode(updateRequest.getNewPassword()));
             if (memberMapper.updateMember(memberId, updateRequest) <= 0) {
                 throw new IllegalStateException("회원 프로필을 수정할 수 없습니다.");
             }
