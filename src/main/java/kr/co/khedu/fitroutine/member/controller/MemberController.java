@@ -1,16 +1,18 @@
 package kr.co.khedu.fitroutine.member.controller;
 
-import kr.co.khedu.fitroutine.member.model.dto.MemberUpdateRequest;
-import kr.co.khedu.fitroutine.member.model.dto.MemberResponse;
+import jakarta.validation.Valid;
+import kr.co.khedu.fitroutine.member.model.dto.*;
 import kr.co.khedu.fitroutine.member.service.MemberService;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/members")
-public final class MemberController {
+@Validated
+public class MemberController {
     private final MemberService memberService;
 
     public MemberController(MemberService memberService) {
@@ -24,10 +26,17 @@ public final class MemberController {
         return ResponseEntity.ok(memberService.getMember(userDetails.getMemberId()));
     }
 
+    @PostMapping
+    public ResponseEntity<MemberCreateResponse> createMember(
+            @RequestBody @Valid MemberCreateRequest createRequest
+    ) {
+        return ResponseEntity.ok(memberService.createMember(createRequest));
+    }
+
     @PatchMapping("/me")
     public ResponseEntity<MemberResponse> updateMember(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestBody MemberUpdateRequest updateRequest
+            @RequestBody @Valid MemberUpdateRequest updateRequest
     ) {
         return ResponseEntity.ok(memberService.updateMember(userDetails.getMemberId(), updateRequest));
     }
