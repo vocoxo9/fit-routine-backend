@@ -121,10 +121,10 @@ public class PostController {
         return ResponseEntity.ok(postService.checkPermissionPost(userDetails.getMemberId(), postId));
     }
 
-    @GetMapping("/posts/simple")
-    public ResponseEntity<Map<String, List<SimplePost>>> getSimplePosts(
-            @AuthenticationPrincipal UserDetailsImpl userDetails
-    ) {
-        return ResponseEntity.ok(postService.getSimplePosts(userDetails.getMemberId()));
-    }
+//    @GetMapping("/posts/simple")
+//    public ResponseEntity<Map<String, List<SimplePost>>> getSimplePosts(
+//            @AuthenticationPrincipal UserDetailsImpl userDetails
+//    ) {
+//        return ResponseEntity.ok(postService.getSimplePosts(userDetails.getMemberId()));
+//    }
 }

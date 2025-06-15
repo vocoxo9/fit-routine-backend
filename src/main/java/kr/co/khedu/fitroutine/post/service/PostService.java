@@ -99,6 +99,5 @@ public class PostService {
         return (postMapper.checkPermissionPost(memberId, postId) == 1);
     }
 
-    public Map<String, List<SimplePost>> getSimplePosts(long memberId) {
-    }
+//    public Map<String, List<SimplePost>> getSimplePosts(long memberId) {}
 }
