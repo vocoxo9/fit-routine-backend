@@ -42,7 +42,6 @@ public final class TodoController {
 
     @PostMapping("/todos/exercises/{todoId}")
     public ResponseEntity<Void> createExerciseRoutine(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable long todoId,
             @RequestBody ExerciseRoutineList exerciseRoutineList
     ){
