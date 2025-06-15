@@ -53,7 +53,7 @@
             <if test="updateRequest.nickname != null">
                 NICKNAME = #{updateRequest.nickname},
             </if>
-            <if test="updateRequest.password != null">
+            <if test="updateRequest.newPassword != null">
                 PASSWORD = #{updateRequest.newPassword},
             </if>
             <if test="updateRequest.phone != null">
