@@ -5,6 +5,7 @@ import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutineList;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
 import kr.co.khedu.fitroutine.todo.model.dto.MyRank;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3;
+import kr.co.khedu.fitroutine.todo.model.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.lang.Nullable;
 
@@ -25,4 +26,14 @@ public interface TodoMapper {
     int insertExerciseDetail(long dailyExerciseId, int exerciseId);
 
     int createExerciseRoutine(long memberId, ExerciseRoutineList exerciseRoutineList);
+
+    List<? extends Menu> getTodayMenuList(long memberId);
+
+    List<? extends Exercise> getTodayExerciseList(long memberId);
+
+    @Nullable MenuTodoListResponse getMenuTodoList(long memberId);
+
+    @Nullable ExerciseTodoListResponse getExerciseTodoList(long memberId);
+
+    int deleteTodo(long memberId, Long todoId);
 }
