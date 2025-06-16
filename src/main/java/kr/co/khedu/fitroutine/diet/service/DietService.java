@@ -1,13 +1,16 @@
 package kr.co.khedu.fitroutine.diet.service;
 
 import kr.co.khedu.fitroutine.diet.mapper.DietMapper;
-import kr.co.khedu.fitroutine.diet.model.dto.MenuCategory;
-import kr.co.khedu.fitroutine.diet.model.dto.MenuResponse;
+import kr.co.khedu.fitroutine.diet.model.dto.*;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -31,5 +34,31 @@ public class DietService {
         }
 
         return menuResponse;
+    }
+
+    public DietResponse generateDiet(int dayRepeat) {
+        return new DietResponse(
+                IntStream.rangeClosed(1, dayRepeat)
+                        .mapToObj(this::generateDay)
+                        .toList()
+        );
+    }
+
+    private DietResponse.Day generateDay(int dayNo) {
+        return new DietResponse.Day(
+                dayNo,
+                Stream.generate(this::generateMeal)
+                        .limit(3)
+                        .toList()
+        );
+    }
+
+    private DietResponse.Meal generateMeal() {
+        return new DietResponse.Meal(
+                Arrays.stream(MenuCategory.values())
+                        .map(dietMapper::selectRandomMenuId)
+                        .peek(Objects::requireNonNull)
+                        .toList()
+        );
     }
 }

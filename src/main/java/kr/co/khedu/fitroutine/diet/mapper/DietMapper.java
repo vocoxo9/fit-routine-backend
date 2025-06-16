@@ -12,4 +12,6 @@ public interface DietMapper {
     List<? extends MenuResponse> selectMenus(@Nullable MenuCategory category, int offset, int size);
 
     @Nullable MenuResponse selectMenuById(long menuId);
+
+    @Nullable Long selectRandomMenuId(MenuCategory category);
 }

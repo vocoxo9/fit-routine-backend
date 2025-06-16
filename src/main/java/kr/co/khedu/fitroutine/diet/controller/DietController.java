@@ -2,6 +2,7 @@ package kr.co.khedu.fitroutine.diet.controller;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import kr.co.khedu.fitroutine.diet.model.dto.DietResponse;
 import kr.co.khedu.fitroutine.diet.model.dto.MenuCategory;
 import kr.co.khedu.fitroutine.diet.model.dto.MenuResponse;
 import kr.co.khedu.fitroutine.diet.service.DietService;
@@ -34,5 +35,10 @@ public class DietController {
     @GetMapping("/menus/{menuId}")
     public ResponseEntity<MenuResponse> getMenu(@PathVariable long menuId) {
         return ResponseEntity.ok(dietService.getMenu(menuId));
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<DietResponse> getDiet(@RequestParam @Min(1) @Max(7) int dayRepeat) {
+        return ResponseEntity.ok(dietService.generateDiet(dayRepeat));
     }
 }
