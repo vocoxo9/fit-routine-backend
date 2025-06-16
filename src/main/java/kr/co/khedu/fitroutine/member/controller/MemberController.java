@@ -48,4 +48,16 @@ public class MemberController {
     ) {
         return ResponseEntity.ok(memberService.updateMember(userDetails.getMemberId(), updateRequest));
     }
+
+    @PostMapping("/me/resign")
+    public ResponseEntity<Void> resignMember(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody @Valid ResignReason resignReason
+    ) {
+        System.out.println("resign member Controller 요청들어옴" + resignReason);
+        System.out.println(resignReason.getInputReason());
+        memberService.insertResignReason(userDetails.getMemberId(), resignReason);
+        System.out.println("요청 끝남");
+        return ResponseEntity.ok().build();
+    }
 }
