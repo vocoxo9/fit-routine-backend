@@ -198,10 +198,14 @@ CREATE TABLE TB_ALARM
 (
     NOTICE_ID          NUMBER                                                               NOT NULL,
     CONTENT            VARCHAR2(100)                                                        NOT NULL,
-    CATEGORY           VARCHAR2(30) CHECK (CATEGORY IN ('REPLY', 'TODO', 'FOLLOW', 'LIKE')) NOT NULL,
+    CATEGORY           VARCHAR2(30) CHECK (CATEGORY IN ('BLOG_FOLLOWED',
+                                                        'POST_REPLIED',
+                                                        'POST_LIKED',
+                                                        'REPLY_LIKED'))                     NOT NULL,
     CREATED_AT         DATE DEFAULT SYSDATE                                                 NOT NULL,
     RECEIVER_MEMBER_ID NUMBER                                                               NOT NULL,
     SENDER_MEMBER_ID   NUMBER                                                               NOT NULL,
+    IS_READ            CHAR(1) CHECK (IS_READ IN ('Y', 'N'))                                NOT NULL,
     PRIMARY KEY (NOTICE_ID),
     FOREIGN KEY (RECEIVER_MEMBER_ID) REFERENCES TB_MEMBER (MEMBER_ID) ON DELETE CASCADE,
     FOREIGN KEY (SENDER_MEMBER_ID) REFERENCES TB_MEMBER (MEMBER_ID) ON DELETE CASCADE
