@@ -107,4 +107,18 @@
         WHERE FOLLOWER_BLOG_ID = #{followerBlogId}
         AND FOLLOWED_BLOG_ID = #{followedBlogId}
     </delete>
+    <select id="checkBlogOwner" resultType="int">
+        SELECT CASE
+        WHEN EXISTS (
+        SELECT 1
+        FROM TB_BLOG B
+        JOIN TB_MEMBER M ON B.MEMBER_ID = M.MEMBER_ID
+        WHERE M.MEMBER_ID = #{memberId} AND
+        B.BLOG_ID = #{blogId}
+        )
+        THEN 1
+        ELSE 0
+        END
+        FROM DUAL
+    </select>
 </mapper>

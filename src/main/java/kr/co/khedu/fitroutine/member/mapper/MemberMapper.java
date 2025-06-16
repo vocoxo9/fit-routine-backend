@@ -23,4 +23,8 @@ public interface MemberMapper {
     int updateMemberDetail(long memberId, MemberUpdateRequest updateRequest);
 
     MemberPassword selectCurrentPassword(long memberId);
+
+    void insertResignReason(long memberId, String reason);
+
+    int resignMember(long memberId);
 }

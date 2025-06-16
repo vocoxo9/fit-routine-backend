@@ -48,4 +48,21 @@ public class MemberController {
     ) {
         return ResponseEntity.ok(memberService.updateMember(userDetails.getMemberId(), updateRequest));
     }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> resignMember(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        memberService.resignMember(userDetails.getMemberId());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/me/withdraw-reasons")
+    public ResponseEntity<Void> resignMember(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody ResignReason resignReason
+    ) {
+        memberService.insertResignReason(userDetails.getMemberId(), resignReason);
+        return ResponseEntity.ok().build();
+    }
 }

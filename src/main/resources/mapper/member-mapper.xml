@@ -79,4 +79,19 @@
         </set>
         WHERE MEMBER_ID = #{memberId}
     </update>
+    <insert id="insertResignReason">
+        INSERT INTO TB_WITHDRAW VALUES (
+            SEQ_WITHDRAW_ID.NEXTVAL,
+            #{memberId},
+            #{reason},
+            SYSDATE
+        )
+    </insert>
+    <update id="resignMember">
+        UPDATE TB_MEMBER
+        SET
+            IS_DELETED = 'Y'
+        WHERE MEMBER_ID = #{memberId}
+            AND IS_DELETED = 'N'
+    </update>
 </mapper>

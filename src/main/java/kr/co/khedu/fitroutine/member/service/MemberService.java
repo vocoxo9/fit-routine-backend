@@ -1,5 +1,6 @@
 package kr.co.khedu.fitroutine.member.service;
 
+import jakarta.validation.Valid;
 import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
 import kr.co.khedu.fitroutine.member.model.dto.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -74,5 +75,29 @@ public class MemberService {
         MemberPassword storedPassword = memberMapper.selectCurrentPassword(memberId); // DB에서 조회한 값
 
         return passwordEncoder.matches(inputPassword, storedPassword.getPassword());
+    }
+
+    @Transactional
+    public void insertResignReason(long memberId, @Valid ResignReason resignReason) {
+        for (String reason : resignReason.getSelectedReason()) {
+            memberMapper.insertResignReason(
+                memberId,
+                reason
+            );
+        }
+        if (resignReason.getInputReason() != null) {
+            memberMapper.insertResignReason(
+                    memberId,
+                    resignReason.getInputReason()
+            );
+        }
+    }
+
+    public int resignMember(long memberId) {
+        int resign =  memberMapper.resignMember(memberId);
+        if (resign <= 0) {
+            throw new IllegalStateException("회원 탈퇴에 실패하였습니다.");
+        }
+        return resign;
     }
 }
