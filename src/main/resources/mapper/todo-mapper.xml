@@ -49,14 +49,15 @@
         )
     </insert>
 
-    <select id="getTodoIdByMemberId" resultType="_int">
+    <select id="getTodoIdByMemberId" resultType="long">
         SELECT TODO_ID
         FROM TB_TODO
         WHERE MEMBER_ID = #{memberId}
+        AND CATEGORY = 'EXERCISE'
     </select>
 
     <insert id="insertDailyExercise"
-        parameterType="kr.co.khedu.fitroutine.exercise.model.dto.DailyExercises"
+        parameterType="kr.co.khedu.fitroutine.exercise.model.dto.DailyExercise"
         useGeneratedKeys="true" keyProperty="dailyExerciseId" keyColumn="DAILY_EXERCISE_ID">
         INSERT INTO TB_DAILY_EXERCISE VALUES
         (
@@ -74,13 +75,42 @@
         )
     </insert>
 
-    <insert id="createExerciseRoutine"
-            parameterType="kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutineList">
-        INSERT INTO TB_DAILY_EXERCISE VALUES
-        (
-            SEQ_DAILY_EXERCISE_ID.NEXTVAL,
-            10,
-            2
-        )
-    </insert>
+    <delete id="deleteExerciseRoutine">
+        DELETE FROM TB_TODO
+        WHERE TODO_ID = #{todoId}
+    </delete>
+
+    <select id="getRoutineInfoByTodoId"
+            parameterType="long"
+            resultType="kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo">
+        SELECT
+            TODO_ID,
+            STARTED_AT,
+            ENDED_AT,
+            PURPOSE,
+            CATEGORY,
+            DAY_REPEAT,
+            TDEE,
+            GOAL_WEIGHT
+        FROM TB_TODO
+        WHERE TODO_ID = #{todoId}
+    </select>
+
+    <select id="getDailyExercisesByTodoId"
+            resultType="kr.co.khedu.fitroutine.exercise.model.dto.DailyExercise">
+        SELECT DAILY_EXERCISE_ID, DAY_NO
+        FROM TB_DAILY_EXERCISE
+        WHERE TODO_ID = #{todoId}
+    </select>
+
+    <select id="getExerciseDetailByDailyIds"
+            resultType="kr.co.khedu.fitroutine.exercise.model.dto.ExerciseDetail">
+        SELECT EXERCISE_DETAIL_ID, DAILY_EXERCISE_ID, EXERCISE_ID
+        FROM TB_EXERCISE_DETAIL
+        WHERE DAILY_EXERCISE_ID IN
+        <foreach item="id" collection="dailyIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>

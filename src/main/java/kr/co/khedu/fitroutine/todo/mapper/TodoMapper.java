@@ -1,11 +1,13 @@
 package kr.co.khedu.fitroutine.todo.mapper;
 
-import kr.co.khedu.fitroutine.exercise.model.dto.DailyExercises;
+import kr.co.khedu.fitroutine.exercise.model.dto.DailyExercise;
+import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseDetail;
 import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutineList;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
 import kr.co.khedu.fitroutine.todo.model.dto.MyRank;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
@@ -18,11 +20,18 @@ public interface TodoMapper {
 
     Long createRoutineInfo(long memberId, RoutineInfo routineInfo);
 
-    @Nullable int getTodoIdByMemberId(long memberId);
+    @Nullable Long getTodoIdByMemberId(long memberId);
 
-    int insertDailyExercise(DailyExercises dailyExercises);
+    int insertDailyExercise(DailyExercise dailyExercise);
 
     int insertExerciseDetail(long dailyExerciseId, int exerciseId);
 
-    int createExerciseRoutine(long memberId, ExerciseRoutineList exerciseRoutineList);
+    int deleteExerciseRoutine(long todoId);
+
+    RoutineInfo getRoutineInfoByTodoId(long todoId);
+
+    List<DailyExercise> getDailyExercisesByTodoId(long todoId);
+
+    List<ExerciseDetail> getExerciseDetailByDailyIds(@Param("dailyIds") List<Long> dailyExerciseId);
+
 }

@@ -7,7 +7,6 @@ import java.sql.Date;
 
 @Getter
 @Setter
-@ToString
 public final class RoutineInfo {
 
     private final @Nullable long todoId;

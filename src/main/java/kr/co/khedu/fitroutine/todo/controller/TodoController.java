@@ -3,6 +3,7 @@ package kr.co.khedu.fitroutine.todo.controller;
 import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutineList;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
+import kr.co.khedu.fitroutine.todo.model.dto.RoutineUpdateResponse;
 import kr.co.khedu.fitroutine.todo.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,27 @@ public final class TodoController {
         return ResponseEntity.ok(todoId);
     }
 
+    @GetMapping("/todos/exercises")
+    public ResponseEntity<Long> getTodoIdByMemberId(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        try {
+            Long todoId = todoService.getTodoIdByMemberId(userDetails.getMemberId());
+            return ResponseEntity.ok(todoId);
+        } catch (IllegalStateException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(0L);
+        }
+    }
+
+    @GetMapping("/todos/exercises/{todoId}")
+    public ResponseEntity<RoutineUpdateResponse> getExerciseTodoList(
+            @PathVariable long todoId
+    ){
+        return ResponseEntity.ok(todoService.getExerciseTodoList(todoId));
+    }
+
     @PostMapping("/todos/exercises/{todoId}")
     public ResponseEntity<Void> createExerciseRoutine(
             @PathVariable long todoId,
@@ -48,4 +70,14 @@ public final class TodoController {
         todoService.createExerciseRoutine(todoId, exerciseRoutineList);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/todos/exercises/{todoId}")
+    public ResponseEntity<Void> deleteExerciseRoutine(
+            @PathVariable long todoId
+    ){
+        todoService.deleteExerciseRoutine(todoId);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
