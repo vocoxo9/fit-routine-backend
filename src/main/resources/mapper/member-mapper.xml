@@ -87,4 +87,11 @@
             SYSDATE
         )
     </insert>
+    <update id="resignMember">
+        UPDATE TB_MEMBER
+        SET
+            IS_DELETED = 'Y'
+        WHERE MEMBER_ID = #{memberId}
+            AND IS_DELETED = 'N'
+    </update>
 </mapper>

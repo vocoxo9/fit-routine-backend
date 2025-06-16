@@ -92,4 +92,12 @@ public class MemberService {
             );
         }
     }
+
+    public int resignMember(long memberId) {
+        int resign =  memberMapper.resignMember(memberId);
+        if (resign <= 0) {
+            throw new IllegalStateException("회원 탈퇴에 실패하였습니다.");
+        }
+        return resign;
+    }
 }
