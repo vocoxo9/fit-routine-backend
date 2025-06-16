@@ -52,6 +52,7 @@ public class MemberService {
                 updateRequest.getPhone() != null ||
                 updateRequest.getNewPassword() != null
         ) {
+            updateRequest.setNewPassword(passwordEncoder.encode(updateRequest.getNewPassword()));
             if (memberMapper.updateMember(memberId, updateRequest) <= 0) {
                 throw new IllegalStateException("회원 프로필을 수정할 수 없습니다.");
             }
@@ -66,5 +67,12 @@ public class MemberService {
         }
 
         return getMember(memberId);
+    }
+
+    public boolean checkCurrentPassword(long memberId, MemberPassword password) {
+        String inputPassword = password.getPassword(); // 입력값
+        MemberPassword storedPassword = memberMapper.selectCurrentPassword(memberId); // DB에서 조회한 값
+
+        return passwordEncoder.matches(inputPassword, storedPassword.getPassword());
     }
 }
