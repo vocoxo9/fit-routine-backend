@@ -27,15 +27,15 @@ public interface TodoMapper {
 
     int insertExerciseDetail(long dailyExerciseId, int exerciseId);
 
-    int deleteExerciseRoutine(long todoId);
+    int deleteExerciseDetailByTodoId(long todoId);
+
+    int deleteDailyExerciseByTodoId(long todoId);
 
     RoutineInfo getRoutineInfoByTodoId(long todoId);
 
     List<DailyExercise> getDailyExercisesByTodoId(long todoId);
 
     List<ExerciseDetail> getExerciseDetailByDailyIds(@Param("dailyIds") List<Long> dailyExerciseId);
-
-    int createExerciseRoutine(long memberId, ExerciseRoutineList exerciseRoutineList);
 
     List<? extends Menu> getTodayMenuList(long memberId);
 

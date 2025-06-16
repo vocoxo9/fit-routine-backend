@@ -107,8 +107,29 @@ public class TodoService {
         return new ExerciseRoutineList(new ArrayList<>(grouped.values()));
     }
 
-    public int deleteExerciseRoutine(long todoId){
-        return todoMapper.deleteExerciseRoutine(todoId);
+    public void updateExerciseRoutine(long todoId, ExerciseRoutineList exerciseRoutineList){
+        todoMapper.deleteExerciseDetailByTodoId(todoId);  // 자식 중 가장 하위
+        todoMapper.deleteDailyExerciseByTodoId(todoId);   // 중간 자식
+
+        List<List<Integer>> routineList = exerciseRoutineList.getExerciseList();
+
+        for (int i = 0; i < routineList.size(); i++) {
+            int dayNo = i + 1;
+
+            // TB_DAILY_EXSERCISE 저장
+            DailyExercise dailyExercise = DailyExercise.builder()
+                    .todoId(todoId)
+                    .dayNo(dayNo)
+                    .build();
+            todoMapper.insertDailyExercise(dailyExercise);
+
+            // TB_EXERCISE_DETAIL 저장
+            Long dailyExerciseId = dailyExercise.getDailyExerciseId();
+
+            for (int exerciseId : routineList.get(i)) {
+                todoMapper.insertExerciseDetail(dailyExerciseId, exerciseId);
+            }
+        }
     }
 
     private List<? extends Menu> getTodayMenuList(long memberId) {

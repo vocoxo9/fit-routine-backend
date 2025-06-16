@@ -7,6 +7,7 @@ import lombok.ToString;
 import java.util.List;
 
 @Getter
+@ToString
 public final class ExerciseRoutineList {
 
     private final List<List<Integer>> exerciseList;

@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.khedu.fitroutine.todo.mapper.TodoMapper">
+
     <select id="getRoutineMvpTOP3" resultType="kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3">
         SELECT NICKNAME, COUNT
         FROM (
@@ -15,6 +16,7 @@
         )
         WHERE ROWNUM &lt;= 3
     </select>
+
     <select id="getRoutineMvpMyRank" resultType="kr.co.khedu.fitroutine.todo.model.dto.MyRank">
         SELECT RANK, COUNT
         FROM (
@@ -75,11 +77,6 @@
         )
     </insert>
 
-    <delete id="deleteExerciseRoutine">
-        DELETE FROM TB_TODO
-        WHERE TODO_ID = #{todoId}
-    </delete>
-
     <select id="getRoutineInfoByTodoId"
             parameterType="long"
             resultType="kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo">
@@ -102,6 +99,20 @@
         FROM TB_DAILY_EXERCISE
         WHERE TODO_ID = #{todoId}
     </select>
+
+    <delete id="deleteExerciseDetailByTodoId">
+        DELETE FROM TB_EXERCISE_DETAIL
+        WHERE DAILY_EXERCISE_ID IN (
+        SELECT DAILY_EXERCISE_ID
+        FROM TB_DAILY_EXERCISE
+        WHERE TODO_ID = #{todoId}
+        )
+    </delete>
+
+    <delete id="deleteDailyExerciseByTodoId">
+        DELETE FROM TB_DAILY_EXERCISE
+        WHERE TODO_ID = #{todoId}
+    </delete>
 
     <select id="getExerciseDetailByDailyIds"
             resultType="kr.co.khedu.fitroutine.exercise.model.dto.ExerciseDetail">
@@ -139,6 +150,7 @@
         WHERE MEMBER_ID = #{memberId} AND
         CATEGORY='MENU'
     </select>
+
     <select id="getExerciseTodoList" resultType="kr.co.khedu.fitroutine.todo.model.dto.ExerciseTodoListResponse">
         SELECT TODO_ID, CATEGORY, STARTED_AT, ENDED_AT
         FROM TB_TODO
@@ -150,4 +162,5 @@
         DELETE TB_TODO
         WHERE TODO_ID = #{todoId} AND MEMBER_ID = #{memberId}
     </delete>
+
 </mapper>

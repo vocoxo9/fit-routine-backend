@@ -72,6 +72,18 @@ public final class TodoController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/todos/exercises/{todoId}")
+    public ResponseEntity<Void> updateExerciseRoutine(
+            @PathVariable long todoId,
+            @RequestBody ExerciseRoutineList exerciseRoutineList
+    ){
+        System.out.println(todoId);
+        System.out.println(exerciseRoutineList);
+
+        todoService.updateExerciseRoutine(todoId, exerciseRoutineList);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/todos/menu")
     public ResponseEntity<MenuTodoListResponse> getMenuTodoList(
             @AuthenticationPrincipal final UserDetailsImpl userDetails
@@ -95,12 +107,5 @@ public final class TodoController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/todos/exercises/{todoId}")
-    public ResponseEntity<Void> deleteExerciseRoutine(
-            @PathVariable long todoId
-    ){
-        todoService.deleteExerciseRoutine(todoId);
-        return ResponseEntity.noContent().build();
-    }
 
 }
