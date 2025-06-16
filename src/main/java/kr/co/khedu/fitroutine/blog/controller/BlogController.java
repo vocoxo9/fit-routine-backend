@@ -116,4 +116,14 @@ public class BlogController {
         );
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{blogId}/permissions")
+    public ResponseEntity<Boolean> checkBlogPermissions(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long blogId
+    ) {
+        return ResponseEntity.ok(
+                blogService.checkBlogOwner(userDetails.getMemberId(), blogId)
+        );
+    }
 }
