@@ -145,4 +145,11 @@
             END
         FROM DUAL
     </select>
+    <select id="getSimplePosts" resultType="kr.co.khedu.fitroutine.post.model.dto.SimplePost">
+        SELECT TITLE, POST_ID, P.CREATED_AT
+        FROM TB_POST P
+        JOIN TB_BLOG USING (BLOG_ID)
+        JOIN TB_MEMBER USING (MEMBER_ID)
+        WHERE MEMBER_ID = #{memberId}
+    </select>
 </mapper>

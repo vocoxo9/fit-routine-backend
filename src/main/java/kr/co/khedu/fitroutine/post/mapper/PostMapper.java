@@ -33,4 +33,6 @@ public interface PostMapper {
     int unlikePost(long memberId, long postId);
 
     int checkPermissionPost(long memberId, long postId);
+
+    @Nullable List<SimplePost> getSimplePosts(long memberId);
 }

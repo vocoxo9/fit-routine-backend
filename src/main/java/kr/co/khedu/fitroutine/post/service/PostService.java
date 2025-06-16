@@ -7,6 +7,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -99,5 +101,17 @@ public class PostService {
         return (postMapper.checkPermissionPost(memberId, postId) == 1);
     }
 
-//    public Map<String, List<SimplePost>> getSimplePosts(long memberId) {}
+    public List<SimplePost> getSimplePosts(long memberId) {
+        return postMapper.getSimplePosts(memberId);
+    }
+
+    public Map<String, List<SimplePost>> makeSimplePostResponse(long memberId) {
+        List<SimplePost> list = getSimplePosts(memberId);
+        Map<String, List<SimplePost>> map = new HashMap<>();
+        for(SimplePost post : list) {
+            String date = post.getCreatedAt().toString();
+            map.computeIfAbsent(date, key -> new ArrayList<>()).add(post);
+        }
+        return map;
+    }
 }
