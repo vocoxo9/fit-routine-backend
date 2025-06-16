@@ -4,12 +4,13 @@ import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutineList;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineUpdateResponse;
+import kr.co.khedu.fitroutine.todo.model.dto.ExerciseTodoListResponse;
+import kr.co.khedu.fitroutine.todo.model.dto.MenuTodoListResponse;
 import kr.co.khedu.fitroutine.todo.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
 @RestController
 public final class TodoController {
     private final TodoService todoService;
@@ -59,7 +60,7 @@ public final class TodoController {
     public ResponseEntity<RoutineUpdateResponse> getExerciseTodoList(
             @PathVariable long todoId
     ){
-        return ResponseEntity.ok(todoService.getExerciseTodoList(todoId));
+        return ResponseEntity.ok(todoService.getExerciseTodoListById(todoId));
     }
 
     @PostMapping("/todos/exercises/{todoId}")
@@ -71,6 +72,29 @@ public final class TodoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/todos/menu")
+    public ResponseEntity<MenuTodoListResponse> getMenuTodoList(
+            @AuthenticationPrincipal final UserDetailsImpl userDetails
+    ) {
+        return ResponseEntity.ok(todoService.getMenuTodoList(userDetails.getMemberId()));
+    }
+
+    @GetMapping("/todos/exercise")
+    public ResponseEntity<ExerciseTodoListResponse> getExerciseTodoList(
+            @AuthenticationPrincipal final UserDetailsImpl userDetails
+    ) {
+        return ResponseEntity.ok(todoService.getExerciseTodoList(userDetails.getMemberId()));
+    }
+
+    @DeleteMapping("/todos/{todoId}")
+    public ResponseEntity<Void> deleteTodo(
+            @AuthenticationPrincipal final UserDetailsImpl userDetails,
+            @PathVariable final Long todoId
+    ) {
+        todoService.deleteTodo(userDetails.getMemberId(), todoId);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/todos/exercises/{todoId}")
     public ResponseEntity<Void> deleteExerciseRoutine(
             @PathVariable long todoId
@@ -78,6 +102,5 @@ public final class TodoController {
         todoService.deleteExerciseRoutine(todoId);
         return ResponseEntity.noContent().build();
     }
-
 
 }

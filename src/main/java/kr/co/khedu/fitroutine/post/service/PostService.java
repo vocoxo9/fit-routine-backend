@@ -7,7 +7,10 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
@@ -92,5 +95,23 @@ public class PostService {
         if (postMapper.unlikePost(memberId, postId) != 1) {
             throw new NoSuchElementException("포스트 좋아요가 존재하지 않습니다. id=" + postId + ", followed=" + memberId);
         }
+    }
+
+    public Boolean checkPermissionPost(long memberId, long postId) {
+        return (postMapper.checkPermissionPost(memberId, postId) == 1);
+    }
+
+    public List<SimplePost> getSimplePosts(long memberId) {
+        return postMapper.getSimplePosts(memberId);
+    }
+
+    public Map<String, List<SimplePost>> makeSimplePostResponse(long memberId) {
+        List<SimplePost> list = getSimplePosts(memberId);
+        Map<String, List<SimplePost>> map = new HashMap<>();
+        for(SimplePost post : list) {
+            String date = post.getCreatedAt().toString();
+            map.computeIfAbsent(date, key -> new ArrayList<>()).add(post);
+        }
+        return map;
     }
 }

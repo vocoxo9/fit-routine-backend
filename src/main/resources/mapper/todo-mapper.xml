@@ -113,4 +113,41 @@
         </foreach>
     </select>
 
+    <select id="getTodayMenuList" resultType="kr.co.khedu.fitroutine.todo.model.dto.Menu">
+        SELECT M.NAME, M.CALORIE
+        FROM TB_MENU M
+        JOIN TB_MENU_DETAIL MD USING (MENU_ID)
+        JOIN TB_DAILY_MENU DM USING (DAILY_MENU_ID)
+        JOIN TB_TODO T USING (TODO_ID)
+        WHERE T.MEMBER_ID = #{memberId}
+        AND DM.DAY_NO = MOD(TRUNC(SYSDATE - STARTED_AT), T.DAY_REPEAT) + 1
+    </select>
+
+    <select id="getTodayExerciseList" resultType="kr.co.khedu.fitroutine.todo.model.dto.Exercise">
+        SELECT E.NAME, E.MET
+        FROM TB_EXERCISE E
+        JOIN TB_EXERCISE_DETAIL ED USING (EXERCISE_ID)
+        JOIN TB_DAILY_EXERCISE DE USING (DAILY_EXERCISE_ID)
+        JOIN TB_TODO T USING (TODO_ID)
+        WHERE T.MEMBER_ID = #{memberId}
+        AND DE.DAY_NO = MOD(TRUNC(SYSDATE - STARTED_AT), T.DAY_REPEAT) + 1
+    </select>
+
+    <select id="getMenuTodoList" resultType="kr.co.khedu.fitroutine.todo.model.dto.MenuTodoListResponse">
+        SELECT TODO_ID, CATEGORY, STARTED_AT, ENDED_AT
+        FROM TB_TODO
+        WHERE MEMBER_ID = #{memberId} AND
+        CATEGORY='MENU'
+    </select>
+    <select id="getExerciseTodoList" resultType="kr.co.khedu.fitroutine.todo.model.dto.ExerciseTodoListResponse">
+        SELECT TODO_ID, CATEGORY, STARTED_AT, ENDED_AT
+        FROM TB_TODO
+        WHERE MEMBER_ID = #{memberId} AND
+        CATEGORY='EXERCISE'
+    </select>
+
+    <delete id="deleteTodo">
+        DELETE TB_TODO
+        WHERE TODO_ID = #{todoId} AND MEMBER_ID = #{memberId}
+    </delete>
 </mapper>
