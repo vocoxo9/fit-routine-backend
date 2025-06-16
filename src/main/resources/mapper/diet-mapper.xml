@@ -21,4 +21,17 @@
         </where>
         OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
     </select>
+    <select id="selectMenuById" resultType="kr.co.khedu.fitroutine.diet.model.dto.MenuResponse">
+        SELECT
+            MENU_ID,
+            NAME,
+            CALORIE,
+            CARBOHYDRATE,
+            PROTEIN,
+            FAT,
+            SODIUM,
+            CATEGORY
+        FROM TB_MENU
+        WHERE MENU_ID = #{menuId}
+    </select>
 </mapper>

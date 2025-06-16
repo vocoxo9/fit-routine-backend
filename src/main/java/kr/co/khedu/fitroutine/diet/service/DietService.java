@@ -22,4 +22,14 @@ public class DietService {
     public List<? extends MenuResponse> getMenus(@Nullable MenuCategory category, int page, int size) {
         return dietMapper.selectMenus(category, page * size, size);
     }
+
+    @Transactional(readOnly = true)
+    public MenuResponse getMenu(long menuId) {
+        MenuResponse menuResponse = dietMapper.selectMenuById(menuId);
+        if (menuResponse == null) {
+            throw new IllegalArgumentException("메뉴를 찾을 수 없습니다. id=" + menuId);
+        }
+
+        return menuResponse;
+    }
 }

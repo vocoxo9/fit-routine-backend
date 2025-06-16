@@ -30,4 +30,9 @@ public class DietController {
     ) {
         return ResponseEntity.ok(dietService.getMenus(category, page, size));
     }
+
+    @GetMapping("/menus/{menuId}")
+    public ResponseEntity<MenuResponse> getMenu(@PathVariable long menuId) {
+        return ResponseEntity.ok(dietService.getMenu(menuId));
+    }
 }
