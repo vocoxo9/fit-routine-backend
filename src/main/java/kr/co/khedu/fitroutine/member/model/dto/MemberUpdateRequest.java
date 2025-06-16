@@ -3,15 +3,17 @@ package kr.co.khedu.fitroutine.member.model.dto;
 import kr.co.khedu.fitroutine.member.validator.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 @Getter
+@Setter
 public final class MemberUpdateRequest {
     @ValidNickname
     private final @Nullable String nickname;
 
     @ValidPassword
-    private final @Nullable String newPassword;
+    private @Nullable String newPassword;
 
     @ValidPhone
     private final @Nullable String phone;
