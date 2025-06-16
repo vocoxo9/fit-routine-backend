@@ -29,4 +29,6 @@ public interface BlogMapper {
     int insertFollowRelation(long followerBlogId, long followedBlogId);
 
     int deleteFollowRelation(long followerBlogId, long followedBlogId);
+
+    int checkBlogOwner(long memberId, long blogId);
 }

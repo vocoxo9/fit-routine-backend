@@ -101,4 +101,8 @@ public class BlogService {
             throw new NoSuchElementException("팔로우 관계가 존재하지 않습니다. follower=" + followerBlogId + ", followed=" + followedBlogId);
         }
     }
+
+    public Boolean checkBlogOwner(long memberId, long blogId) {
+        return (blogMapper.checkBlogOwner(memberId, blogId) == 1);
+    }
 }
