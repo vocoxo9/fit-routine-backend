@@ -3,9 +3,12 @@ package kr.co.khedu.fitroutine.member.service;
 import jakarta.validation.Valid;
 import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
 import kr.co.khedu.fitroutine.member.model.dto.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -99,5 +102,10 @@ public class MemberService {
             throw new IllegalStateException("회원 탈퇴에 실패하였습니다.");
         }
         return resign;
+    }
+
+    public List<MemberNotification> findNotifications(long memberId) {
+        List<MemberNotification> notification = memberMapper.findNotifications(memberId);
+        return notification;
     }
 }

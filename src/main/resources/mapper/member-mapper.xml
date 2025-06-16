@@ -95,4 +95,17 @@
         WHERE MEMBER_ID = #{memberId}
             AND IS_DELETED = 'N'
     </update>
+    <select id="findNotifications" resultType="kr.co.khedu.fitroutine.member.model.dto.MemberNotification">
+        SELECT
+            A.NOTICE_ID AS NOTICE_ID,
+            A.CATEGORY AS CATEGORY,
+            M.NICKNAME AS NICKNAME,
+            A.CONTENT AS CONTENT,
+            A.CREATED_AT AS CREATED_AT
+        FROM TB_ALARM A
+        JOIN TB_MEMBER M
+            ON A.SENDER_MEMBER_ID = M.MEMBER_ID
+        WHERE A.RECEIVER_MEMBER_ID = #{memberId}
+        ORDER BY A.CREATED_AT DESC
+    </select>
 </mapper>

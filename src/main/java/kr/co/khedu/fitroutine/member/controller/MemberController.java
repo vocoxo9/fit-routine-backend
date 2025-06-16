@@ -65,4 +65,11 @@ public class MemberController {
         memberService.insertResignReason(userDetails.getMemberId(), resignReason);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/me/notifications")
+    public ResponseEntity<?> findNotifications(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        return ResponseEntity.ok(memberService.findNotifications(userDetails.getMemberId()));
+    }
 }
