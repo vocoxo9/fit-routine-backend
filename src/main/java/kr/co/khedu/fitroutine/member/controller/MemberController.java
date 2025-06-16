@@ -49,6 +49,14 @@ public class MemberController {
         return ResponseEntity.ok(memberService.updateMember(userDetails.getMemberId(), updateRequest));
     }
 
+    @PatchMapping("/me/resign")
+    public ResponseEntity<Void> resignMember(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        memberService.resignMember(userDetails.getMemberId());
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/me/resign")
     public ResponseEntity<Void> resignMember(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
