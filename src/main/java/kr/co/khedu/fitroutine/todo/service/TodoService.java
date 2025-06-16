@@ -108,8 +108,8 @@ public class TodoService {
     }
 
     public void updateExerciseRoutine(long todoId, ExerciseRoutineList exerciseRoutineList){
-        todoMapper.deleteExerciseDetailByTodoId(todoId);  // 자식 중 가장 하위
-        todoMapper.deleteDailyExerciseByTodoId(todoId);   // 중간 자식
+        todoMapper.deleteExerciseDetailByTodoId(todoId);
+        todoMapper.deleteDailyExerciseByTodoId(todoId);
 
         List<List<Integer>> routineList = exerciseRoutineList.getExerciseList();
 
