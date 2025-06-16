@@ -74,13 +74,4 @@
         )
     </insert>
 
-    <insert id="createExerciseRoutine"
-            parameterType="kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutineList">
-        INSERT INTO TB_DAILY_EXERCISE VALUES
-        (
-            SEQ_DAILY_EXERCISE_ID.NEXTVAL,
-            10,
-            2
-        )
-    </insert>
 </mapper>
