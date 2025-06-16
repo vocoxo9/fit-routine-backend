@@ -63,6 +63,8 @@ CREATE TABLE TB_MENU
     CALORIE      NUMBER                                                      NOT NULL,
     CARBOHYDRATE NUMBER                                                      NOT NULL,
     PROTEIN      NUMBER                                                      NOT NULL,
+    FAT          NUMBER                                                      NOT NULL,
+    SODIUM       NUMBER                                                      NOT NULL,
     CATEGORY     VARCHAR2(30) CHECK (CATEGORY IN ('RICE', 'SIDES', 'SOUPS')) NOT NULL,
     PRIMARY KEY (MENU_ID)
 );
