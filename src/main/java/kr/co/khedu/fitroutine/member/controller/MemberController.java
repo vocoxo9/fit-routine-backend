@@ -60,7 +60,7 @@ public class MemberController {
     @PostMapping("/me/withdraw-reasons")
     public ResponseEntity<Void> resignMember(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestBody @Valid ResignReason resignReason
+            @RequestBody ResignReason resignReason
     ) {
         memberService.insertResignReason(userDetails.getMemberId(), resignReason);
         return ResponseEntity.ok().build();
