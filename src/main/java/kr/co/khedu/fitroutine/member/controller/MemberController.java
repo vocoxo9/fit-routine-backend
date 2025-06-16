@@ -57,7 +57,7 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/me/resign")
+    @PostMapping("/me/withdraw-reasons")
     public ResponseEntity<Void> resignMember(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody @Valid ResignReason resignReason

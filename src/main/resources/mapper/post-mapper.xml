@@ -130,4 +130,26 @@
         WHERE MEMBER_ID = #{memberId}
         AND POST_ID = #{postId}
     </delete>
+    <select id="checkPermissionPost" resultType="int">
+        SELECT CASE
+            WHEN EXISTS (
+                    SELECT 1
+                    FROM TB_POST P
+                    JOIN TB_BLOG B ON P.BLOG_ID = B.BLOG_ID
+                    JOIN TB_MEMBER M ON B.MEMBER_ID = M.MEMBER_ID
+                    WHERE P.POST_ID = #{postId}
+                    AND M.MEMBER_ID = #{memberId}
+                )
+                THEN 1
+                ELSE 0
+            END
+        FROM DUAL
+    </select>
+    <select id="getSimplePosts" resultType="kr.co.khedu.fitroutine.post.model.dto.SimplePost">
+        SELECT TITLE, POST_ID, P.CREATED_AT
+        FROM TB_POST P
+        JOIN TB_BLOG USING (BLOG_ID)
+        JOIN TB_MEMBER USING (MEMBER_ID)
+        WHERE MEMBER_ID = #{memberId}
+    </select>
 </mapper>

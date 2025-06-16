@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public final class MemberPassword {
-    private String password;
+    private final String password;
 
     @Builder
     private MemberPassword(String password) {

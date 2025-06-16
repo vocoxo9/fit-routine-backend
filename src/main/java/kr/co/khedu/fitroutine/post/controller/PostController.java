@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Validated
@@ -110,5 +111,20 @@ public class PostController {
     ) {
         postService.unlikePost(userDetails.getMemberId(), postId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/posts/{postId}/permissions")
+    public ResponseEntity<Boolean> checkPermissionPost(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable long postId
+    ) {
+        return ResponseEntity.ok(postService.checkPermissionPost(userDetails.getMemberId(), postId));
+    }
+
+    @GetMapping("/posts/simple")
+    public ResponseEntity<Map<String, List<SimplePost>>> getSimplePosts(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        return ResponseEntity.ok(postService.makeSimplePostResponse(userDetails.getMemberId()));
     }
 }
