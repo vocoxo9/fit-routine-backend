@@ -48,4 +48,13 @@ public class MemberController {
     ) {
         return ResponseEntity.ok(memberService.updateMember(userDetails.getMemberId(), updateRequest));
     }
+
+    @PostMapping("/me/withdraw-reasons")
+    public ResponseEntity<Void> resignMember(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody @Valid ResignReason resignReason
+    ) {
+        memberService.insertResignReason(userDetails.getMemberId(), resignReason);
+        return ResponseEntity.ok().build();
+    }
 }
