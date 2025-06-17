@@ -20,6 +20,7 @@
         SELECT *
         FROM TB_MEMBER
         WHERE EMAIL = #{email}
+        AND IS_DELETED = 'N'
     </select>
     <select id="selectCurrentPassword" resultType="kr.co.khedu.fitroutine.member.model.dto.MemberPassword">
         SELECT PASSWORD
