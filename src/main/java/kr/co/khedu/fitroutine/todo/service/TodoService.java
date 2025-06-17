@@ -1,14 +1,18 @@
 package kr.co.khedu.fitroutine.todo.service;
 
-import kr.co.khedu.fitroutine.exercise.model.dto.DailyExercises;
+import kr.co.khedu.fitroutine.exercise.model.dto.DailyExercise;
+import kr.co.khedu.fitroutine.exercise.model.dto.DailyExercise;
+import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseDetail;
 import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutineList;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
 import kr.co.khedu.fitroutine.todo.model.dto.MyRank;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3;
 import kr.co.khedu.fitroutine.todo.model.dto.*;
 import kr.co.khedu.fitroutine.todo.mapper.TodoMapper;
+import kr.co.khedu.fitroutine.todo.model.dto.RoutineUpdateResponse;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -36,6 +40,13 @@ public class TodoService {
         return routineInfo.getTodoId();
     }
 
+    public Long getTodoIdByMemberId(long memberId){
+        Long todoId = todoMapper.getTodoIdByMemberId(memberId);
+        if (todoId == null){
+            throw new IllegalStateException("등록된 루틴이 없습니다. " + memberId);
+        }
+        return todoMapper.getTodoIdByMemberId(memberId);
+    }
 
     public void createExerciseRoutine(long todoId, ExerciseRoutineList exerciseRoutineList) {
         List<List<Integer>> routineList = exerciseRoutineList.getExerciseList();
@@ -44,7 +55,69 @@ public class TodoService {
             int dayNo = i + 1;
 
             // TB_DAILY_EXSERCISE 저장
-            DailyExercises dailyExercise = DailyExercises.builder()
+            DailyExercise dailyExercise = DailyExercise.builder()
+                    .todoId(todoId)
+                    .dayNo(dayNo)
+                    .build();
+            todoMapper.insertDailyExercise(dailyExercise);
+
+            // TB_EXERCISE_DETAIL 저장
+            Long dailyExerciseId = dailyExercise.getDailyExerciseId();
+
+            for (int exerciseId : routineList.get(i)) {
+                todoMapper.insertExerciseDetail(dailyExerciseId, exerciseId);
+            }
+        }
+    }
+
+    public RoutineUpdateResponse getExerciseTodoListById(long todoId){
+        RoutineInfo routineInfo = todoMapper.getRoutineInfoByTodoId(todoId);
+        ExerciseRoutineList exerciseRoutineList = getExerciseRoutineListByTodoId(todoId);
+
+        return RoutineUpdateResponse.builder()
+                .routineInfo(routineInfo)
+                .exerciseRoutineList(exerciseRoutineList)
+                .build();
+    }
+
+    public ExerciseRoutineList getExerciseRoutineListByTodoId(long todoId) {
+        List<DailyExercise> dailyExercises = todoMapper.getDailyExercisesByTodoId(todoId);
+        List<Long> dailyIds = dailyExercises.stream()
+                .map(DailyExercise::getDailyExerciseId)
+                .toList();
+
+        if (dailyIds.isEmpty()) {
+            return new ExerciseRoutineList(Collections.emptyList());
+        }
+
+        List<ExerciseDetail> details = todoMapper.getExerciseDetailByDailyIds(dailyIds);
+
+        // dayIndex -> List<exerciseId>
+        Map<Integer, List<Integer>> grouped = new TreeMap<>();
+
+        for (DailyExercise daily : dailyExercises) {
+            List<Integer> exerciseIds = details.stream()
+                    .filter(d -> d.getDailyExerciseId() == daily.getDailyExerciseId())
+                    .map(ExerciseDetail::getExerciseId)
+                    .toList();
+
+            grouped.put(daily.getDayNo(), exerciseIds);
+        }
+
+        return new ExerciseRoutineList(new ArrayList<>(grouped.values()));
+    }
+
+    public void updateExerciseRoutine(long todoId, ExerciseRoutineList exerciseRoutineList){
+        todoMapper.deleteExerciseDetailByTodoId(todoId);
+        todoMapper.deleteDailyExerciseByTodoId(todoId);
+
+        List<List<Integer>> routineList = exerciseRoutineList.getExerciseList();
+
+        for (int i = 0; i < routineList.size(); i++) {
+            int dayNo = i + 1;
+
+            // TB_DAILY_EXSERCISE 저장
+            DailyExercise dailyExercise = DailyExercise.builder()
                     .todoId(todoId)
                     .dayNo(dayNo)
                     .build();

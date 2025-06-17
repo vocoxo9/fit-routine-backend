@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.khedu.fitroutine.todo.mapper.TodoMapper">
+
     <select id="getRoutineMvpTOP3" resultType="kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3">
         SELECT NICKNAME, COUNT
         FROM (
@@ -15,6 +16,7 @@
         )
         WHERE ROWNUM &lt;= 3
     </select>
+
     <select id="getRoutineMvpMyRank" resultType="kr.co.khedu.fitroutine.todo.model.dto.MyRank">
         SELECT RANK, COUNT
         FROM (
@@ -49,14 +51,15 @@
         )
     </insert>
 
-    <select id="getTodoIdByMemberId" resultType="_int">
+    <select id="getTodoIdByMemberId" resultType="long">
         SELECT TODO_ID
         FROM TB_TODO
         WHERE MEMBER_ID = #{memberId}
+        AND CATEGORY = 'EXERCISE'
     </select>
 
     <insert id="insertDailyExercise"
-        parameterType="kr.co.khedu.fitroutine.exercise.model.dto.DailyExercises"
+        parameterType="kr.co.khedu.fitroutine.exercise.model.dto.DailyExercise"
         useGeneratedKeys="true" keyProperty="dailyExerciseId" keyColumn="DAILY_EXERCISE_ID">
         INSERT INTO TB_DAILY_EXERCISE VALUES
         (
@@ -73,6 +76,53 @@
             #{exerciseId}
         )
     </insert>
+
+    <select id="getRoutineInfoByTodoId"
+            parameterType="long"
+            resultType="kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo">
+        SELECT
+            TODO_ID,
+            STARTED_AT,
+            ENDED_AT,
+            PURPOSE,
+            CATEGORY,
+            DAY_REPEAT,
+            TDEE,
+            GOAL_WEIGHT
+        FROM TB_TODO
+        WHERE TODO_ID = #{todoId}
+    </select>
+
+    <select id="getDailyExercisesByTodoId"
+            resultType="kr.co.khedu.fitroutine.exercise.model.dto.DailyExercise">
+        SELECT DAILY_EXERCISE_ID, DAY_NO
+        FROM TB_DAILY_EXERCISE
+        WHERE TODO_ID = #{todoId}
+    </select>
+
+    <delete id="deleteExerciseDetailByTodoId">
+        DELETE FROM TB_EXERCISE_DETAIL
+        WHERE DAILY_EXERCISE_ID IN (
+        SELECT DAILY_EXERCISE_ID
+        FROM TB_DAILY_EXERCISE
+        WHERE TODO_ID = #{todoId}
+        )
+    </delete>
+
+    <delete id="deleteDailyExerciseByTodoId">
+        DELETE FROM TB_DAILY_EXERCISE
+        WHERE TODO_ID = #{todoId}
+    </delete>
+
+    <select id="getExerciseDetailByDailyIds"
+            resultType="kr.co.khedu.fitroutine.exercise.model.dto.ExerciseDetail">
+        SELECT EXERCISE_DETAIL_ID, DAILY_EXERCISE_ID, EXERCISE_ID
+        FROM TB_EXERCISE_DETAIL
+        WHERE DAILY_EXERCISE_ID IN
+        <foreach item="id" collection="dailyIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
     <select id="getTodayMenuList" resultType="kr.co.khedu.fitroutine.todo.model.dto.Menu">
         SELECT M.NAME, M.CALORIE
@@ -100,6 +150,7 @@
         WHERE MEMBER_ID = #{memberId} AND
         CATEGORY='MENU'
     </select>
+
     <select id="getExerciseTodoList" resultType="kr.co.khedu.fitroutine.todo.model.dto.ExerciseTodoListResponse">
         SELECT TODO_ID, CATEGORY, STARTED_AT, ENDED_AT
         FROM TB_TODO
@@ -111,4 +162,5 @@
         DELETE TB_TODO
         WHERE TODO_ID = #{todoId} AND MEMBER_ID = #{memberId}
     </delete>
+
 </mapper>

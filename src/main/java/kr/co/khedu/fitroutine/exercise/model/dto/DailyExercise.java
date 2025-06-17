@@ -7,14 +7,14 @@ import org.springframework.lang.Nullable;
 
 @Getter
 @Setter
-public final class DailyExercises {
+public final class DailyExercise {
 
     private @Nullable long dailyExerciseId;
     private final long todoId;
     private final int dayNo;
 
     @Builder
-    private DailyExercises(long todoId, int dayNo) {
+    private DailyExercise(long todoId, int dayNo) {
         this.todoId = todoId;
         this.dayNo = dayNo;
     }
