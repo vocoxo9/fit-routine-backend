@@ -9,18 +9,6 @@ VALUES (SEQ_MEMBER_ID.NEXTVAL, 'test_4@gmail.com', '$2a$10$MZ.4QKiC2Ruo2JcfYxIWA
 INSERT INTO TB_MEMBER
 VALUES (SEQ_MEMBER_ID.NEXTVAL, 'test_5@gmail.com', '$2a$10$MZ.4QKiC2Ruo2JcfYxIWAuepOGYB6vgG42lT6vrgdW7ZAwk5a46aO', '마라마', 'F', sysdate, '010-1811-2222', sysdate, 'N');
 
-INSERT INTO TB_BLOG
-VALUES (SEQ_BLOG_ID.NEXTVAL, 1, '저는 뽀리입니다. 꽤 귀엽구요\n잘 부탁합니다.', 120);
-INSERT INTO TB_BLOG
-VALUES (SEQ_BLOG_ID.NEXTVAL, 2, '저는 재롱이입니다. 굉장히 싸납구요\n조심하세요.', 57);
-INSERT INTO TB_BLOG
-VALUES (SEQ_BLOG_ID.NEXTVAL, 3, '저는 담비입니다.\n구운게 아니라 원래 색깔입니다.', 1000);
-INSERT INTO TB_BLOG
-VALUES (SEQ_BLOG_ID.NEXTVAL, 4, '저는 환희입니다. \n항상 감사하구요.\n주인만 물어요.\n센척 엄청합니다.', 650);
-INSERT INTO TB_BLOG
-VALUES (SEQ_BLOG_ID.NEXTVAL, 5, '살려줭', 10);
-
-
 INSERT INTO TB_MEMBER_DETAIL
 VALUES (1, 164, 66);
 INSERT INTO TB_MEMBER_DETAIL
