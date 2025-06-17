@@ -35,4 +35,6 @@ public interface PostMapper {
     int checkPermissionPost(long memberId, long postId);
 
     @Nullable List<SimplePost> getSimplePosts(long memberId);
+
+    int increaseGrade(long blogId);
 }

@@ -152,4 +152,8 @@
         JOIN TB_MEMBER USING (MEMBER_ID)
         WHERE MEMBER_ID = #{memberId}
     </select>
+
+    <update id="increaseGrade">
+        update tb_blog set grade = grade + 1 where blog_id = #{blogId}
+    </update>
 </mapper>
