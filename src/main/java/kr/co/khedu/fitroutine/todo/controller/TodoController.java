@@ -2,10 +2,7 @@ package kr.co.khedu.fitroutine.todo.controller;
 
 import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutineList;
 import kr.co.khedu.fitroutine.security.model.dto.UserDetailsImpl;
-import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
-import kr.co.khedu.fitroutine.todo.model.dto.RoutineUpdateResponse;
-import kr.co.khedu.fitroutine.todo.model.dto.ExerciseTodoListResponse;
-import kr.co.khedu.fitroutine.todo.model.dto.MenuTodoListResponse;
+import kr.co.khedu.fitroutine.todo.model.dto.*;
 import kr.co.khedu.fitroutine.todo.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,6 +90,13 @@ public final class TodoController {
             @AuthenticationPrincipal final UserDetailsImpl userDetails
     ) {
         return ResponseEntity.ok(todoService.getExerciseTodoList(userDetails.getMemberId()));
+    }
+
+    @GetMapping("/todos/me/exe-routine/today")
+    public ResponseEntity<?> getExerciseToday(
+            @AuthenticationPrincipal final UserDetailsImpl userDetails
+    ) {
+        return ResponseEntity.ok(todoService.getExerciseToday(userDetails.getMemberId()));
     }
 
     @DeleteMapping("/todos/{todoId}")
