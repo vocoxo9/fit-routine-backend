@@ -28,4 +28,8 @@ public interface MemberMapper {
     int resignMember(long memberId);
 
     List<MemberNotification> findNotifications(long memberId);
+
+    int deleteNotice(long noticeId);
+
+    int deleteNoticeAll(long memberId);
 }

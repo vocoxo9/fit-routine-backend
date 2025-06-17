@@ -109,4 +109,12 @@
             AND A.IS_READ = 'N'
         ORDER BY A.CREATED_AT DESC
     </select>
+    <delete id="deleteNotice">
+        DELETE TB_ALARM
+        WHERE NOTICE_ID = #{noticeId}
+    </delete>
+    <delete id="deleteNoticeAll">
+        DELETE TB_ALARM
+        WHERE RECEIVER_MEMBER_ID = #{memberId}
+    </delete>
 </mapper>

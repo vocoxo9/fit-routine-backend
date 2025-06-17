@@ -3,7 +3,6 @@ package kr.co.khedu.fitroutine.member.service;
 import jakarta.validation.Valid;
 import kr.co.khedu.fitroutine.member.mapper.MemberMapper;
 import kr.co.khedu.fitroutine.member.model.dto.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,5 +106,15 @@ public class MemberService {
     public List<MemberNotification> findNotifications(long memberId) {
         List<MemberNotification> notification = memberMapper.findNotifications(memberId);
         return notification;
+    }
+
+    public boolean deleteNotice(long noticeId) {
+        int result = memberMapper.deleteNotice(noticeId);
+        return result > 0;
+    }
+
+    public boolean deleteNoticeAll(long memberId) {
+        int result = memberMapper.deleteNoticeAll(memberId);
+        return result > 0;
     }
 }
