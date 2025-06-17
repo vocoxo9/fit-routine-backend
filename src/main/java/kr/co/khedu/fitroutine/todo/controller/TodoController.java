@@ -77,9 +77,6 @@ public final class TodoController {
             @PathVariable long todoId,
             @RequestBody ExerciseRoutineList exerciseRoutineList
     ){
-        System.out.println(todoId);
-        System.out.println(exerciseRoutineList);
-
         todoService.updateExerciseRoutine(todoId, exerciseRoutineList);
         return ResponseEntity.noContent().build();
     }
