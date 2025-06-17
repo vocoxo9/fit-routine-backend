@@ -65,4 +65,27 @@ public class MemberController {
         memberService.insertResignReason(userDetails.getMemberId(), resignReason);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/me/notifications")
+    public ResponseEntity<?> findNotifications(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        return ResponseEntity.ok(memberService.findNotifications(userDetails.getMemberId()));
+    }
+
+    @DeleteMapping("/me/notice/{noticeId}")
+    public boolean deleteNotice(
+            @PathVariable long noticeId
+    ) {
+        boolean isDeleted = memberService.deleteNotice(noticeId);
+        return isDeleted;
+    }
+
+    @DeleteMapping("/me/notices")
+    public boolean deleteNoticeAll(
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ) {
+        boolean isDeleted = memberService.deleteNoticeAll(userDetails.getMemberId());
+        return isDeleted;
+    }
 }

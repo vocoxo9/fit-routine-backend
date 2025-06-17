@@ -7,6 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class MemberService {
@@ -99,5 +101,20 @@ public class MemberService {
             throw new IllegalStateException("회원 탈퇴에 실패하였습니다.");
         }
         return resign;
+    }
+
+    public List<MemberNotification> findNotifications(long memberId) {
+        List<MemberNotification> notification = memberMapper.findNotifications(memberId);
+        return notification;
+    }
+
+    public boolean deleteNotice(long noticeId) {
+        int result = memberMapper.deleteNotice(noticeId);
+        return result > 0;
+    }
+
+    public boolean deleteNoticeAll(long memberId) {
+        int result = memberMapper.deleteNoticeAll(memberId);
+        return result > 0;
     }
 }

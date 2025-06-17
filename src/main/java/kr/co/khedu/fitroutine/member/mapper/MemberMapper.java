@@ -1,12 +1,11 @@
 package kr.co.khedu.fitroutine.member.mapper;
 
 import jakarta.annotation.Nullable;
-import kr.co.khedu.fitroutine.member.model.dto.MemberCreateRequest;
-import kr.co.khedu.fitroutine.member.model.dto.MemberPassword;
-import kr.co.khedu.fitroutine.member.model.dto.MemberUpdateRequest;
-import kr.co.khedu.fitroutine.member.model.dto.MemberResponse;
+import kr.co.khedu.fitroutine.member.model.dto.*;
 import kr.co.khedu.fitroutine.member.model.vo.Member;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface MemberMapper {
@@ -27,4 +26,10 @@ public interface MemberMapper {
     void insertResignReason(long memberId, String reason);
 
     int resignMember(long memberId);
+
+    List<MemberNotification> findNotifications(long memberId);
+
+    int deleteNotice(long noticeId);
+
+    int deleteNoticeAll(long memberId);
 }
