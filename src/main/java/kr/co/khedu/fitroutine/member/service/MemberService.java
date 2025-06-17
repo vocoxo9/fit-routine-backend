@@ -49,7 +49,7 @@ public class MemberService {
     }
 
     public MemberResponse updateMember(long memberId, MemberUpdateRequest updateRequest) {
-        if (updateRequest.getNewPassword() != null && !updateRequest.getNewPassword().isBlank()) {
+        if (updateRequest.getNewPassword() != null) {
             updateRequest.setNewPassword(passwordEncoder.encode(updateRequest.getNewPassword()));
         }
 
