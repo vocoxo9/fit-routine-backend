@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//KO"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.khedu.fitroutine.diet.mapper.DietMapper">
+    <select id="selectMenus" resultType="kr.co.khedu.fitroutine.diet.model.dto.MenuResponse">
+        SELECT
+            MENU_ID,
+            NAME,
+            CALORIE,
+            CARBOHYDRATE,
+            PROTEIN,
+            FAT,
+            SODIUM,
+            CATEGORY
+        FROM TB_MENU
+        <where>
+            <if test="category != null">
+                CATEGORY = #{category}
+            </if>
+        </where>
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
+    </select>
+    <select id="selectMenuById" resultType="kr.co.khedu.fitroutine.diet.model.dto.MenuResponse">
+        SELECT
+            MENU_ID,
+            NAME,
+            CALORIE,
+            CARBOHYDRATE,
+            PROTEIN,
+            FAT,
+            SODIUM,
+            CATEGORY
+        FROM TB_MENU
+        WHERE MENU_ID = #{menuId}
+    </select>
+    <select id="selectRandomMenuId"
+            resultType="_long"
+            useCache="false"
+            flushCache="true"
+    >
+        SELECT MENU_ID
+        FROM (
+            SELECT
+                MENU_ID,
+                NAME,
+                CALORIE,
+                CARBOHYDRATE,
+                PROTEIN,
+                FAT,
+                SODIUM,
+                CATEGORY
+            FROM TB_MENU
+            WHERE CATEGORY = #{category}
+            ORDER BY DBMS_RANDOM.VALUE
+        )
+        WHERE ROWNUM = 1
+    </select>
+    <insert id="insertDailyMenu">
+        <selectKey keyProperty="dailyMenuId" resultType="long" order="BEFORE">
+            SELECT SEQ_DAILY_MENU_ID.NEXTVAL
+            FROM DAUL
+        </selectKey>
+        INSERT INTO TB_DAILY_MENU
+        VALUES (
+            #{dailyMenuId},
+            #{todoId},
+            #{dayNo}
+        )
+    </insert>
+    <insert id="insertMenuDetail">
+        INSERT INTO TB_MENU_DETAIL
+        VALUES (
+            SEQ_MENU_DETAIL_ID.NEXTVAL,
+            #{dailyMenuId},
+            #{menuId}
+        )
+    </insert>
+</mapper>
