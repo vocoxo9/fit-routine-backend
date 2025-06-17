@@ -58,6 +58,10 @@ public class PostService {
         if (postId == null) {
             throw new IllegalStateException("포스트를 추가할 수 없습니다.");
         }
+        int result = postMapper.increaseGrade(blogId);
+        if (result != 1) {
+            throw new NoSuchElementException("블로그가 존재하지 않습니다. id=" + blogId);
+        }
 
         return getPost(postId);
     }
