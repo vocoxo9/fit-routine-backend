@@ -1,7 +1,6 @@
 package kr.co.khedu.fitroutine.todo.service;
 
 import kr.co.khedu.fitroutine.exercise.model.dto.DailyExercise;
-import kr.co.khedu.fitroutine.exercise.model.dto.DailyExercise;
 import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseDetail;
 import kr.co.khedu.fitroutine.exercise.model.dto.ExerciseRoutineList;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineInfo;
@@ -21,6 +20,19 @@ public class TodoService {
     private final TodoMapper todoMapper;
     public TodoService (TodoMapper todoMapper) {
         this.todoMapper = todoMapper;
+    }
+
+    public List<? extends TodayRoutine> getExerciseToday(long memberId) {
+        List<? extends TodayRoutine> routines = todoMapper.getExerciseToday(memberId);
+        for (TodayRoutine routine : routines) {
+            String category = routine.getCategory();
+            if ("EXERCISE".equals(category)) {
+                routine.setCategory("운동");  // "EXERCISE" -> "운동"
+            } else if ("MENU".equals(category)) {
+                routine.setCategory("식단");  // "MENU" -> "식단"
+            }
+        }
+        return routines;
     }
 
     public List<? extends RoutineMvpTOP3> getRoutineMvpTOP3() {

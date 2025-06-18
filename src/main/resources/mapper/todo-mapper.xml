@@ -134,6 +134,16 @@
         AND DM.DAY_NO = MOD(TRUNC(SYSDATE - STARTED_AT), T.DAY_REPEAT) + 1
     </select>
 
+    <select id="getExerciseToday" resultType="kr.co.khedu.fitroutine.todo.model.dto.TodayRoutine">
+        SELECT DISTINCT E.NAME, T.CATEGORY
+        FROM TB_EXERCISE E
+        JOIN TB_EXERCISE_DETAIL ED ON E.EXERCISE_ID = ED.EXERCISE_ID
+        JOIN TB_DAILY_EXERCISE DE ON ED.DAILY_EXERCISE_ID = DE.DAILY_EXERCISE_ID
+        JOIN TB_TODO T ON DE.TODO_ID = T.TODO_ID
+        WHERE T.MEMBER_ID = #{memberId}
+
+    </select>
+
     <select id="getTodayExerciseList" resultType="kr.co.khedu.fitroutine.todo.model.dto.Exercise">
         SELECT E.NAME, E.MET
         FROM TB_EXERCISE E
