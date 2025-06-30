@@ -27,7 +27,7 @@ public final class TodoController {
         return ResponseEntity.ok(todoService.getgetRoutineMvpMyRank(userDetails.getMemberId()));
     }
 
-    @PostMapping("/todos/info")
+    @PostMapping("/todos")
     public ResponseEntity<Long> createRoutineInfo(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody RoutineInfo routineInfo
@@ -39,7 +39,7 @@ public final class TodoController {
         return ResponseEntity.ok(todoId);
     }
 
-    @GetMapping("/todos/exercises")
+    @GetMapping("/todos/current")
     public ResponseEntity<Long> getTodoIdByMemberId(
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ) {
@@ -53,14 +53,14 @@ public final class TodoController {
         }
     }
 
-    @GetMapping("/todos/exercises/{todoId}")
+    @GetMapping("/todos/{todoId}/exercises")
     public ResponseEntity<RoutineUpdateResponse> getExerciseTodoList(
             @PathVariable long todoId
     ){
         return ResponseEntity.ok(todoService.getExerciseTodoListById(todoId));
     }
 
-    @PostMapping("/todos/exercises/{todoId}")
+    @PostMapping("/todos/{todoId}/exercises")
     public ResponseEntity<Void> createExerciseRoutine(
             @PathVariable long todoId,
             @RequestBody ExerciseRoutineList exerciseRoutineList
@@ -69,7 +69,7 @@ public final class TodoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/todos/exercises/{todoId}")
+    @PatchMapping("/todos/{todoId}/exercises")
     public ResponseEntity<Void> updateExerciseRoutine(
             @PathVariable long todoId,
             @RequestBody ExerciseRoutineList exerciseRoutineList
