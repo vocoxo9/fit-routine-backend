@@ -14,5 +14,4 @@ public interface ExerciseMapper {
 
     ExerciseOpenData getExerciseById(int id);
 
-    int registExerciseRoutine(long memberId, RoutineInfo routineInfo);
 }

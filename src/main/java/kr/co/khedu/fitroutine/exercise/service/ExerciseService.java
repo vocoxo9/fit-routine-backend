@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public final class ExerciseService {
@@ -18,17 +19,32 @@ public final class ExerciseService {
     }
 
     public List<? extends ExerciseOpenData> getAllExerciseOpenDataList(String purpose) {
+        if (purpose == null || purpose.trim().isEmpty()) {
+            throw new IllegalArgumentException("목적은 null일 수 없습니다.");
+        }
         return exerciseMapper.getAllExerciseOpenDataList(purpose);
     }
 
     // 운동 루틴 랜덤 추출
     public List<? extends Integer> getRandomExerciseRoutine(int dayRepeat, String purpose) {
+        if (dayRepeat <= 0) {
+            throw new IllegalArgumentException("반복일은 0이나 음수일 수 없습니다.");
+        }
+        if (purpose == null || purpose.trim().isEmpty()) {
+            throw new IllegalArgumentException("목적은 null일 수 없습니다.");
+        }
         return exerciseMapper.getRandomExerciseRoutine(dayRepeat, purpose);
     }
 
     // 운동 루틴 랜덤 추출을 통해 Front에서 사용할 형태로 변환
     public ExerciseRoutineList getRandomExerciseRoutineTransform(int dayRepeat, String purpose) {
+        if(dayRepeat <= 0){
+            throw new IllegalArgumentException("반복일은 0이나 음수일 수 없습니다.");
+        }
         List<Integer> randomExerciseList = (List<Integer>) getRandomExerciseRoutine(dayRepeat, purpose);
+        if(randomExerciseList.size() < dayRepeat*5){
+            throw new IllegalStateException("배열의 크기가 충분하지 않습니다.");
+        }
         /*
             0 : 0 ~ 4
             1 : 5 ~ 9
@@ -47,14 +63,11 @@ public final class ExerciseService {
     }
 
     public ExerciseOpenData getExerciseById(int id) {
-        return exerciseMapper.getExerciseById(id);
+        ExerciseOpenData data = exerciseMapper.getExerciseById(id);
+        if (data == null) {
+            throw new NoSuchElementException("운동 ID가 존재하지 않습니다 " + id);
+        }
+        return data;
     }
 
-    public int registExerciseRoutine(long memberId, RoutineInfo routineInfo) {
-        int result = exerciseMapper.registExerciseRoutine(memberId, routineInfo);
-        if (exerciseMapper.registExerciseRoutine(memberId, routineInfo) <= 0) {
-            throw new IllegalStateException("루틴을 등록할 수 없습니다.");
-        }
-        return result;
-    }
 }

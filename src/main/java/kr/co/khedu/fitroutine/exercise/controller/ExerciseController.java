@@ -22,8 +22,11 @@ public final class ExerciseController {
         return ResponseEntity.ok(exerciseService.getAllExerciseOpenDataList(purpose));
     }
 
-    @GetMapping("/random-routine")
-    public ResponseEntity<ExerciseRoutineList> getRandomExerciseRoutine(@RequestParam int dayRepeat, @RequestParam String purpose){
+    @GetMapping("/random")
+    public ResponseEntity<ExerciseRoutineList> getRandomExerciseRoutine(
+            @RequestParam int dayRepeat,
+            @RequestParam String purpose
+    ){
         return ResponseEntity.ok(exerciseService.getRandomExerciseRoutineTransform(dayRepeat, purpose));
     }
 
