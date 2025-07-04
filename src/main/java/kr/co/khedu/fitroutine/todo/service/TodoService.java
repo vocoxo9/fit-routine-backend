@@ -9,7 +9,9 @@ import kr.co.khedu.fitroutine.todo.model.dto.RoutineMvpTOP3;
 import kr.co.khedu.fitroutine.todo.model.dto.*;
 import kr.co.khedu.fitroutine.todo.mapper.TodoMapper;
 import kr.co.khedu.fitroutine.todo.model.dto.RoutineUpdateResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 import java.util.List;
@@ -61,6 +63,15 @@ public class TodoService {
     }
 
     public void createExerciseRoutine(long todoId, ExerciseRoutineList exerciseRoutineList) {
+        if (exerciseRoutineList == null || exerciseRoutineList.getExerciseList() == null
+                || exerciseRoutineList.getExerciseList().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "운동 루틴이 존재하지 않습니다.");
+        }
+
+        if (!todoMapper.existsById(todoId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 Todo가 존재하지 않습니다.");
+        }
+
         List<List<Integer>> routineList = exerciseRoutineList.getExerciseList();
 
         for (int i = 0; i < routineList.size(); i++) {
@@ -120,6 +131,11 @@ public class TodoService {
     }
 
     public void updateExerciseRoutine(long todoId, ExerciseRoutineList exerciseRoutineList){
+        if (!todoMapper.existsById(todoId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 Todo가 존재하지 않습니다.");
+        }
+        
+        // 해당 todoId 자식 요소 삭제 후 재삽입
         todoMapper.deleteExerciseDetailByTodoId(todoId);
         todoMapper.deleteDailyExerciseByTodoId(todoId);
 
@@ -141,6 +157,17 @@ public class TodoService {
             for (int exerciseId : routineList.get(i)) {
                 todoMapper.insertExerciseDetail(dailyExerciseId, exerciseId);
             }
+        }
+    }
+
+    public void deleteTodo(long memberId, Long todoId) {
+        if (todoId == null) {
+            throw new IllegalArgumentException("todoId는 null일 수 없습니다.");
+        }
+
+        if (todoMapper.deleteTodo(memberId, todoId) != 1) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "해당하는 TODO가 존재하지 않습니다. todoId=" + todoId);
         }
     }
 
@@ -166,11 +193,5 @@ public class TodoService {
             exerciseTodoListResponse.setTodos(getTodayExerciseList(memberId));
         }
         return exerciseTodoListResponse;
-    }
-
-    public void deleteTodo(long memberId, Long todoId) {
-        if(todoMapper.deleteTodo(memberId, todoId) != 1) {
-            throw new NoSuchElementException("해당하는 TODO가 존재하지 않습니다. todoId=" + todoId);
-        }
     }
 }

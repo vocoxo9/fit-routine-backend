@@ -38,6 +38,8 @@ public interface TodoMapper {
 
     List<ExerciseDetail> getExerciseDetailByDailyIds(@Param("dailyIds") List<Long> dailyExerciseId);
 
+    boolean existsById(long todoId);
+
     List<? extends Menu> getTodayMenuList(long memberId);
 
     List<? extends Exercise> getTodayExerciseList(long memberId);

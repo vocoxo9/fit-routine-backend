@@ -17,11 +17,13 @@ public final class ExerciseController {
         this.exerciseService = exerciseService;
     }
 
+    // 운동 공공데이터 목록
     @GetMapping("/open-data")
     public ResponseEntity<List<? extends ExerciseOpenData>> getAllExerciseOpenDataList(@RequestParam String purpose) {
         return ResponseEntity.ok(exerciseService.getAllExerciseOpenDataList(purpose));
     }
 
+    // 랜덤 루틴 목록
     @GetMapping("/random")
     public ResponseEntity<ExerciseRoutineList> getRandomExerciseRoutine(
             @RequestParam int dayRepeat,
@@ -30,6 +32,7 @@ public final class ExerciseController {
         return ResponseEntity.ok(exerciseService.getRandomExerciseRoutineTransform(dayRepeat, purpose));
     }
 
+    // 운동 id기반 운동 정보
     @GetMapping("/{id}")
     public ResponseEntity<ExerciseOpenData> getExerciseById(@PathVariable int id){
         return ResponseEntity.ok(exerciseService.getExerciseById(id));

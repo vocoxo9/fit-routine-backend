@@ -39,6 +39,7 @@ public final class TodoController {
         return ResponseEntity.ok(todoId);
     }
 
+    // memberId로 todoId 반환
     @GetMapping("/todos/current")
     public ResponseEntity<Long> getTodoIdByMemberId(
             @AuthenticationPrincipal UserDetailsImpl userDetails
@@ -53,6 +54,7 @@ public final class TodoController {
         }
     }
 
+    // 운동 루틴 반환(수정 시)
     @GetMapping("/todos/{todoId}/exercises")
     public ResponseEntity<RoutineUpdateResponse> getExerciseTodoList(
             @PathVariable long todoId
@@ -60,6 +62,7 @@ public final class TodoController {
         return ResponseEntity.ok(todoService.getExerciseTodoListById(todoId));
     }
 
+    // 운동 루틴 등록
     @PostMapping("/todos/{todoId}/exercises")
     public ResponseEntity<Void> createExerciseRoutine(
             @PathVariable long todoId,
@@ -69,12 +72,23 @@ public final class TodoController {
         return ResponseEntity.noContent().build();
     }
 
+    // 운동 루틴 수정
     @PatchMapping("/todos/{todoId}/exercises")
     public ResponseEntity<Void> updateExerciseRoutine(
             @PathVariable long todoId,
             @RequestBody ExerciseRoutineList exerciseRoutineList
     ){
         todoService.updateExerciseRoutine(todoId, exerciseRoutineList);
+        return ResponseEntity.noContent().build();
+    }
+
+    // 운동 루틴 삭제
+    @DeleteMapping("/todos/{todoId}")
+    public ResponseEntity<Void> deleteTodo(
+            @AuthenticationPrincipal final UserDetailsImpl userDetails,
+            @PathVariable final Long todoId
+    ) {
+        todoService.deleteTodo(userDetails.getMemberId(), todoId);
         return ResponseEntity.noContent().build();
     }
 
@@ -97,15 +111,6 @@ public final class TodoController {
             @AuthenticationPrincipal final UserDetailsImpl userDetails
     ) {
         return ResponseEntity.ok(todoService.getExerciseToday(userDetails.getMemberId()));
-    }
-
-    @DeleteMapping("/todos/{todoId}")
-    public ResponseEntity<Void> deleteTodo(
-            @AuthenticationPrincipal final UserDetailsImpl userDetails,
-            @PathVariable final Long todoId
-    ) {
-        todoService.deleteTodo(userDetails.getMemberId(), todoId);
-        return ResponseEntity.noContent().build();
     }
 
 

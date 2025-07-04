@@ -64,7 +64,8 @@
         INSERT INTO TB_DAILY_EXERCISE VALUES
         (
             SEQ_DAILY_EXERCISE_ID.NEXTVAL,
-            #{todoId}, #{dayNo}
+            #{todoId},
+            #{dayNo}
         )
     </insert>
 
@@ -124,6 +125,12 @@
         </foreach>
     </select>
 
+    <select id="existsById" resultType="boolean" parameterType="long">
+        SELECT COUNT(*) > 0
+        FROM TB_TODO
+        WHERE TODO_ID
+    </select>
+
     <select id="getTodayMenuList" resultType="kr.co.khedu.fitroutine.todo.model.dto.Menu">
         SELECT M.NAME, M.CALORIE
         FROM TB_MENU M
@@ -141,7 +148,6 @@
         JOIN TB_DAILY_EXERCISE DE ON ED.DAILY_EXERCISE_ID = DE.DAILY_EXERCISE_ID
         JOIN TB_TODO T ON DE.TODO_ID = T.TODO_ID
         WHERE T.MEMBER_ID = #{memberId}
-
     </select>
 
     <select id="getTodayExerciseList" resultType="kr.co.khedu.fitroutine.todo.model.dto.Exercise">
@@ -169,7 +175,7 @@
     </select>
 
     <delete id="deleteTodo">
-        DELETE TB_TODO
+        DELETE FROM TB_TODO
         WHERE TODO_ID = #{todoId} AND MEMBER_ID = #{memberId}
     </delete>
 
